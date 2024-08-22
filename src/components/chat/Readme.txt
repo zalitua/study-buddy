@@ -1,0 +1,1 @@
+this folder contains all the chat functions exports and the css for the specific chat stuff
