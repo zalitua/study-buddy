@@ -14,6 +14,7 @@ import {
   doc,
   setDoc,
 } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 //import upload from "../../lib/upload";
 
 const Login = () => {
@@ -23,6 +24,7 @@ const Login = () => {
   }); */
 
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   /* const handleAvatar = (e) => {
     if (e.target.files[0]) {
@@ -71,6 +73,7 @@ const Login = () => {
       }); */
 
       toast.success("Account created! You can login now!");
+      navigate("/profile");
     } catch (err) {
       console.log(err);
       toast.error(err.message);
