@@ -1,0 +1,5 @@
+list of needed dependencys:
+- npm node: npm install
+- react router: npm install --save react-toastify
+- react toastfiy: npm install --save react-toastify
+
