@@ -7,8 +7,10 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/" element={<Login />} /> //this sets the login page as the
+        default start point
+        <Route path="/profile" element={<Profile />} /> //this indicates a route
+        that leads to the profile page
       </Routes>
     </Router>
   );

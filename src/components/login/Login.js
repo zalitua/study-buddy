@@ -16,6 +16,8 @@ import {
 } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 //import upload from "../../lib/upload";
+//to do: look at protected route, have handleLogin open dashboard, work on profile page so it updates users collection
+//create group function, tidy up forms, how to check user to show login or register, look at other 3rd party authentication
 
 const Login = () => {
   /* const [avatar, setAvatar] = useState({
