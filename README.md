@@ -8,16 +8,6 @@ sophiaullrich - Sophia,
 kny725979 - Lucy,
 zalitua - Zali
 
-Dependecies:
-
-By: Zali
-react-dom: npm install react react-dom
-react-firebase-hooks: npm install --save react-firebase-hooks
-react-router-dom: npm install react-router-dom@6
-react-toastify: npm install --save react-toastify
-react-bootstrap: npm install react-bootstrap bootstrap
-react-google-button: npm install --save react-google-button
-
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

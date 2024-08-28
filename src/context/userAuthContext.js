@@ -8,12 +8,21 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 
-import { auth } from "../lib/firebase";
+import { auth, db } from "../lib/firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 const userAuthContext = createContext();
 
 export function UserAuthContextProvider({ children }) {
   const [user, setUser] = useState({});
+
+  function addUser(email) {
+    return setDoc(doc(db, "users", user.uid), {
+      email,
+      id: user.uid,
+      //block[],  ...need to look this up
+    });
+  }
 
   function logIn(email, password) {
     return signInWithEmailAndPassword(auth, email, password);
@@ -42,7 +51,7 @@ export function UserAuthContextProvider({ children }) {
 
   return (
     <userAuthContext.Provider
-      value={{ user, logIn, signUp, logOut, googleSignIn }}
+      value={{ user, logIn, signUp, addUser, logOut, googleSignIn }}
     >
       {children}
     </userAuthContext.Provider>

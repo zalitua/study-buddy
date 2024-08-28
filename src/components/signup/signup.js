@@ -9,6 +9,7 @@ const Signup = () => {
   const [error, setError] = useState("");
   const [password, setPassword] = useState("");
   const { signUp } = useUserAuth();
+  const { addUser } = useUserAuth();
   let navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -16,6 +17,7 @@ const Signup = () => {
     setError("");
     try {
       await signUp(email, password);
+      addUser(email);
       navigate("/");
     } catch (err) {
       setError(err.message);
