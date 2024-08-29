@@ -1,136 +1,79 @@
-import { useState } from "react";
-//import "./login.css";
-import { toast } from "react-toastify";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-import { auth, db } from "../../lib/firebase";
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  doc,
-  setDoc,
-} from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
-//import upload from "../../lib/upload";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Form, Alert } from "react-bootstrap";
+import { Button } from "react-bootstrap";
+import GoogleButton from "react-google-button";
+import { useUserAuth } from "../../context/userAuthContext";
 
 const Login = () => {
-  /* const [avatar, setAvatar] = useState({
-    file: null,
-    url: "",
-  }); */
-
-  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const { logIn, googleSignIn } = useUserAuth();
   const navigate = useNavigate();
 
-  /* const handleAvatar = (e) => {
-    if (e.target.files[0]) {
-      setAvatar({
-        file: e.target.files[0],
-        url: URL.createObjectURL(e.target.files[0]),
-      });
-    }
-  }; */
-
-  const handleRegister = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    const formData = new FormData(e.target);
-
-    const { username, email, password } = Object.fromEntries(formData);
-
-    // VALIDATE INPUTS
-    if (!username || !email || !password)
-      return toast.warn("Please enter inputs!");
-    //if (!avatar.file) return toast.warn("Please upload an avatar!");
-
-    // VALIDATE UNIQUE USERNAME
-    const usersRef = collection(db, "users");
-    const q = query(usersRef, where("username", "==", username));
-    const querySnapshot = await getDocs(q);
-    if (!querySnapshot.empty) {
-      return toast.warn("Select another username");
-    }
-
+    setError("");
     try {
-      const res = await createUserWithEmailAndPassword(auth, email, password);
-
-      //const imgUrl = await upload(avatar.file);
-
-      await setDoc(doc(db, "users", res.user.uid), {
-        username,
-        email,
-        //avatar: imgUrl,
-        id: res.user.uid,
-        blocked: [],
-      });
-
-      /* await setDoc(doc(db, "userchats", res.user.uid), {
-        chats: [],
-      }); */
-
-      toast.success("Account created! You can login now!");
-      navigate("/profile");
+      await logIn(email, password);
+      navigate("/dashboard");
     } catch (err) {
-      console.log(err);
-      toast.error(err.message);
-    } finally {
-      setLoading(false);
+      setError(err.message);
     }
   };
-
-  const handleLogin = async (e) => {
+  const handleGoogleSignIn = async (e) => {
     e.preventDefault();
-    setLoading(true);
-
-    const formData = new FormData(e.target);
-    const { email, password } = Object.fromEntries(formData);
-
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-    } catch (err) {
-      console.log(err);
-      toast.error(err.message);
-    } finally {
-      setLoading(false);
+      await googleSignIn();
+      navigate("/dashboard");
+    } catch (error) {
+      console.log(error.message);
     }
   };
 
   return (
-    <div className="login">
-      <div className="item">
-        <h2>Welcome back,</h2>
-        <form onSubmit={handleLogin}>
-          <input type="text" placeholder="Email" name="email" />
-          <input type="password" placeholder="Password" name="password" />
-          <button disabled={loading}>{loading ? "Loading" : "Sign In"}</button>
-        </form>
+    <>
+      <div className="p-4 box">
+        <h2 className="mb-3">Firebase Auth Login</h2>
+        {error && <Alert variant="danger">{error}</Alert>}
+        <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Control
+              type="email"
+              placeholder="Email address"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </Form.Group>
+
+          <div className="d-grid gap-2">
+            <Button variant="primary" type="Submit">
+              Log In
+            </Button>
+          </div>
+        </Form>
+        <hr />
+        <div>
+          <GoogleButton
+            className="g-btn"
+            type="dark"
+            onClick={handleGoogleSignIn}
+          />
+        </div>
       </div>
-      <div className="separator"></div>
-      <div className="item">
-        <h2>Create an Account</h2>
-        <form onSubmit={handleRegister}>
-          {/* <label htmlFor="file">
-            <img src={avatar.url || "./avatar.png"} alt="" />
-            Upload an image
-          </label>
-          <input
-            type="file"
-            id="file"
-            style={{ display: "none" }}
-            onChange={handleAvatar}
-          /> */}
-          <input type="text" placeholder="Username" name="username" />
-          <input type="text" placeholder="Email" name="email" />
-          <input type="password" placeholder="Password" name="password" />
-          <button disabled={loading}>{loading ? "Loading" : "Sign Up"}</button>
-        </form>
+      <div className="p-4 box mt-3 text-center">
+        Don't have an account? <Link to="/signup">Sign up</Link>
       </div>
-    </div>
+    </>
   );
 };
-
+//?../signup/signup
 export default Login;

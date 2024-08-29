@@ -1,3 +1,13 @@
+# Study-Buddy-SDP
+
+Study buddy web app made for software development practice sem 2 2024
+
+Developers:
+ISHUMANSS - Alister,
+sophiaullrich - Sophia,
+kny725979 - Lucy,
+zalitua - Zali
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
