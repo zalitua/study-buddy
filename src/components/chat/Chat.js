@@ -14,4 +14,4 @@ const Chat = () =>{
 };
 
 
-export default Chat;
+export default Chat; //exports the chat function to main
