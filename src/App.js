@@ -6,6 +6,10 @@ import Dashboard from "./components/dashboard/Dashboard";
 import Login from "./components/login/Login";
 import Signup from "./components/signup/Signup";
 import Chat from "./components/chat/Chat";
+import Chat from "./components/chat/Chat";
+import Leaderboard from "./components/leaderboard/Leaderboard";
+import Profile from "./components/profile/Profile";
+import Calendar from "./components/calandar/Calendar";
 
 function App() {
   return (
@@ -15,10 +19,13 @@ function App() {
         <Col>
           <UserAuthContextProvider>
             <Routes>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/" element={<Login />} />
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
-              <Route path="/chat" element = {<Chat />}/>
+              <Route path="/chat" element={<Chat />} />
+              <Route path="/leaderboard" element={<Leaderboard />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/calendar" element={<Calendar />} />
             </Routes>
           </UserAuthContextProvider>
         </Col>

@@ -17,7 +17,7 @@ const Login = () => {
     setError("");
     try {
       await logIn(email, password);
-      navigate("/dashboard");
+      navigate("/");
     } catch (err) {
       setError(err.message);
     }
@@ -36,7 +36,12 @@ const Login = () => {
     <>
       <div className="p-4 box">
         <h2 className="mb-3">StudyBuddy Login</h2>
-        {error && <Alert variant="danger">{error}</Alert>}
+        {error && (
+          <Alert variant="primary">
+            Please enter your email and password. Your password must be at least
+            8 characters long.
+          </Alert>
+        )}
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Control
