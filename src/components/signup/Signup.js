@@ -4,6 +4,7 @@ import { Form, Alert } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { useUserAuth } from "../../context/userAuthContext";
 
+//Creates function for the sign up process
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
@@ -12,11 +13,14 @@ const Signup = () => {
   const { addUser } = useUserAuth();
   let navigate = useNavigate();
 
+  //Deals with submitting sign up information
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     try {
+      //Create user authentication entry
       await signUp(email, password);
+      //Add the newly registered user to the users collection in the database
       await addUser(email);
       navigate("/");
     } catch (err) {
@@ -24,6 +28,7 @@ const Signup = () => {
     }
   };
 
+  //Displays sign up form
   return (
     <>
       <div className="p-4 box">
