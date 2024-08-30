@@ -5,6 +5,7 @@ import "./App.css";
 import Dashboard from "./components/dashboard/Dashboard";
 import Login from "./components/login/Login";
 import Signup from "./components/signup/Signup";
+import Chat from "./components/chat/Chat";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
+              <Route path="/chat" element = {<Chat />}/>
             </Routes>
           </UserAuthContextProvider>
         </Col>
