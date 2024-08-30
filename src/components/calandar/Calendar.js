@@ -1,34 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css'; // Import default styles
+import React, { useState, useEffect } from "react";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
+import { useUserAuth } from "../../context/userAuthContext";
+import { fetchAvailabilitiesForDate } from "../../services/availabilityService"; // Assume this is a service that handles API requests
 
 const CalendarPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [availabilities, setAvailabilities] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const { user } = useUserAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!user) {
+      toast.warn("You need to be logged in to view availabilities.");
+      navigate("/login");
+      return;
+    }
+
     const fetchAvailabilities = async () => {
       setLoading(true);
-      setError(null);
-
       try {
-        const response = await fetch(`/api/availabilities?date=${selectedDate.toISOString()}`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch availabilities');
-        }
-        const data = await response.json();
+        const data = await fetchAvailabilitiesForDate(selectedDate);
         setAvailabilities(data);
       } catch (err) {
-        setError(err.message);
+        toast.error("Failed to fetch availabilities: " + err.message);
       } finally {
         setLoading(false);
       }
     };
 
     fetchAvailabilities();
-  }, [selectedDate]);
+  }, [selectedDate, user, navigate]);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -37,10 +42,6 @@ const CalendarPage = () => {
   const renderAvailabilities = () => {
     if (loading) {
       return <p>Loading availabilities...</p>;
-    }
-
-    if (error) {
-      return <p>Error fetching availabilities: {error}</p>;
     }
 
     if (availabilities.length === 0) {
@@ -71,3 +72,4 @@ const CalendarPage = () => {
 };
 
 export default CalendarPage;
+
