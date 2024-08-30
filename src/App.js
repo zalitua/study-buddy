@@ -5,7 +5,7 @@ import "./App.css";
 import Dashboard from "./components/dashboard/Dashboard";
 import Login from "./components/login/Login";
 import Signup from "./components/signup/Signup";
-import Chat from "./components/chat/Chat";
+
 import Chat from "./components/chat/Chat";
 import Leaderboard from "./components/leaderboard/Leaderboard";
 import Profile from "./components/profile/Profile";
