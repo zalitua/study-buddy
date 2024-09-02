@@ -15,7 +15,6 @@ function App() {
   return (
     //changed width value in my testing so my chat would take up the whole screen 
     <Container style={{ width: "2000px" }}> 
-    
       <Row>
         <Col>
           <UserAuthContextProvider>

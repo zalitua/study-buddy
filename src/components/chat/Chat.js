@@ -1,4 +1,5 @@
 //file which stores the majority of the chat functions
+import { Button } from "react-bootstrap";
 import { useState } from "react";
 import './chat.css'
 import { auth } from "../../lib/firebase";
@@ -10,14 +11,46 @@ import { useNavigate } from "react-router-dom"; //Used for react router to get t
 
 
 const Chat = () =>{
-    const [msg, setmsg] = useState('')
-    const [show, setShow] = useState(true) //is the user loged in or in the group
+    const [msg, setmsg] = useState('');
+    const [show, setShow] = useState(true); //is the user loged in or in the group
+
+
+    const navigate = useNavigate();
+
+    const handleNavDash = async () => {
+        //handle user going back to the dash
+        try {
+            navigate("/");
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
     
 
-    console.log(msg) //used to test if the message gets taken
+    //console.log(msg) //used to test if the message gets taken
+    const handleSSO = () => {
+
+    }
+
 
     return(
         <div >
+            <div className="navbar">
+
+                <Button variant="primary" onClick={handleNavDash}>
+                    Dashboard
+                </Button>
+                <Button variant="primary" onClick={handleNavDash}>
+                    Dashboard
+                </Button>
+                <Button variant="primary" onClick={handleNavDash}>
+                    Dashboard
+                </Button>
+                <Button variant="primary" onClick={handleNavDash}>
+                    Dashboard
+                </Button>
+            </div>
+
             {//check to see if the user is in the group / signed in
                 show?
             <div>

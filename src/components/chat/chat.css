@@ -1,4 +1,16 @@
 
+.navbar{ 
+    /*nav bar used on the the chat page to be able to leave the chat*/
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    width: 100%;
+    height: 50px;
+
+    
+}
+
 .messages{
     display: flex;
     height: 80vh;
