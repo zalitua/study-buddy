@@ -13,8 +13,9 @@ import Calendar from "./components/calandar/Calendar";
 
 function App() {
   return (
-
-    <Container style={{ width: "400px" }}>
+    //changed width value in my testing so my chat would take up the whole screen 
+    <Container style={{ width: "2000px" }}> 
+    
       <Row>
         <Col>
           <UserAuthContextProvider>
