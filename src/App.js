@@ -8,7 +8,7 @@ import Signup from "./components/signup/Signup";
 import Chat from "./components/chat/Chat";
 import Leaderboard from "./components/leaderboard/Leaderboard";
 import Profile from "./components/profile/Profile";
-import Calendar from "./components/calandar/Calendar";
+import Calendar from "./components/calendar/Calendar";
 
 function App() {
   return (
