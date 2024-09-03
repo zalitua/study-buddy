@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Table, Spinner, Alert } from "react-bootstrap";
-import { db } from "./firebase-config"; // Adjust the path as necessary
+import { db } from "../../lib/firebase"; // Adjust the path as necessary
 import { collection, query, orderBy, getDocs } from "firebase/firestore";
 
 const Leaderboard = () => {
