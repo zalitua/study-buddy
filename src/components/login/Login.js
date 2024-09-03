@@ -5,6 +5,7 @@ import { Button } from "react-bootstrap";
 import GoogleButton from "react-google-button";
 import { useUserAuth } from "../../context/userAuthContext";
 
+//Creates a function to export that handles the Login process
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,19 +13,24 @@ const Login = () => {
   const { logIn, googleSignIn } = useUserAuth();
   const navigate = useNavigate();
 
+  //Deals with submitting the login information
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     try {
+      //Create user authentication entry
       await logIn(email, password);
       navigate("/");
     } catch (err) {
       setError(err.message);
     }
   };
+
+  //Deals with submitting the Google login information
   const handleGoogleSignIn = async (e) => {
     e.preventDefault();
     try {
+      //Authenticate with Google credentials
       await googleSignIn();
       navigate("/dashboard");
     } catch (error) {
@@ -32,6 +38,7 @@ const Login = () => {
     }
   };
 
+  //Displays form for login options using react-bootstrap
   return (
     <>
       <div className="p-4 box">
@@ -80,5 +87,5 @@ const Login = () => {
     </>
   );
 };
-//?../signup/signup
+
 export default Login;
