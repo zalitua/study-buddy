@@ -4,7 +4,8 @@ import "react-calendar/dist/Calendar.css";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import { useUserAuth } from "../../context/userAuthContext";
-import { fetchAvailabilitiesForDate } from "../../services/availabilityService"; // Assume this is a service that handles API requests
+import { fetchAvailabilitiesForDate } from './availabilityService';
+
 
 const CalendarPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
