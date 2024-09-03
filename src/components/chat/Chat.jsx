@@ -15,40 +15,49 @@ const Chat = () =>{
     const [show, setShow] = useState(true); //is the user loged in or in the group
 
 
+    //console.log(msg) //used to test if the message typed gets loged to the varaible
+    const handleSSO = () => {
+
+    }
+
+    //react router code to be able to naviate around the site
     const navigate = useNavigate();
 
     const handleNavDash = async () => {
-        //handle user going back to the dash
+        //handle user going to the dash
         try {
             navigate("/");
         } catch (error) {
             console.log(error.message);
         }
     };
+
+    const handleNavGroup = async () => {
+        //handle user going to the group
+        try {
+            navigate("/group");
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
+
+
+
     
-
-    //console.log(msg) //used to test if the message gets taken
-    const handleSSO = () => {
-
-    }
 
 
     return(
-        <div >
-            <div className="navbar">
+        <div className="chat">
+            <div className="nav">
 
                 <Button variant="primary" onClick={handleNavDash}>
                     Dashboard
                 </Button>
-                <Button variant="primary" onClick={handleNavDash}>
-                    Dashboard
+
+                <Button variant="primary" onClick={handleNavGroup}>
+                    Group
                 </Button>
-                <Button variant="primary" onClick={handleNavDash}>
-                    Dashboard
-                </Button>
-                <Button variant="primary" onClick={handleNavDash}>
-                    Dashboard
-                </Button>
+                
             </div>
 
             {//check to see if the user is in the group / signed in
@@ -56,9 +65,10 @@ const Chat = () =>{
             <div>
                 <div className="messages">
                     <h1>messages</h1>
+                    
                 </div>
                 <div className="sender">
-                    <input value={msg} onChange={(e) => setmsg(e.target.value)} />
+                    <input placeholder="Lorem ipsum, dolor sit amet consectetur adipisicing elit." value={msg} onChange={(e) => setmsg(e.target.value)} />
                     <button>Send</button>
                 </div>
             </div>:

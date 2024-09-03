@@ -10,6 +10,7 @@ import Chat from "./components/chat/Chat";
 import Leaderboard from "./components/leaderboard/Leaderboard";
 import Profile from "./components/profile/Profile";
 import Calendar from "./components/calandar/Calendar";
+import Group from "./components/group/Group";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/chat" element={<Chat />} />
+              <Route path="/group" element={<Group />}/>
               <Route path="/leaderboard" element={<Leaderboard />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/calendar" element={<Calendar />} />

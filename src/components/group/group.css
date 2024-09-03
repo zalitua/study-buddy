@@ -1,0 +1,53 @@
+.group{
+    
+    background-color: #f7f8fac7; /*sites color*/
+    
+    margin: auto;
+
+    
+    align-items: top;
+
+    height: 90vh;
+
+    .nav{
+        /*nav bar used on the the chat page to be able to leave the chat*/
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+
+        padding-top: 6px; 
+        padding-bottom: 6px;
+        width: 100%;
+        
+        
+    }
+
+    .groups{
+        display: flex;
+        
+        align-content: center;
+        justify-content:flex-start ;
+
+        
+        width: 100%;
+        height: 80hv;
+
+        background-color: rgb(242, 247, 247);
+
+
+        .create{
+            padding: 50px;
+            display: flex;
+            align-content: center;
+            justify-content:center ;
+        }
+
+        .current{
+            display: flex;
+            align-content: center;
+            justify-content:center ;
+        }
+
+
+    }
+}
