@@ -28,6 +28,7 @@ import { useNavigate } from "react-router-dom"; //Used for react router to get t
 const Group = () => {
 
     //Seach users
+    //to be able to search users i had to edit the fire base permessions so it would be able to sort
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([]);
     const [selectedUsers, setSelectedUsers] = useState([]);
@@ -68,6 +69,8 @@ const Group = () => {
 
     const handleSelectUser = (user) => {
         setSelectedUsers([...selectedUsers, user]);
+        console.log(selectedUsers);
+
     };
 
 
@@ -75,7 +78,7 @@ const Group = () => {
     const handleCreateGroup = async () => {
         try {
             const groupData = {
-                groupName: "Group Name Here", // You may want to allow users to input this
+                groupName: "Group Name Here", //NEED TO HANDLE AN INPUT FOR A GROUP NAME
                 members: selectedUsers.map((user) => user.id),
                 createdAt: serverTimestamp(),
                 createdBy: auth.currentUser.uid,
@@ -89,28 +92,39 @@ const Group = () => {
     };
 
     //Show users groups
+
+
+    //need to fix this shit
+
+
     const [userGroups, setUserGroups] = useState([]);
 
     useEffect(() => {
         const fetchUserGroups = async () => {
             try {
-                const querySnapshot = await db.collection('groups')
-                    .where('members', 'array-contains', auth.currentUser.uid)
-                    .get();
-
+                // Reference to the 'groups' collection
+                const groupsRef = collection(db, 'groups');
+    
+                // Query to find all groups where the current user is a member
+                const q = query(groupsRef, where('members', 'array-contains', auth.currentUser.uid));
+    
+                // Execute the query
+                const querySnapshot = await getDocs(q);
+    
                 const groups = [];
                 querySnapshot.forEach((doc) => {
                     groups.push({ id: doc.id, ...doc.data() });
                 });
+    
                 setUserGroups(groups);
             } catch (error) {
                 console.log("Error fetching user groups: ", error);
             }
         };
-
+    
         fetchUserGroups();
     }, []);
-
+    
 
 
     //react router code to be able to naviate around the site
@@ -158,7 +172,7 @@ const Group = () => {
                     <ul>
                         {searchResults.map((user) => (
                             <li key={user.id}>
-                                {user.username}
+                                {user.username}{/*some users currently don't have user names so they are blank*/}
                                 <button onClick={() => handleSelectUser(user)}>Add</button>
                             </li>
                         ))}
