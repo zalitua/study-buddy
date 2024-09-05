@@ -33,7 +33,7 @@ const Signup = () => {
   //Handles closing the success modal and navigating to the dashboard
   const handleCloseSuccess = () => {
     setShowSuccess(false);
-    navigate("/");
+    navigate("/profile");
   };
 
   //Displays sign up form
