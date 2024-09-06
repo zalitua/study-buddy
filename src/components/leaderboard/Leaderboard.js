@@ -11,11 +11,14 @@ const Leaderboard = () => {
   useEffect(() => {
     const fetchLeaders = async () => {
       try {
-        const q = query(collection(db, "leaderboard"), orderBy("score", "desc"));
+        const q = query(
+          collection(db, "leaderboard"),
+          orderBy("score", "desc")
+        );
         const querySnapshot = await getDocs(q);
-        const leaderboardData = querySnapshot.docs.map(doc => ({
+        const leaderboardData = querySnapshot.docs.map((doc) => ({
           id: doc.id,
-          ...doc.data()
+          ...doc.data(),
         }));
         setLeaders(leaderboardData);
         setLoading(false);
@@ -29,9 +32,11 @@ const Leaderboard = () => {
   }, []);
 
   if (loading) {
-    return <Spinner animation="border" role="status">
-      <span className="visually-hidden">Loading...</span>
-    </Spinner>;
+    return (
+      <Spinner animation="border" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </Spinner>
+    );
   }
 
   if (error) {

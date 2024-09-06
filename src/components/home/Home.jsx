@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { useUserAuth } from "../../context/userAuthContext";
 
 //Main UI. Displays relevant information for the user and allows site navigation
-const Dashboard = () => {
+const Home = () => {
   //logout option
   const { logOut } = useUserAuth();
   const navigate = useNavigate();
@@ -48,6 +48,14 @@ const Dashboard = () => {
     }
   };
 
+  const handleNavDashboard = async () => {
+    try {
+      navigate("/dashboard");
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   const handleNavLeaderboard = async () => {
     try {
       navigate("/leaderboard");
@@ -87,6 +95,9 @@ const Dashboard = () => {
         <Button variant="primary" onClick={handleNavCalendar}>
           Calendar
         </Button>
+        <Button variant="primary" onClick={handleNavDashboard}>
+          Dashboard
+        </Button>
         <Button variant="primary" onClick={handleNavLeaderboard}>
           Leaderboard
         </Button>
@@ -98,4 +109,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Home;
