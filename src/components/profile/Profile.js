@@ -17,6 +17,8 @@ const Profile = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  const points = 0;
+
   const handleGenderChange = (e) => {
     setGender(e.target.value);
     if (e.target.value !== "other") {
@@ -59,6 +61,7 @@ const Profile = () => {
           phone,
           dateOfBirth: date,
           gender: gender === "other" ? other : gender,
+          points,
           uid: user.uid,
         },
         { merge: true }
