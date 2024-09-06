@@ -42,15 +42,16 @@
             clear:both;
             float: left;
         }
-
-        .current{
-            width: 100%;
-            float: left;
-            clear: left;
-            display: flex;
-            
-        }
-
-
     }
+
+    .current{
+        width: 100%;
+        float: left;
+        clear: left;
+        display: flex;
+        
+    }
+
+
+    
 }
