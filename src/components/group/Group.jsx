@@ -37,14 +37,21 @@ const Group = () => {
     const handleSearch = async (e) => {
         e.preventDefault();
         try {
+
+          //get the the users from the users collection where they match the search  
           const userRef = collection(db, "users");
           const q = query(
             userRef,
+            //email will be changed to user name when all users have a username
             where('email', '>=', searchTerm),
             where('email', '<=', searchTerm + '\uf8ff')
           );
+
+          //get doc
           const querySnapShot = await getDocs(q);
           const users = [];
+
+          //get each of the users that match the wanted data
           querySnapShot.forEach((doc) => {
             users.push({ id: doc.id, ...doc.data() });
           });
@@ -53,7 +60,7 @@ const Group = () => {
           console.log("Error searching users: ", error);
         }
       };
-    
+      //used when the user clicks the add button so they can add a user to the group
       const handleSelectUser = (user) => {
         setSelectedUsers([...selectedUsers, user]);
       };
@@ -61,6 +68,7 @@ const Group = () => {
 
     //Group creation
     const handleCreateGroup = async () => {
+        //check the name is valid
         if (!groupName.trim()) {
           alert("Please enter a group name before creating the group.");
           return;
@@ -69,17 +77,26 @@ const Group = () => {
         try {
           const currentUserID = auth.currentUser.uid;
           let updatedSelectedUsers = [...selectedUsers];
+          //add the current users id to the group
           if (!selectedUsers.some((user) => user.id === currentUserID)) {
             updatedSelectedUsers.push({ id: currentUserID });
           }
+
+          //get rid of any duplicate ids
           const uniqueUserIDs = [...new Set(updatedSelectedUsers.map(user => user.id))];
+
+          //set up the group
           const groupData = {
             groupName: groupName,
             members: uniqueUserIDs,
             createdAt: serverTimestamp(),
             createdBy: currentUserID,
           };
+
+          //create group
           await addDoc(collection(db, 'groups'), groupData);
+
+          //start closeing
           alert("Group created successfully!");
           setShowCreateGroupModal(false);
           setSelectedUsers([]);
@@ -95,6 +112,7 @@ const Group = () => {
     const fetchUserGroups = async () => {
         try {
           const user = auth.currentUser;
+          //check if the user is logged in
           if (!user) {
             alert("User not logged in!!!");
             return;
@@ -103,6 +121,8 @@ const Group = () => {
           const q = query(groupsRef, where('members', 'array-contains', user.uid));
           const querySnapshot = await getDocs(q);
           const groups = [];
+
+          //get each group the user is in
           querySnapshot.forEach((doc) => {
             groups.push({ id: doc.id, ...doc.data() });
           });
@@ -115,6 +135,7 @@ const Group = () => {
         if (auth.currentUser) {
           fetchUserGroups();
         } else {
+            //unsub if the user changes
           const unsubscribe = auth.onAuthStateChanged((user) => {
             if (user) {
               fetchUserGroups();
@@ -130,6 +151,7 @@ const Group = () => {
     };
     
     const closeCreateGroupModal = () => {
+        //close the modal and reset all its values
         setShowCreateGroupModal(false);
         setSelectedUsers([]);
         setGroupName("");
@@ -144,6 +166,7 @@ const Group = () => {
     };
 
     const closeEditGroupModal = () => {
+        //close the modal and reset all its values
         setShowEditGroupModal(false);
         setEditingGroup(null);
         setEditGroupName("");
@@ -160,25 +183,33 @@ const Group = () => {
         }
 
         //try update the group
+
+
+
+
+
+
+        //Currently only updating by name works
+        //would also like to make is so only the maker of the group can delete it 
         try {
             const currentUserID = auth.currentUser.uid;
 
-            // Ensure the current user is part of the group
+            //check the current user is part of the group
             let updatedSelectedUsers = [...editSelectedUsers];
             if (!editSelectedUsers.some((user) => user.id === currentUserID)) {
                 updatedSelectedUsers.push({ id: currentUserID });
             }
     
-            // Filter out any invalid user objects (those without an 'id')
+            //filter out any invalid user objects no id
             const validUsers = updatedSelectedUsers.filter(user => user.id);
     
-            // Ensure no undefined or invalid user objects are being used
+            //check no undefined or invalid user objects are being used
             const uniqueUserIDs = [...new Set(validUsers.map(user => user.id))];
     
-            // Reference the group's document in Firestore
+            //reference the group's document in Firestore
             const docRef = doc(db, 'groups', editingGroup.id);
             
-            // Update the group document in Firestore
+            //update the group document in Firestore
             await updateDoc(docRef, {
                 groupName: editGroupName, // Update group name
                 members: uniqueUserIDs,  // Update the members list
@@ -186,9 +217,9 @@ const Group = () => {
     
             alert("Group updated successfully!");
             closeEditGroupModal();
-            fetchUserGroups(); // Refresh the groups list
+            fetchUserGroups(); //refresh the groups list
         } catch (error) {
-        console.log("Error updating group: ", error);
+            console.log("Error updating group: ", error);
         }
     };
     
@@ -198,7 +229,9 @@ const Group = () => {
     };
     //when remove user button is clicked
     const handleRemoveUser = (user) => {
-        setEditSelectedUsers(editSelectedUsers.filter((u) => u.id !== user.id));
+        console.log(user);
+
+        setEditSelectedUsers(editSelectedUsers.filter((u) => u.id != user.id));
     };
 
 
