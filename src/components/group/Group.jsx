@@ -12,11 +12,13 @@ import {
     setDoc, updateDoc, where, addDoc,
   } from "firebase/firestore";
 
-import { useNavigate } from "react-router-dom"; //Used for react router to get to this page
+import { useNavigate } from "react-router-dom";//Used for react router to get to this page
 
 
 
 const Group = () => {
+
+    //consts used in this file
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([]);
     const [selectedUsers, setSelectedUsers] = useState([]);
@@ -82,6 +84,7 @@ const Group = () => {
           setShowCreateGroupModal(false);
           setSelectedUsers([]);
           setGroupName("");
+          fetchUserGroups();
         } catch (error) {
           console.log("Error creating group: ", error);
         }
@@ -108,7 +111,6 @@ const Group = () => {
           console.log("Error fetching user groups: ", error);
         }
       };
-    
       useEffect(() => {
         if (auth.currentUser) {
           fetchUserGroups();
@@ -122,14 +124,18 @@ const Group = () => {
         }
       }, []);
     
-    //model and creating the group
-    const openCreateGroupModal = () => setShowCreateGroupModal(true);
+    //modal and creating the group
+    const openCreateGroupModal = () => { 
+        setShowCreateGroupModal(true)
+    };
+    
     const closeCreateGroupModal = () => {
         setShowCreateGroupModal(false);
         setSelectedUsers([]);
         setGroupName("");
     };
 
+    //modal for editing a group
     const openEditGroupModal = (group) => {
         setEditingGroup(group);
         setEditGroupName(group.groupName || "");
@@ -144,36 +150,53 @@ const Group = () => {
         setEditSelectedUsers([]);
     };
 
+
+    //update information for an existing group
     const handleUpdateGroup = async () => {
+        //check to see if group name is valid
         if (!editGroupName.trim()) {
         alert("Please enter a group name before updating the group.");
         return;
         }
 
+        //try update the group
         try {
-        const currentUserID = auth.currentUser.uid;
-        let updatedSelectedUsers = [...editSelectedUsers];
-        if (!editSelectedUsers.some((user) => user.id === currentUserID)) {
-            updatedSelectedUsers.push({ id: currentUserID });
-        }
-        const uniqueUserIDs = [...new Set(updatedSelectedUsers.map(user => user.id))];
-        const groupData = {
-            groupName: editGroupName,
-            members: uniqueUserIDs,
-        };
-        await updateDoc(doc(db, 'groups', editingGroup.id), groupData);
-        alert("Group updated successfully!");
-        closeEditGroupModal();
-        fetchUserGroups(); // Refresh the groups list
+            const currentUserID = auth.currentUser.uid;
+
+            // Ensure the current user is part of the group
+            let updatedSelectedUsers = [...editSelectedUsers];
+            if (!editSelectedUsers.some((user) => user.id === currentUserID)) {
+                updatedSelectedUsers.push({ id: currentUserID });
+            }
+    
+            // Filter out any invalid user objects (those without an 'id')
+            const validUsers = updatedSelectedUsers.filter(user => user.id);
+    
+            // Ensure no undefined or invalid user objects are being used
+            const uniqueUserIDs = [...new Set(validUsers.map(user => user.id))];
+    
+            // Reference the group's document in Firestore
+            const docRef = doc(db, 'groups', editingGroup.id);
+            
+            // Update the group document in Firestore
+            await updateDoc(docRef, {
+                groupName: editGroupName, // Update group name
+                members: uniqueUserIDs,  // Update the members list
+            });
+    
+            alert("Group updated successfully!");
+            closeEditGroupModal();
+            fetchUserGroups(); // Refresh the groups list
         } catch (error) {
         console.log("Error updating group: ", error);
         }
     };
-
+    
+    //when add user button is clicked
     const handleAddUser = (user) => {
         setEditSelectedUsers([...editSelectedUsers, user]);
     };
-
+    //when remove user button is clicked
     const handleRemoveUser = (user) => {
         setEditSelectedUsers(editSelectedUsers.filter((u) => u.id !== user.id));
     };
@@ -212,7 +235,7 @@ const Group = () => {
       </div>
       <div className="groups">
         <div className="create">
-          <h1>Group Creation:</h1>
+          <h1>Group Creation: </h1>
           <input
             type="text"
             placeholder="Search for users"
@@ -223,7 +246,7 @@ const Group = () => {
           <ul>
             {searchResults.map((user) => (
               <li key={user.id}>
-                {user.username || user.email}
+                {user.username || user.email} {/*show either the users username or email*/}
                 <button onClick={() => handleSelectUser(user)}>Add</button>
               </li>
             ))}
@@ -232,18 +255,19 @@ const Group = () => {
         </div>
     </div>
     <div className="current">
-        <h1>Users Groups</h1>
+        <h1>Users Groups: </h1>
         <ul>
         {userGroups.map((group) => (
             <li key={group.id}>
             {group.groupName}
             <button onClick={() => openEditGroupModal(group)}>Edit</button>
+            <button >Chat</button>
             </li>
         ))}
         </ul>
     </div>
 
-        {/* create group modal */}
+        {/*create group modal*/}
         <Modal show={showCreateGroupModal} onHide={closeCreateGroupModal}>
           <Modal.Header closeButton>
             <Modal.Title>Create Group</Modal.Title>
@@ -280,7 +304,7 @@ const Group = () => {
           </Modal.Footer>
         </Modal>
 
-        {/* edit group modal */}
+        {/*edit group modal*/}
         <Modal show={showEditGroupModal} onHide={closeEditGroupModal}>
           <Modal.Header closeButton>
             <Modal.Title>Edit Group</Modal.Title>
