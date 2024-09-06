@@ -11,3 +11,5 @@ react-router-dom: npm install react-router-dom@6
 react-toastify: npm install --save react-toastify //currently not being used. bootstrap components do this already
 react-bootstrap: npm install react-bootstrap bootstrap
 react-google-button: npm install --save react-google-button
+
+react-calendar: npm install react-calendar

@@ -9,7 +9,8 @@ import Signup from "./components/signup/Signup";
 import Chat from "./components/chat/Chat";
 import Leaderboard from "./components/leaderboard/Leaderboard";
 import Profile from "./components/profile/Profile";
-import Calendar from "./components/calandar/Calendar";
+import Calendar from "./components/calendar/Calendar";
+import Home from "./components/home/Home";
 import Group from "./components/group/Group";
 
 function App() {
@@ -20,7 +21,8 @@ function App() {
         <Col>
           <UserAuthContextProvider>
             <Routes>
-              <Route path="/" element={<Dashboard />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/chat" element={<Chat />} />
