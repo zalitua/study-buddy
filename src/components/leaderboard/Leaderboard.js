@@ -13,7 +13,6 @@ const Leaderboard = ({ userId }) => {
   useEffect(() => {
     const fetchLeaders = async () => {
       try {
-        // Fetch top 10 leaderboard data
         const q = query(
           collection(db, "leaderboard"),
           orderBy("score", "desc"),
@@ -26,7 +25,6 @@ const Leaderboard = ({ userId }) => {
         }));
         setLeaders(leaderboardData);
 
-        // Fetch the current user's rank and score
         if (userId) {
           const userQuery = query(
             collection(db, "leaderboard"),
@@ -37,7 +35,6 @@ const Leaderboard = ({ userId }) => {
             const userData = userSnapshot.docs[0].data();
             setUserScore(userData.score);
 
-            // Now, fetch the user's rank by checking their score against others
             const rankQuery = query(
               collection(db, "leaderboard"),
               orderBy("score", "desc")
@@ -46,7 +43,7 @@ const Leaderboard = ({ userId }) => {
             const rank = rankSnapshot.docs.findIndex(
               (doc) => doc.id === userId
             );
-            setUserRank(rank + 1); // Adding 1 since findIndex is 0-based
+            setUserRank(rank + 1); 
           }
         }
 
