@@ -66,13 +66,7 @@ const Dashboard = () => {
     return <div>Loading...</div>;
   }
 
-  const handleNavGroup = async () => {
-    try {
-        navigate("/group");
-    } catch (error) {
-        console.log(error.message);
-    }
-};
+  
 
   return (
     <div className="dashboard-container">
