@@ -159,11 +159,12 @@ const Group = () => {
 
     //modal for editing a group
     const openEditGroupModal = (group) => {
-        setEditingGroup(group);
-        setEditGroupName(group.groupName || "");
-        setEditSelectedUsers(group.members || []);
-        setShowEditGroupModal(true);
-    };
+      console.log("Editing group members: ", group.members); // Log members for debugging
+      setEditingGroup(group);
+      setEditGroupName(group.groupName || "");
+      setEditSelectedUsers(group.members || []);
+      setShowEditGroupModal(true);
+   };
 
     const closeEditGroupModal = () => {
         //close the modal and reset all its values
@@ -183,14 +184,6 @@ const Group = () => {
         }
 
         //try update the group
-
-
-
-
-
-
-        //Currently only updating by name works
-        //would also like to make is so only the maker of the group can delete it 
         try {
             const currentUserID = auth.currentUser.uid;
 
@@ -205,6 +198,9 @@ const Group = () => {
     
             //check no undefined or invalid user objects are being used
             const uniqueUserIDs = [...new Set(validUsers.map(user => user.id))];
+
+
+            console.log("Unique User IDs: ", uniqueUserIDs);//ONLY RETURNING THE OWNER WHICH WAS JUST ADDED
     
             //reference the group's document in Firestore
             const docRef = doc(db, 'groups', editingGroup.id);
@@ -229,10 +225,22 @@ const Group = () => {
     };
     //when remove user button is clicked
     const handleRemoveUser = (user) => {
-        console.log(user);
-
-        setEditSelectedUsers(editSelectedUsers.filter((u) => u.id != user.id));
-    };
+      console.log(user);
+      
+      // Make a copy of the current array
+      const updatedUsers = [...editSelectedUsers];
+      
+      // Find the index of the user to be removed
+      const index = updatedUsers.findIndex((u) => u.id === user.id);
+      
+      // If the user exists, remove them from the array
+      if (index > -1) {
+          updatedUsers.splice(index, 1); // Remove the user at that index
+      }
+      
+      // Update the state with the new array
+      setEditSelectedUsers(updatedUsers);
+  };
 
 
     //react router code to be able to naviate around the site
@@ -338,6 +346,9 @@ const Group = () => {
         </Modal>
 
         {/*edit group modal*/}
+
+        {/*TO FIX HOW IT DISPLAYS MAKE IT SO IT TAKES IN WHAT GROUP IT IS THE PERSON IS CLICKING ON*/}
+        {/*RN ITS JUST MAKING IT THE EDITsELECTED USERS THIS COULD ALSO BE WHY IT BREAKS LATER*/}
         <Modal show={showEditGroupModal} onHide={closeEditGroupModal}>
           <Modal.Header closeButton>
             <Modal.Title>Edit Group</Modal.Title>
