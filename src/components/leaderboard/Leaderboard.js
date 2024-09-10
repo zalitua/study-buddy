@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Table, Spinner, Alert } from "react-bootstrap";
 import { db } from "../../lib/firebase"; 
-import { collection, query, orderBy, getDocs, limit, where } from "firebase/firestore";
+import { collection, query, orderBy, getDocs, limit } from "firebase/firestore"; // Firestore functions
 
 const Leaderboard = ({ userId }) => {
   const [leaders, setLeaders] = useState([]);
@@ -15,7 +15,7 @@ const Leaderboard = ({ userId }) => {
       try {
         const q = query(
           collection(db, "users"), 
-          orderBy("points", "desc"), 
+          orderBy("points", "desc"),
           limit(10) 
         );
         const querySnapshot = await getDocs(q);
@@ -25,25 +25,20 @@ const Leaderboard = ({ userId }) => {
         }));
         setLeaders(leaderboardData);
 
-        if (userId) {
-          const userQuery = query(
+         if (userId) {
+          const rankQuery = query(
             collection(db, "users"),
-            where("id", "==", userId)
+            orderBy("points", "desc") 
           );
-          const userSnapshot = await getDocs(userQuery);
-          if (!userSnapshot.empty) {
-            const userData = userSnapshot.docs[0].data();
-            setUserPoints(userData.points);
+          const rankSnapshot = await getDocs(rankQuery);
+          const rank = rankSnapshot.docs.findIndex(
+            (doc) => doc.id === userId
+          );
+          setUserRank(rank + 1);
 
-            const rankQuery = query(
-              collection(db, "users"),
-              orderBy("points", "desc")
-            );
-            const rankSnapshot = await getDocs(rankQuery);
-            const rank = rankSnapshot.docs.findIndex(
-              (doc) => doc.id === userId
-            );
-            setUserRank(rank + 1); 
+          const userDoc = rankSnapshot.docs.find((doc) => doc.id === userId);
+          if (userDoc) {
+            setUserPoints(userDoc.data().points);
           }
         }
 
