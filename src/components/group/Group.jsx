@@ -353,8 +353,7 @@ const Group = () => {
 
         {/*edit group modal*/}
 
-        {/*TO FIX HOW IT DISPLAYS MAKE IT SO IT TAKES IN WHAT GROUP IT IS THE PERSON IS CLICKING ON*/}
-        {/*RN ITS JUST MAKING IT THE EDITsELECTED USERS THIS COULD ALSO BE WHY IT BREAKS LATER*/}
+        {/*Need to fix it showing the user who created the group*/}
         <Modal show={showEditGroupModal} onHide={closeEditGroupModal}>
           <Modal.Header closeButton>
             <Modal.Title>Edit Group</Modal.Title>
