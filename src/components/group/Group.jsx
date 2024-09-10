@@ -158,13 +158,19 @@ const Group = () => {
     };
 
     //modal for editing a group
-    const openEditGroupModal = (group) => {
-      console.log("Editing group members: ", group.members); // Log members for debugging
+    const openEditGroupModal = async (group) => {
+      console.log("Editing group members: ", group.members);
+    
       setEditingGroup(group);
       setEditGroupName(group.groupName || "");
-      setEditSelectedUsers(group.members || []);
+    
+      //pass all the members id so they show up correctly
+      const userDocs = await Promise.all(group.members.map(userID => getDoc(doc(db, 'users', userID))));
+      const memberDetails = userDocs.map(doc => ({ id: doc.id, ...doc.data() }));
+    
+      setEditSelectedUsers(memberDetails); // Set the full user objects
       setShowEditGroupModal(true);
-   };
+    };
 
     const closeEditGroupModal = () => {
         //close the modal and reset all its values
