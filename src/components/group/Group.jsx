@@ -7,9 +7,9 @@ import { db } from "../../lib/firebase";
 import { useEffect } from "react";
 
 import {
-    arrayUnion, collection, doc, getDoc,
+     collection, doc, getDoc,
     getDocs, query, serverTimestamp,
-    setDoc, updateDoc, where, addDoc,
+     updateDoc, where, addDoc,
   } from "firebase/firestore";
 
 import { useNavigate } from "react-router-dom";//Used for react router to get to this page
@@ -43,8 +43,8 @@ const Group = () => {
           const q = query(
             userRef,
             //email will be changed to user name when all users have a username
-            where('email', '>=', searchTerm),
-            where('email', '<=', searchTerm + '\uf8ff')
+            where('username', '>=', searchTerm),
+            where('username', '<=', searchTerm + '\uf8ff')
           );
 
           //get doc
