@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Table, Spinner, Alert } from "react-bootstrap";
-import { db } from "../../lib/firebase"; 
-import { collection, query, orderBy, getDocs, limit } from "firebase/firestore"; 
+import { db } from "../../lib/firebase";
+import { collection, query, orderBy, getDocs, limit } from "firebase/firestore";
 
 const Leaderboard = ({ userId }) => {
   const [leaders, setLeaders] = useState([]);
@@ -14,31 +14,30 @@ const Leaderboard = ({ userId }) => {
     const fetchLeaders = async () => {
       try {
         const q = query(
-          collection(db, "users"), 
-          orderBy("points", "desc"), 
-          limit(10) 
+          collection(db, "users"),
+          orderBy("points", "desc"),
+          limit(10)
         );
         const querySnapshot = await getDocs(q);
         const leaderboardData = querySnapshot.docs.map((doc) => ({
           id: doc.id,
-          ...doc.data(), 
+          ...doc.data(),
         }));
         setLeaders(leaderboardData);
 
         if (userId) {
-          const rankQuery = query(
-            collection(db, "users"),
-            orderBy("points", "desc")
-          );
+          const rankQuery = query(collection(db, "users"), orderBy("points", "desc"));
           const rankSnapshot = await getDocs(rankQuery);
-          const rank = rankSnapshot.docs.findIndex(
-            (doc) => doc.id === userId
-          );
-          setUserRank(rank + 1); 
+          const allUsersData = rankSnapshot.docs.map((doc, index) => ({
+            id: doc.id,
+            ...doc.data(),
+            rank: index + 1, 
+          }));
 
-          const userDoc = rankSnapshot.docs.find((doc) => doc.id === userId);
+          const userDoc = allUsersData.find((user) => user.id === userId);
           if (userDoc) {
-            setUserPoints(userDoc.data().points);
+            setUserRank(userDoc.rank);
+            setUserPoints(userDoc.points);
           }
         }
 
@@ -79,8 +78,8 @@ const Leaderboard = ({ userId }) => {
           {leaders.map((leader, index) => (
             <tr key={leader.id}>
               <td>{index + 1}</td>
-              <td>{leader.username}</td> 
-              <td>{leader.points}</td> 
+              <td>{leader.username}</td>
+              <td>{leader.points}</td>
             </tr>
           ))}
           {userRank && userRank > 10 && (
