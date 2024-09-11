@@ -1,39 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { Table, Spinner, Alert } from "react-bootstrap";
 import { db } from "../../lib/firebase";
-import { collection, query, orderBy, getDocs } from "firebase/firestore";
+import { collection, query, orderBy, getDocs, limit } from "firebase/firestore";
 
-const Leaderboard = ({ userId }) => {
+const Leaderboard = () => {
   const [leaders, setLeaders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [userRank, setUserRank] = useState(null);
-  const [userPoints, setUserPoints] = useState(null);
 
   useEffect(() => {
     const fetchLeaders = async () => {
       try {
-        const rankQuery = query(collection(db, "users"), orderBy("points", "desc"));
-        const rankSnapshot = await getDocs(rankQuery);
+        const q = query(collection(db, "users"), orderBy("points", "desc"), limit(10));
+        const querySnapshot = await getDocs(q);
 
-        const allUsersData = rankSnapshot.docs.map((doc, index) => ({
+        const leaderboardData = querySnapshot.docs.map((doc, index) => ({
           id: doc.id,
           username: doc.data().username,
           points: doc.data().points,
           rank: index + 1, 
         }));
 
-        const topLeaders = allUsersData.slice(0, 10);
-        setLeaders(topLeaders);
-
-         if (userId) {
-          const userDoc = allUsersData.find((user) => user.id === userId);
-          if (userDoc) {
-            setUserRank(userDoc.rank); 
-            setUserPoints(userDoc.points);
-          }
-        }
-
+        setLeaders(leaderboardData);
         setLoading(false);
       } catch (err) {
         setError("Failed to fetch leaderboard data: " + err.message);
@@ -42,7 +30,7 @@ const Leaderboard = ({ userId }) => {
     };
 
     fetchLeaders();
-  }, [userId]);
+  }, []);
 
   if (loading) {
     return (
@@ -75,13 +63,6 @@ const Leaderboard = ({ userId }) => {
               <td>{leader.points}</td>
             </tr>
           ))}
-          {userRank && userRank > 10 && (
-            <tr>
-              <td>{userRank}</td>
-              <td>{leaders.find((leader) => leader.id === userId)?.username || "You"}</td>
-              <td>{userPoints}</td>
-            </tr>
-          )}
         </tbody>
       </Table>
     </div>
