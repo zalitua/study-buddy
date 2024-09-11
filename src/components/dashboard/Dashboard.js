@@ -66,6 +66,8 @@ const Dashboard = () => {
     return <div>Loading...</div>;
   }
 
+  
+
   return (
     <div className="dashboard-container">
       {/* Profile Picture in Corner */}

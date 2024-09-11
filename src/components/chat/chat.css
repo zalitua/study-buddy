@@ -1,0 +1,42 @@
+
+.chat{
+    
+
+    .nav{ 
+        /*nav bar used on the the chat page to be able to leave the chat*/
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        width: 100%;
+        height: 50px;
+    }
+
+    .messages{
+        display: flex;
+        height: 80vh;
+        justify-content: center;
+        align-items: center;
+        background: rgb(218, 217, 217);
+    }
+
+    .sender{
+        display: flex;
+        height: 10vh;
+        background: rgb(197, 193, 193);
+        align-items: center;
+        justify-content: center;
+
+        input{
+            height: 100%;
+            width: 80%;
+            overflow: scroll;
+        }
+
+        button{
+            height: 100%;
+            width: 20%;
+            
+        }
+    }
+}

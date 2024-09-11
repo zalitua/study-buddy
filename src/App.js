@@ -5,15 +5,18 @@ import "./App.css";
 import Dashboard from "./components/dashboard/Dashboard";
 import Login from "./components/login/Login";
 import Signup from "./components/signup/Signup";
+
 import Chat from "./components/chat/Chat";
 import Leaderboard from "./components/leaderboard/Leaderboard";
 import Profile from "./components/profile/Profile";
 import Calendar from "./components/calendar/Calendar";
 import Home from "./components/home/Home";
+import Group from "./components/group/Group";
 
 function App() {
   return (
-    <Container style={{ width: "400px" }}>
+    //changed width value in my testing so my chat would take up the whole screen 
+    <Container style={{ width: "2000px" }}> 
       <Row>
         <Col>
           <UserAuthContextProvider>
@@ -23,6 +26,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/chat" element={<Chat />} />
+              <Route path="/group" element={<Group />}/>
               <Route path="/leaderboard" element={<Leaderboard />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/calendar" element={<Calendar />} />
@@ -31,6 +35,7 @@ function App() {
         </Col>
       </Row>
     </Container>
+
   );
 }
 

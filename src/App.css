@@ -4,7 +4,9 @@ body {
   justify-content: center;
   align-content: center;
   width: 100%;
+  /*commented out add for each own page you want makes it so not everything starts in the center
   align-items: center;
+  */
   height: 100vh;
 }
 

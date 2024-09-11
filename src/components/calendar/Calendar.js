@@ -18,7 +18,7 @@ const CalendarPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user) {y
+    if (!user) {
       toast.warn("You need to be logged in to view availabilities.");
       navigate("/login");
       return;
