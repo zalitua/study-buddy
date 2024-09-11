@@ -21,6 +21,9 @@ const firebaseConfig = {
 // Initialize Firebase alt way:(const app = initializeApp(firebaseConfig);)
 initializeApp(firebaseConfig);
 
-export const db = getFirestore(); //Database for the project
-export const auth = getAuth(); //Authentication/user services for the project
-export const storage = getStorage(); //Storage (like images for the project)
+
+export const db = getFirestore();
+export const auth = getAuth();
+export const storage = getStorage();
+
+
