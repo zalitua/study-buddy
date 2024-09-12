@@ -8,12 +8,16 @@ import { db } from "../../lib/firebase";
 import React, { useEffect, useState } from 'react'
 
 
-//import { database, provider } from './firebaseAuth'
-import { addDoc, collection, deleteDoc, doc, getDocs, onSnapshot, orderBy, query, updateDoc } from 'firebase/firestore'
+//firebase database imports
+import { 
+     addDoc, collection, deleteDoc, doc,
+     getDocs, onSnapshot, orderBy, 
+     query, updateDoc } 
+    from 'firebase/firestore'
 
 
 
-import { useNavigate } from "react-router-dom"; //Used for react router to get to this page
+import { useNavigate } from "react-router-dom"; //used for react router to get to this page
 
 
 
@@ -26,11 +30,15 @@ const Chat = () =>{
     const [id,setId] = useState('')
 
 
-    
-    const ref = collection(db,'message')
+    //need to change the main collection from messages so its split up for each unique group
+    const ref = collection(db, 'message')
+
 
     //keep messages uptodate 
     useEffect(()=>{
+        //check to make sure the user is loged in
+        //will edit to make sure they are in the group
+
         auth.onAuthStateChanged(data=>{
             setUser(data?.providerData[0])
             if(data?.providerData[0]){
@@ -44,11 +52,14 @@ const Chat = () =>{
             const updatedData = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
             setData(updatedData);
         });
-        console.log("first")
+        console.log("first")//why??????
     },[])
 
 
     //handle send
+
+    //chaneg the handle send so it just sends to the group rather then to every user of the site
+    //use the single user one from the first one as a base
     const handleSend =async()=>{
         if(update){
             const editRef = doc(db,'message',id)
@@ -60,6 +71,9 @@ const Chat = () =>{
             setMsg('')
         }
     }
+
+
+    //used to edit a sellected message
     const handleUpdate =async(edit,val)=>{
         console.log(val)
         if(edit == 'Y'){
@@ -68,6 +82,8 @@ const Chat = () =>{
             setId(val.id)
         }
     }
+
+    //used to delete a selected message
     const handleDelete =async(del,id)=>{
         if(del== 'Y'){
             setUpdate(false)
@@ -90,7 +106,6 @@ const Chat = () =>{
             console.log(error.message);
         }
     };
-
     const handleNavGroup = async () => {
         //handle user going to the group
         try {
