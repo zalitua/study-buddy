@@ -143,6 +143,9 @@ const Group = () => {
           });
           return () => unsubscribe();
         }
+
+
+        
       }, []);
     
     //modal and creating the group
