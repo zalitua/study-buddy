@@ -11,6 +11,32 @@ import {
 import { db } from "../../lib/firebase";
 import { useUserAuth } from "../../context/userAuthContext";
 import { useNavigate } from "react-router-dom";
+import ProfilePic from "./ProfilePic";
+
+import avatar1 from "../../assets/avatar1.png";
+import avatar2 from "../../assets/avatar2.png";
+import avatar3 from "../../assets/avatar3.png";
+import avatar4 from "../../assets/avatar4.png";
+import avatar5 from "../../assets/avatar5.png";
+import avatar6 from "../../assets/avatar6.png";
+import avatar7 from "../../assets/avatar7.png";
+import avatar8 from "../../assets/avatar8.png";
+import avatar9 from "../../assets/avatar9.png";
+import avatar10 from "../../assets/avatar10.png";
+
+// Array of avatar image imports
+const avatarOptions = [
+  avatar1,
+  avatar2,
+  avatar3,
+  avatar4,
+  avatar5,
+  avatar6,
+  avatar7,
+  avatar8,
+  avatar9,
+  avatar10,
+];
 
 //creates a form to add profile information to a user
 const Profile = () => {
@@ -22,6 +48,7 @@ const Profile = () => {
   const [date, setDate] = useState("");
   const [gender, setGender] = useState("");
   const [other, setOther] = useState("");
+  const [selectedAvatar, setSelectedAvatar] = useState(avatarOptions[0]);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -91,6 +118,7 @@ const Profile = () => {
           dateOfBirth: date,
           gender: gender === "other" ? other : gender,
           points,
+          avatarUrl: selectedAvatar, // Save selected avatar URL
           uid: user.uid,
         },
         { merge: true }
@@ -161,54 +189,55 @@ const Profile = () => {
             />
           </Form.Group>
 
-          <Form.Group className="mb-3">
+          <Form.Group className="mb-3" controlId="formGender">
             <Form.Label>Gender</Form.Label>
-            <Form.Check
-              type="radio"
-              label="Female"
-              name="gender"
-              value="female"
-              onChange={handleGenderChange}
-              checked={gender === "female"}
-            />
-            <Form.Check
-              type="radio"
-              label="Male"
-              name="gender"
-              value="male"
-              onChange={handleGenderChange}
-              checked={gender === "male"}
-            />
-            <Form.Check
-              type="radio"
-              label="Nonbinary"
-              name="gender"
-              value="nonbinary"
-              onChange={handleGenderChange}
-              checked={gender === "nonbinary"}
-            />
-            <Form.Check
-              type="radio"
-              label="Other"
-              name="gender"
-              value="other"
-              onChange={handleGenderChange}
-              checked={gender === "other"}
-            />
-
-            {gender === "other" && (
-              <Form.Group className="mt-2">
-                <Form.Control
-                  type="text"
-                  placeholder="Please specify"
-                  value={other}
-                  onChange={(e) => setOther(e.target.value)} // Store in otherGender state
-                />
-              </Form.Group>
-            )}
+            <Form.Select
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
+            >
+              <option value="">Select Gender</option>
+              <option value="female">Female</option>
+              <option value="male">Male</option>
+              <option value="nonbinary">Nonbinary</option>
+              <option value="other">Other</option>
+            </Form.Select>
           </Form.Group>
 
-          <div className="d-grid gap-2">
+          {gender === "other" && (
+            <Form.Group className="mt-2">
+              <Form.Control
+                type="text"
+                placeholder="Please specify"
+                value={other}
+                onChange={(e) => setOther(e.target.value)}
+              />
+            </Form.Group>
+          )}
+
+          {/* Avatar Selection */}
+          <Form.Group className="mb-3">
+            <Form.Label>Select Avatar</Form.Label>
+            <Form.Control
+              as="select"
+              value={selectedAvatar}
+              onChange={(e) => setSelectedAvatar(e.target.value)}
+            >
+              {avatarOptions.map((avatar, index) => (
+                <option key={index} value={avatar}>
+                  Avatar {index + 1}
+                </option>
+              ))}
+            </Form.Control>
+            <div className="mt-3">
+              <img src={selectedAvatar} alt="Selected Avatar" width="100" />
+            </div>
+          </Form.Group>
+
+          <div className="d-grid gap-2 mt-3">
+            <h2>Upload Profile Picture</h2>
+            <ProfilePic /> {/* Show the profile pic component here */}
+          </div>
+          <div className="d-grid gap-2 mt-3">
             <Button variant="primary" type="Submit">
               Create Profile
             </Button>

@@ -15,6 +15,13 @@ body {
   background-color: #fff;
 }
 
+.p-4 {
+  max-height: 100vh; /* Set maximum height to the viewport height */
+  overflow-y: auto;  /* Allow vertical scrolling */
+  padding: 20px;     /* Ensure the content inside has space */
+  box-sizing: border-box; /* Include padding in the element’s height */
+}
+
 .g-btn {
   width: 100% !important;
   height: 40px !important;

@@ -4,7 +4,7 @@ import "react-calendar/dist/Calendar.css";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import { useUserAuth } from "../../context/userAuthContext";
-import { db } from '../../lib/firebase';  
+import { db } from "../../lib/firebase";
 import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
 import "./CalendarPage.css";
 
@@ -32,7 +32,7 @@ const CalendarPage = () => {
           where("date", "==", selectedDate.toDateString())
         );
         const querySnapshot = await getDocs(q);
-        const data = querySnapshot.docs.map(doc => doc.data());
+        const data = querySnapshot.docs.map((doc) => doc.data());
         setAvailabilities(data);
       } catch (err) {
         toast.error("Failed to fetch availabilities: " + err.message);
@@ -84,7 +84,8 @@ const CalendarPage = () => {
       <ul>
         {availabilities.map((availability, index) => (
           <li key={index}>
-            <strong>{availability.userName}</strong>: {availability.startTime} - {availability.endTime}
+            <strong>{availability.userName}</strong>: {availability.startTime} -{" "}
+            {availability.endTime}
           </li>
         ))}
       </ul>
