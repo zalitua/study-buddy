@@ -21,6 +21,30 @@ import { useNavigate } from "react-router-dom"; //used for react router to get t
 
 
 
+
+
+
+
+
+
+//Need to update this so it displays the group name and handles all the group
+//NEEDS TO BE PASSED THE GROUP ID AND THE CHAT ID
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const Chat = () =>{
     const [msg,setMsg] = useState('')
     const [show,setShow] = useState(false)
@@ -123,9 +147,6 @@ const Chat = () =>{
         }
     };
 
-
-
-    
 
 
     return(
