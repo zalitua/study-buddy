@@ -17,8 +17,6 @@ import {
      query, updateDoc } 
     from 'firebase/firestore'
 
-
-
 import { useNavigate } from "react-router-dom"; //used for react router to get to this page
 
 
