@@ -10,6 +10,9 @@ import {
      collection, doc, getDoc,
     getDocs, query, serverTimestamp,
      updateDoc, where, addDoc,
+     setDoc,
+     arrayUnion,
+     onSnapshot,
   } from "firebase/firestore";
 
 import { useNavigate } from "react-router-dom";//Used for react router to get to this page
@@ -19,11 +22,17 @@ import { useNavigate } from "react-router-dom";//Used for react router to get to
 const Group = () => {
 
     //consts used in this file
+
+    //used for searching and selecting users
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([]);
     const [selectedUsers, setSelectedUsers] = useState([]);
-    const [groupName, setGroupName] = useState("");
+
+    //Create group
+    const [groupName, setGroupName] = useState(""); //used for changing group name
     const [showCreateGroupModal, setShowCreateGroupModal] = useState(false);
+
+    //edit group
     const [showEditGroupModal, setShowEditGroupModal] = useState(false);
     const [editingGroup, setEditingGroup] = useState(null);
     const [editGroupName, setEditGroupName] = useState("");
@@ -68,85 +77,131 @@ const Group = () => {
 
     //Group creation
     const handleCreateGroup = async () => {
-        //check the name is valid
-        if (!groupName.trim()) {
+      //check if group name is valid
+      if (!groupName.trim()) {
           alert("Please enter a group name before creating the group.");
           return;
-        }
-    
-        try {
+      }
+  
+      try {
           const currentUserID = auth.currentUser.uid;
           let updatedSelectedUsers = [...selectedUsers];
-          //add the current users id to the group
+  
+          //add the current user to the group 
           if (!selectedUsers.some((user) => user.id === currentUserID)) {
-            updatedSelectedUsers.push({ id: currentUserID });
+              updatedSelectedUsers.push({ id: currentUserID });
           }
-
-          //get rid of any duplicate ids
+  
+          //remove duplicate user IDs
           const uniqueUserIDs = [...new Set(updatedSelectedUsers.map(user => user.id))];
-
-          //set up the group
+  
+          //set up group data
           const groupData = {
-            groupName: groupName,
-            members: uniqueUserIDs,
-            createdAt: serverTimestamp(),
-            createdBy: currentUserID,
+              groupName: groupName,
+              members: uniqueUserIDs,
+              createdAt: serverTimestamp(),
+              createdBy: currentUserID,
           };
-
-          //create group
-          await addDoc(collection(db, 'groups'), groupData);
-
-          //start closeing
-          alert("Group created successfully!");
+  
+          //create the group and get the new group ID
+          const groupRef = await addDoc(collection(db, 'groups'), groupData);
+          const groupId = groupRef.id;
+  
+          //create a new chat for the group
+          const chatData = {
+              groupId: groupId,
+              createdAt: serverTimestamp(),
+              messages: [],
+          };
+  
+          const chatRef = await addDoc(collection(db, 'chats'), chatData);
+  
+          //link the created chat to the group
+          await updateDoc(groupRef, {
+              chatId: chatRef.id,
+          });
+  
+          //finish up
+          alert("Group and chat created successfully!");
           setShowCreateGroupModal(false);
           setSelectedUsers([]);
           setGroupName("");
           fetchUserGroups();
-        } catch (error) {
-          console.log("Error creating group: ", error);
-        }
-      };
+  
+      } catch (error) {
+          console.log("Error creating group and chat: ", error);
+      }
+  };
+
+
+    
     
 
     //Show users groups
-    const fetchUserGroups = async () => {
-        try {
+    const fetchUserGroups = () => {
+      try {
           const user = auth.currentUser;
-          //check if the user is logged in
           if (!user) {
-            alert("User not logged in!!!");
-            return;
+              alert("User not logged in!!!");
+              return;
           }
+  
+          //ref to groups
           const groupsRef = collection(db, 'groups');
           const q = query(groupsRef, where('members', 'array-contains', user.uid));
-          const querySnapshot = await getDocs(q);
-          const groups = [];
-
-          //get each group the user is in
-          querySnapshot.forEach((doc) => {
-            groups.push({ id: doc.id, ...doc.data() });
+  
+          //real time listener so updates every time a new one is added without refresh
+          const unsubscribe = onSnapshot(q, (querySnapshot) => {
+              const groups = [];
+              querySnapshot.forEach((doc) => {
+                  groups.push({ id: doc.id, ...doc.data() });
+              });
+              setUserGroups(groups); //update with the real time data
           });
-          setUserGroups(groups);
-        } catch (error) {
+  
+          //return the unsubscribe function to stop listening 
+          return unsubscribe;
+  
+      } catch (error) {
           console.log("Error fetching user groups: ", error);
-        }
-      };
-      useEffect(() => {
-        if (auth.currentUser) {
-          fetchUserGroups();
-        } else {
-            //unsub if the user changes
-          const unsubscribe = auth.onAuthStateChanged((user) => {
-            if (user) {
-              fetchUserGroups();
-            }
+      }
+    };
+    //useEffect for the live group updating now whenever your added you update
+    useEffect(() => {
+      //fetch user groups only if the user is loged in
+      if (auth.currentUser) {
+          const unsubscribe = fetchUserGroups();
+          
+          //cleanup function to unsubscribe from the listener
+          return () => {
+              if (unsubscribe) {
+                  unsubscribe();
+              }
+          };
+      } else {
+          //listen for auth state changes if the user is not authenticated 
+          const unsubscribeAuth = auth.onAuthStateChanged((user) => {
+              if (user) {
+                  const unsubscribeGroups = fetchUserGroups();
+                  
+                  //cleanup listener for groups when auth state changes
+                  return () => {
+                      if (unsubscribeGroups) {
+                          unsubscribeGroups();
+                      }
+                  };
+              }
           });
-          return () => unsubscribe();
-        }
+
+          //cleanup function to unsubscribe from auth listener
+          return () => {
+              unsubscribeAuth();
+          };
+      }
+    }, []);
 
 
-        
-      }, []);
+      
     
     //modal and creating the group
     const openCreateGroupModal = () => { 
@@ -219,10 +274,34 @@ const Group = () => {
                 groupName: editGroupName, // Update group name
                 members: uniqueUserIDs,  // Update the members list
             });
+
+
+            //check linked chat is stored
+            /*
+            const chatId = editingGroup.chatId;
+            if (chatId) {
+                //ref to chat 
+                const chatDocRef = doc(db, 'chats', chatId);
+
+                //update the chat with the new members list
+                await updateDoc(chatDocRef, {
+                    members: uniqueUserIDs, //update chat members
+                });
+            }
+            */    
+
     
             alert("Group updated successfully!");
             closeEditGroupModal();
             fetchUserGroups(); //refresh the groups list
+
+
+
+            //make sure all users are included in the chat
+            
+            
+
+
         } catch (error) {
             console.log("Error updating group: ", error);
         }
