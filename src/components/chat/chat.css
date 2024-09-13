@@ -28,9 +28,27 @@
         justify-content: center;
 
         input{
+            flex: 1;
+            background-color: rgba(115, 128, 153, 0.5);
+            border: none;
+            outline: none;
+            color: rgb(0, 0, 0);
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 16px;
+
+        }
+
+        .emoji{
             height: 100%;
-            width: 80%;
-            overflow: scroll;
+            width: 20%;
+            position: relative;
+
+            .picker {
+                position: absolute;
+                bottom: 50px;
+                left: 0;
+            }
         }
 
         button{

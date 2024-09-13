@@ -7,6 +7,8 @@ import { db } from "../../lib/firebase";
 
 import React, { useEffect, useState } from 'react'
 
+import EmojiPicker from "emoji-picker-react";
+
 
 //firebase database imports
 import { 
@@ -29,6 +31,9 @@ const Chat = () =>{
     const [update,setUpdate] = useState(false)
     const [id,setId] = useState('')
 
+    //Emoji opener
+    const [open, setOpen] = useState(false);
+    const [text, setText] = useState("");
 
     //need to change the main collection from messages so its split up for each unique group
     const ref = collection(db, 'message')
@@ -95,6 +100,11 @@ const Chat = () =>{
 
 
 
+    const handleEmoji = (e) => {
+        setText((prev) => prev + e.emoji);
+        setOpen(false);
+      };
+
     
     //react router code to be able to naviate around the site
     const navigate = useNavigate();
@@ -149,6 +159,16 @@ const Chat = () =>{
                 </div>
                 <div className='sender'>
                     <input value={msg} onChange={(e)=>setMsg(e.target.value)} />
+                    <div className="emoji">
+                        <img
+                            src="./emoji.png"
+                            alt=""
+                            onClick={() => setOpen((prev) => !prev)}
+                        />
+                        <div className="picker">
+                            <EmojiPicker open={open} onEmojiClick={handleEmoji} />
+                        </div>
+                    </div>
                     <button onClick={handleSend}>{update?'Update':'Send'}</button>
                 </div>
             </div>:
