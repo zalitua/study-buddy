@@ -14,3 +14,8 @@ react-google-button: npm install --save react-google-button
 uuid: npm install uuid
 
 react-calendar: npm install react-calendar
+
+
+Chat:
+React emoji: npm i emoji-picker-react
+
