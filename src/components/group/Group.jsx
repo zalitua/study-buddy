@@ -347,9 +347,7 @@ const Group = () => {
         <Button variant="primary" onClick={handleNavDash}>
           Dashboard
         </Button>
-        <Button variant="primary" onClick={handleNavChat}>
-          Chat
-        </Button>
+        
       </div>
       <div className="groups">
         <div className="create">
@@ -378,8 +376,8 @@ const Group = () => {
           {userGroups.map((group) => (
             <li key={group.id}>
               {group.groupName}
-              <button onClick={() => openEditGroupModal(group)}>Edit</button>
-              <button onClick={() => handleNavChat(group.chatId, group.id)}>Chat</button>
+              <Button onClick={() => openEditGroupModal(group)}>Edit</Button>
+              <Button onClick={() => handleNavChat(group.id, group.chatId)}>Chat</Button>
             </li>
           ))}
         </ul>
