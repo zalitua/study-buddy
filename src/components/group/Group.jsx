@@ -315,8 +315,16 @@ const Group = () => {
       console.log(error.message);
     }
   };
-  const handleNavChat = (chatId) => {
+
+
+  const handleNavChat = ( groupId, chatId) => {
     //handle user going to chat
+    //group and chat are passed to make sure the context is kept eaiser
+
+    //used for testing to see whats being passed
+    console.log("chatID: "+ chatId);
+    console.log("groupID: "+ groupId);
+
     try {
 
       if (!chatId) {
@@ -324,7 +332,7 @@ const Group = () => {
         return;
       }
       else {
-        navigate("/chat/${chatId}");//navigate to each unique chat
+        navigate(`/chat/${groupId}/${chatId}`);//navigate to each unique chat
       }
     } catch (error) {
       console.log(error.message);
@@ -371,7 +379,7 @@ const Group = () => {
             <li key={group.id}>
               {group.groupName}
               <button onClick={() => openEditGroupModal(group)}>Edit</button>
-              <button onClick={() => handleNavChat(group.chatId)}>Chat</button>
+              <button onClick={() => handleNavChat(group.chatId, group.id)}>Chat</button>
             </li>
           ))}
         </ul>
