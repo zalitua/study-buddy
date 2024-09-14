@@ -30,8 +30,8 @@ const Chat = () =>{
     const {groupId,  chatId} = useParams(); // Extracts groupId and chatId from the URL
 
     // used for testing the passing of the IDs
-    console.log("chatId from chat: " + chatId);
-    console.log("groupId from chat: " + groupId);
+    //console.log("chatId from chat: " + chatId);
+    //console.log("groupId from chat: " + groupId);
 
 
     const [msg, setMsg] = useState('');
@@ -41,15 +41,18 @@ const Chat = () =>{
 
     const [groupName, setGroupName] = useState('');
 
+    const [groupData, setGroupData] = useState([]); //not sure if using
+
     const fetchGroupData = async () => {
         try {
             const docRef = doc(db, "groups", groupId);
             const groupDocSnap = await getDoc(docRef);
             if (groupDocSnap.exists()) {
-                console.log(groupDocSnap.data())
+                //console.log(groupDocSnap.data())
                 const groupData = groupDocSnap.data();
+                
                 setGroupName(groupData.groupName); // Set the group name here
-                console.log(groupName);
+                //console.log(groupName);
 
             } else {
                 console.log("Group does not exist");
@@ -71,6 +74,13 @@ const Chat = () =>{
     //if in the group allow them to message
     //if not tell them page not found (would only happen if they typed in the link)
     const checkInGroup = (()=>{
+        if (auth.currentUser.id in groupData){
+            console.log()
+            return true;
+        }
+        else{
+            return false;
+        }
 
 
 

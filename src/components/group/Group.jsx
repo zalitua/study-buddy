@@ -322,8 +322,8 @@ const Group = () => {
     //group and chat are passed to make sure the context is kept eaiser
 
     //used for testing to see whats being passed
-    console.log("chatID: "+ chatId);
-    console.log("groupID: "+ groupId);
+    //console.log("chatID: "+ chatId);
+    //console.log("groupID: "+ groupId);
 
     try {
 
