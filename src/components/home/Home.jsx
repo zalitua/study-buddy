@@ -64,6 +64,15 @@ const Home = () => {
     }
   };
 
+  // New: Handle navigation to Tasks
+  const handleNavTasks = async () => {
+    try {
+      navigate("/tasks");
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   const handleLogout = async () => {
     try {
       await logOut();
@@ -100,6 +109,10 @@ const Home = () => {
         </Button>
         <Button variant="primary" onClick={handleNavLeaderboard}>
           Leaderboard
+        </Button>
+        {/* New Button for Tasks */}
+        <Button variant="primary" onClick={handleNavTasks}>
+          Tasks
         </Button>
         <Button variant="primary" onClick={handleLogout}>
           Log out
