@@ -43,8 +43,6 @@ const Chat = () =>{
 
     const [groupName, setGroupName] = useState('');
 
-    const [groupData, setGroupData] = useState([]); //not sure if using
-
     const [members, setMembers] = useState([]);
 
     const fetchGroupData = async () => {
@@ -73,9 +71,38 @@ const Chat = () =>{
     };
 
 
-    useEffect(() => {
+    //get all the messages from the chat
+    const fetchMessages = async () => {
 
-        
+    };
+
+
+
+    //handle sending a message to the chat
+    const handleSend = async () => {
+
+        const ref = collection(db, )
+
+        await addDoc
+
+    };
+
+    //be able to edit a message you sent
+    const handleEdit = async () => {
+
+    };
+
+    //be able to delete a message you sent
+    const handleDelete = async () =>{
+
+    };
+
+
+
+
+    //to get the groups data
+    //runs everytime the group id changes
+    useEffect(() => {
 
         fetchGroupData();
 
@@ -95,19 +122,23 @@ const Chat = () =>{
     //used to check if the user is in the group
     //if in the group allow them to message
     //if not tell them page not found return to the main page
+    //runs each time the memebers list changes or the user changes
     useEffect(() => {
         if (user && members.length > 0) {
             if (members.includes(user.uid)) {
-                console.log("You are in the group");
-                console.log(members);
-                setShow(true);  // Show the chat if the user is in the group
+                //console.log("You are in the group");
+                //console.log(members);
+                setShow(true); //show the chat if user in group
             } else {
-                console.log("You are NOT in the group");
-                console.log(members);
-                setShow(false); // Hide the chat if the user is not in the group
+                //console.log("You are NOT in the group");
+                //console.log(members);
+                setShow(false); //hide the chat if user not in group
             }
         }
     }, [members, user]);  // Re-run this effect whenever `members` or `user` changes
+
+
+
 
 
     
@@ -129,11 +160,6 @@ const Chat = () =>{
             console.log(error.message);
         }
     };
-
-
-
-    
-    
 
 
 
