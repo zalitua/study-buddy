@@ -31,6 +31,9 @@ const Chat = () =>{
 
     const [show, setShow] = useState(false); //check to make sure the user is in thr group
 
+
+    const [chat, setChat] = useState();
+
     // used for testing the passing of the IDs
     //console.log("chatId from chat: " + chatId);
     //console.log("groupId from chat: " + groupId);
@@ -70,6 +73,36 @@ const Chat = () =>{
         }
     };
 
+    const fetchChat = async () =>{
+        try{
+            const docRef = doc(db, "chats", chatId);
+            const chatDocSnap = await getDoc(docRef);
+            if (chatDocSnap.exists()) {
+                //console.log(groupDocSnap.data())
+                const chatData = chatDocSnap.data();
+                console.log( chatData);
+
+
+                setChat(chatData);
+                console.log(chat);
+                
+                //setGroupName(chatData.); //set the group name here
+                //console.log(groupName);
+
+                //groupData.members.forEach((member)=>setMembers());
+                //setMembers(groupData.members || []); //set members in the group
+                //console.log(members);
+
+
+            } else {
+                console.log("Group does not exist");
+            }
+        }
+        catch (error) {
+            console.log("Error fetching chat data:", error);
+        }
+    };
+
 
     //get all the messages from the chat
     const fetchMessages = async () => {
@@ -105,6 +138,9 @@ const Chat = () =>{
     useEffect(() => {
 
         fetchGroupData();
+        fetchChat();
+
+        //console.log("Current chat from chat" + chat);
 
         // Check the auth state of the user
         const unsubscribe = auth.onAuthStateChanged((currentUser) => {
@@ -183,9 +219,15 @@ const Chat = () =>{
                 //user is in the group
                 <div className="inGroup">
                     <h2>Chat for: {groupName}</h2>
-                    <div className='message'>
-                        
-                    </div>
+
+                    {chat?.messsages?.map(message=>(
+                        <div className='message' key={message?.createAt}>
+                            <h1>Sender</h1>
+                            <p>{message.text}</p>
+                            <span>{/*message.createAt*/}</span>
+                        </div>
+                        ))
+                    }
                     <div className='sender'>
                         <input  />
                         <div className="emoji">
