@@ -29,6 +29,8 @@ const Chat = () =>{
 
     const {groupId,  chatId} = useParams(); // Extracts groupId and chatId from the URL
 
+    const [show, setShow] = useState(false); //check to make sure the user is in thr group
+
     // used for testing the passing of the IDs
     //console.log("chatId from chat: " + chatId);
     //console.log("groupId from chat: " + groupId);
@@ -43,6 +45,8 @@ const Chat = () =>{
 
     const [groupData, setGroupData] = useState([]); //not sure if using
 
+    const [members, setMembers] = useState([]);
+
     const fetchGroupData = async () => {
         try {
             const docRef = doc(db, "groups", groupId);
@@ -50,9 +54,15 @@ const Chat = () =>{
             if (groupDocSnap.exists()) {
                 //console.log(groupDocSnap.data())
                 const groupData = groupDocSnap.data();
+                //console.log(groupData);
                 
-                setGroupName(groupData.groupName); // Set the group name here
+                setGroupName(groupData.groupName); //set the group name here
                 //console.log(groupName);
+
+                //groupData.members.forEach((member)=>setMembers());
+                setMembers(groupData.members || []); //set members in the group
+                //console.log(members);
+
 
             } else {
                 console.log("Group does not exist");
@@ -61,32 +71,43 @@ const Chat = () =>{
             console.log("Error fetching group data:", error);
         }
     };
-    
 
 
     useEffect(() => {
 
+        
+
         fetchGroupData();
+
+        // Check the auth state of the user
+        const unsubscribe = auth.onAuthStateChanged((currentUser) => {
+            if (currentUser) {
+                setUser(currentUser);  // Set the logged-in user
+            } else {
+                setShow(false); // No user is logged in
+            }
+        });
+
+        return () => unsubscribe();  // Cleanup the auth listener
+
     }, [groupId]);
     
-
     //used to check if the user is in the group
     //if in the group allow them to message
-    //if not tell them page not found (would only happen if they typed in the link)
-    const checkInGroup = (()=>{
-        if (auth.currentUser.id in groupData){
-            console.log()
-            return true;
+    //if not tell them page not found return to the main page
+    useEffect(() => {
+        if (user && members.length > 0) {
+            if (members.includes(user.uid)) {
+                console.log("You are in the group");
+                console.log(members);
+                setShow(true);  // Show the chat if the user is in the group
+            } else {
+                console.log("You are NOT in the group");
+                console.log(members);
+                setShow(false); // Hide the chat if the user is not in the group
+            }
         }
-        else{
-            return false;
-        }
-
-
-
-
-    });
-    
+    }, [members, user]);  // Re-run this effect whenever `members` or `user` changes
 
 
     
@@ -111,6 +132,11 @@ const Chat = () =>{
 
 
 
+    
+    
+
+
+
     return(
         <div className="chat">
             <div className="nav">
@@ -126,10 +152,10 @@ const Chat = () =>{
             </div>
 
 
-            {/*check to see if the user is in the group / signed in*/
-                
-                
-                <div>
+            {/*check to see if the user is in the group */
+             show?   
+                //user is in the group
+                <div className="inGroup">
                     <h2>Chat for: {groupName}</h2>
                     <div className='message'>
                         
@@ -147,8 +173,12 @@ const Chat = () =>{
                             </div>
                         </div>
                         <button >send</button>
+                    </div>
+                </div>:
+                //the user isn't in the group
+                <div className="notInGroup">
+                    <h2>You are not a member of this group.</h2>
                 </div>
-            </div>
             }
         </div>
     );
