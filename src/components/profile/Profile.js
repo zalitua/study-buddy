@@ -47,20 +47,14 @@ const Profile = () => {
   const [phone, setPhone] = useState("");
   const [date, setDate] = useState("");
   const [gender, setGender] = useState("");
+  const [pronouns, setPronouns] = useState("");
   const [other, setOther] = useState("");
+  const [otherPN, setOtherPN] = useState("");
   const [selectedAvatar, setSelectedAvatar] = useState(avatarOptions[0]);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const points = 0; //set points to zero for new users
-
-  //process gender data from radio buttons
-  const handleGenderChange = (e) => {
-    setGender(e.target.value);
-    if (e.target.value !== "other") {
-      setOther(""); // Reset the "Other" field when another option is selected
-    }
-  };
 
   //check if username is already taken
   const checkUsername = async (username) => {
@@ -74,16 +68,8 @@ const Profile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (
-      !firstName ||
-      !lastName ||
-      !username ||
-      !phone ||
-      !date ||
-      !gender ||
-      (gender === "other" && !other)
-    ) {
-      setError("Please fill out all items."); //error if not all fields completed
+    if (!firstName || !lastName || !username) {
+      setError("Please fill out required fields."); //error if not all fields completed
       return;
     }
 
@@ -131,17 +117,15 @@ const Profile = () => {
     }
   };
 
-  //action for skip button - go straight to dashboard
-  const handleSkip = () => {
-    navigate("/"); //go to home page
-  };
-
-  //return form for entering profile information with an option to skip
+  //return form for entering profile information
   return (
     <>
       <div className="p-4 box">
         <h2 className="mb-3">Create Profile</h2>
+        <h4 className="mb-3">Required Fields:</h4>
         {error && <Alert variant="primary">{error}</Alert>}
+
+        {/* input field for first name */}
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formFirstName">
             <Form.Label>First Name</Form.Label>
@@ -152,6 +136,7 @@ const Profile = () => {
             />
           </Form.Group>
 
+          {/* input field for last name */}
           <Form.Group className="mb-3" controlId="formLastName">
             <Form.Label>Last Name</Form.Label>
             <Form.Control
@@ -161,6 +146,7 @@ const Profile = () => {
             />
           </Form.Group>
 
+          {/* input field for username */}
           <Form.Group className="mb-3" controlId="formUsername">
             <Form.Label>Username</Form.Label>
             <Form.Control
@@ -170,6 +156,8 @@ const Profile = () => {
             />
           </Form.Group>
 
+          {/* input field for phone number */}
+          <h4 className="mb-3">Optional Fields:</h4>
           <Form.Group className="mb-3" controlId="formPhone">
             <Form.Label>Phone Number</Form.Label>
             <Form.Control
@@ -179,6 +167,7 @@ const Profile = () => {
             />
           </Form.Group>
 
+          {/* input field for date */}
           <Form.Group className="mb-3" controlId="formDate">
             <Form.Label>Date of Birth</Form.Label>
             <Form.Control
@@ -189,12 +178,14 @@ const Profile = () => {
             />
           </Form.Group>
 
+          {/* dropdown menu for gender */}
           <Form.Group className="mb-3" controlId="formGender">
             <Form.Label>Gender</Form.Label>
             <Form.Select
               value={gender}
               onChange={(e) => setGender(e.target.value)}
             >
+              {/* gender options */}
               <option value="">Select Gender</option>
               <option value="female">Female</option>
               <option value="male">Male</option>
@@ -203,6 +194,7 @@ const Profile = () => {
             </Form.Select>
           </Form.Group>
 
+          {/* user provided gender option if other is selected */}
           {gender === "other" && (
             <Form.Group className="mt-2">
               <Form.Control
@@ -214,22 +206,63 @@ const Profile = () => {
             </Form.Group>
           )}
 
+          {/* dropdown menu for pronouns */}
+          <Form.Group className="mb-3" controlId="formPronouns">
+            <Form.Label>Pronouns</Form.Label>
+            <Form.Select
+              value={pronouns}
+              onChange={(e) => setPronouns(e.target.value)}
+            >
+              {/* pronoun options */}
+              <option value="">Select Gender</option>
+              <option value="she/her">Female</option>
+              <option value="he/him">Male</option>
+              <option value="they/them">Nonbinary</option>
+              <option value="other">Other</option>
+            </Form.Select>
+          </Form.Group>
+
+          {/* user provided pronouns option if other is selected */}
+          {pronouns === "other" && (
+            <Form.Group className="mt-2">
+              <Form.Control
+                type="text"
+                placeholder="Please specify"
+                value={otherPN}
+                onChange={(e) => setOtherPN(e.target.value)}
+              />
+            </Form.Group>
+          )}
+
           {/* Avatar Selection */}
           <Form.Group className="mb-3">
             <Form.Label>Select Avatar</Form.Label>
-            <Form.Control
-              as="select"
-              value={selectedAvatar}
-              onChange={(e) => setSelectedAvatar(e.target.value)}
-            >
+            <div className="d-flex flex-wrap">
               {avatarOptions.map((avatar, index) => (
-                <option key={index} value={avatar}>
-                  Avatar {index + 1}
-                </option>
+                <div key={index} className="m-2 text-center">
+                  <input
+                    type="radio"
+                    name="avatar"
+                    value={avatar}
+                    checked={selectedAvatar === avatar}
+                    onChange={() => setSelectedAvatar(avatar)}
+                    style={{ display: "none" }}
+                    id={`avatar-${index}`}
+                  />
+                  <label htmlFor={`avatar-${index}`}>
+                    <img
+                      src={avatar}
+                      alt={`Avatar ${index + 1}`}
+                      width="50"
+                      style={{
+                        border:
+                          selectedAvatar === avatar ? "2px solid blue" : "none",
+                        cursor: "pointer",
+                      }}
+                    />
+                  </label>
+                </div>
               ))}
-            </Form.Control>
-            <div className="mt-3">
-              <img src={selectedAvatar} alt="Selected Avatar" width="100" />
             </div>
           </Form.Group>
 
@@ -243,11 +276,6 @@ const Profile = () => {
             </Button>
           </div>
         </Form>
-        <div className="d-grid gap-2 mt-3">
-          <Button variant="secondary" onClick={handleSkip}>
-            Skip for now
-          </Button>
-        </div>
       </div>
     </>
   );
