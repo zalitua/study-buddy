@@ -1,26 +1,17 @@
+// src/components/Leaderboard.js
 import React, { useEffect, useState } from "react";
 import { Table, Spinner, Alert } from "react-bootstrap";
-import { db } from "../../lib/firebase";
-import { collection, query, orderBy, getDocs, limit } from "firebase/firestore";
+import { GetLeaderboard } from '../LeaderboardService'; // Adjust the path as per your project structure
 
 const Leaderboard = () => {
   const [leaders, setLeaders] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchLeaders = async () => {
       try {
-        const q = query(collection(db, "users"), orderBy("points", "desc"), limit(10));
-        const querySnapshot = await getDocs(q);
-
-        const leaderboardData = querySnapshot.docs.map((doc, index) => ({
-          id: doc.id,
-          username: doc.data().username,
-          points: doc.data().points,
-          rank: index + 1, 
-        }));
-
+        const leaderboardData = await GetLeaderboard();
         setLeaders(leaderboardData);
         setLoading(false);
       } catch (err) {
@@ -33,11 +24,9 @@ const Leaderboard = () => {
   }, []);
 
   if (loading) {
-    return (
-      <Spinner animation="border" role="status">
-        <span className="visually-hidden">Loading...</span>
-      </Spinner>
-    );
+    return <Spinner animation="border" role="status">
+      <span className="visually-hidden">Loading...</span>
+    </Spinner>;
   }
 
   if (error) {
@@ -52,15 +41,15 @@ const Leaderboard = () => {
           <tr>
             <th>Rank</th>
             <th>Username</th>
-            <th>Points</th>
+            <th>Score</th>
           </tr>
         </thead>
         <tbody>
           {leaders.map((leader) => (
             <tr key={leader.id}>
-              <td>{leader.rank}</td> 
+              <td>{leader.rank}</td>
               <td>{leader.username}</td>
-              <td>{leader.points}</td>
+              <td>{leader.score}</td>
             </tr>
           ))}
         </tbody>
