@@ -1,0 +1,38 @@
+import { db } from "./firebase"; // Import Firestore instance
+import { collection, getDocs, query, where, addDoc, updateDoc } from "firebase/firestore";
+
+// Function to check if a username exists in the leaderboard
+const IsUsernameExist = async (username) => {
+  const querySnapshot = await getDocs(query(collection(db, "leaderboard"), where("username", "==", username)));
+  return querySnapshot.size > 0;
+};
+
+// Function to add a user or update their points in the leaderboard
+const AddUserInLeaderboard = async (username, points) => {
+  try {
+    const isUsernameExist = await IsUsernameExist(username);
+
+    // If the username exists, update the points
+    if (isUsernameExist) {
+      const querySnapshot = await getDocs(query(collection(db, "leaderboard"), where("username", "==", username)));
+      querySnapshot.forEach((doc) => {
+        updateDoc(doc.ref, { points: Number(points) }); // Ensure points is stored as a number
+      });
+      return true;
+    }
+
+    // If the username does not exist, add a new user with points
+    await addDoc(collection(db, "leaderboard"), {
+      username: username,
+      points: Number(points), // Ensure points is stored as a number
+    });
+
+    return true;
+  } catch (e) {
+    console.error("Error adding/updating document: ", e);
+  }
+
+  return false;
+};
+
+export { AddUserInLeaderboard, IsUsernameExist };
