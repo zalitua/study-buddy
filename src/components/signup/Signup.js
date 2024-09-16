@@ -12,7 +12,7 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [password, setPassword] = useState("");
-  const { signUp, user, logIn } = useUserAuth();
+  const { signUp, logIn } = useUserAuth();
   const [showSuccess, setShowSuccess] = useState(false);
   let navigate = useNavigate();
 
@@ -22,18 +22,20 @@ const Signup = () => {
     setError("");
     try {
       //Create user authentication entry
-      await signUp(email, password);
-      //Add the newly registered user to the users collection in the database
+      const userCredential = await signUp(email, password);
+      const newUser = userCredential.user;
+
+      // Add the newly registered user to the users collection in the database
       await setDoc(
-        doc(db, "users", user.uid),
+        doc(db, "users", newUser.uid),
         {
-          email,
-          uid: user.uid,
+          email: newUser.email,
+          uid: newUser.uid,
         },
         { merge: true }
       );
-
       await logIn(email, password);
+
       setShowSuccess(true);
     } catch (err) {
       setError(err.message);
@@ -51,7 +53,7 @@ const Signup = () => {
     <>
       <div className="p-4 box">
         <h2 className="mb-3">StudyBuddy Signup</h2>
-        {error && <Alert variant="danger">{error}</Alert>}
+        {error && <Alert variant="secondary">{error}</Alert>}
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Control
