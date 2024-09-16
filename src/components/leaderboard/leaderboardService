@@ -1,38 +1,39 @@
-import { db } from "./firebase"; // Import Firestore instance
-import { collection, getDocs, query, where, addDoc, updateDoc } from "firebase/firestore";
+// src/LeaderboardService.js
+import db from './firebase';
+import { collection, query, orderBy, getDocs, limit } from "firebase/firestore";
 
-// Function to check if a username exists in the leaderboard
-const IsUsernameExist = async (username) => {
+export const IsUsernameExist = async (username) => {
   const querySnapshot = await getDocs(query(collection(db, "leaderboard"), where("username", "==", username)));
   return querySnapshot.size > 0;
-};
+}
 
-// Function to add a user or update their points in the leaderboard
-const AddUserInLeaderboard = async (username, points) => {
+export const AddUserInLeaderboard = async (username, score) => {
   try {
     const isUsernameExist = await IsUsernameExist(username);
-
-    // If the username exists, update the points
     if (isUsernameExist) {
       const querySnapshot = await getDocs(query(collection(db, "leaderboard"), where("username", "==", username)));
-      querySnapshot.forEach((doc) => {
-        updateDoc(doc.ref, { points: Number(points) }); // Ensure points is stored as a number
+      querySnapshot.forEach(async (doc) => {
+        await updateDoc(doc.ref, { score: score });
       });
-      return true;
+    } else {
+      await addDoc(collection(db, "leaderboard"), {
+        username: username,
+        score: score
+      });
     }
-
-    // If the username does not exist, add a new user with points
-    await addDoc(collection(db, "leaderboard"), {
-      username: username,
-      points: Number(points), // Ensure points is stored as a number
-    });
-
     return true;
   } catch (e) {
-    console.error("Error adding/updating document: ", e);
+    console.error("Error adding/updating leaderboard: ", e);
+    return false;
   }
+}
 
-  return false;
-};
-
-export { AddUserInLeaderboard, IsUsernameExist };
+export const GetLeaderboard = async () => {
+  const querySnapshot = await getDocs(query(collection(db, "leaderboard"), orderBy("score", "desc"), limit(10)));
+  return querySnapshot.docs.map((doc, index) => ({
+    id: doc.id,
+    username: doc.data().username,
+    score: doc.data().score,
+    rank: index + 1
+  }));
+}
