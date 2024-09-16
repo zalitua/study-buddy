@@ -21,7 +21,9 @@ const firebaseConfig = {
 // Initialize Firebase alt way:(const app = initializeApp(firebaseConfig);)
 initializeApp(firebaseConfig);
 
+
 export const db = getFirestore();
 export const auth = getAuth();
 export const storage = getStorage();
+
 

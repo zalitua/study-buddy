@@ -40,6 +40,14 @@ const Home = () => {
     }
   };
 
+  const handleNavGroup = async () => {
+    try {
+      navigate("/group");
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   const handleNavCalendar = async () => {
     try {
       navigate("/calendar");
@@ -100,6 +108,9 @@ const Home = () => {
         </Button>
         <Button variant="primary" onClick={handleNavChat}>
           Chat
+        </Button>
+        <Button variant="primary" onClick={handleNavGroup}>
+          Group
         </Button>
         <Button variant="primary" onClick={handleNavCalendar}>
           Calendar

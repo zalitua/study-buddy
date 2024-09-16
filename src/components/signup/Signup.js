@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { Form, Alert } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { useUserAuth } from "../../context/userAuthContext";
+import { db } from "../../lib/firebase";
+import { setDoc, doc } from "firebase/firestore";
 import Success from "./SuccessModal";
 
 //Creates function for the sign up process
@@ -10,7 +12,7 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [password, setPassword] = useState("");
-  const { signUp, addUser, logIn } = useUserAuth();
+  const { signUp, user, logIn } = useUserAuth();
   const [showSuccess, setShowSuccess] = useState(false);
   let navigate = useNavigate();
 
@@ -22,7 +24,15 @@ const Signup = () => {
       //Create user authentication entry
       await signUp(email, password);
       //Add the newly registered user to the users collection in the database
-      await addUser(email);
+      await setDoc(
+        doc(db, "users", user.uid),
+        {
+          email,
+          uid: user.uid,
+        },
+        { merge: true }
+      );
+
       await logIn(email, password);
       setShowSuccess(true);
     } catch (err) {
