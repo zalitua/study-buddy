@@ -1,28 +1,31 @@
-import { Container, Row, Col } from "react-bootstrap";
-import { Routes, Route } from "react-router-dom";
-import { UserAuthContextProvider } from "./context/userAuthContext";
-import "./App.css";
-import Dashboard from "./components/dashboard/Dashboard";
-import Login from "./components/login/Login";
-import Signup from "./components/signup/Signup";
-
-import Chat from "./components/chat/Chat";
-import Leaderboard from "./components/leaderboard/Leaderboard";
-import Profile from "./components/profile/Profile";
-import Calendar from "./components/calendar/Calendar";
-import Home from "./components/home/Home";
-<<<<<<< HEAD
-import Tasks from './components/tasks/Tasks'; 
-=======
-import Group from "./components/group/Group";
->>>>>>> 428a8e552a28ef77a286e8841438893bc4b3d1b8
+import React from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
+import { Routes, Route } from 'react-router-dom';
+import { UserAuthContextProvider } from './context/userAuthContext';
+import './App.css';
+import Dashboard from './components/dashboard/Dashboard';
+import Login from './components/login/Login';
+import Signup from './components/signup/Signup';
+import Chat from './components/chat/Chat';
+import Leaderboard from './components/leaderboard/Leaderboard';
+import Profile from './components/profile/Profile';
+import Calendar from './components/calendar/Calendar';
+import Home from './components/home/Home';
+import Tasks from './components/tasks/Tasks';
+import Group from './components/group/Group';
+import Sidebar from './components/sidebar/Sidebar'; // Import the Sidebar
 
 function App() {
   return (
-    //changed width value in my testing so my chat would take up the whole screen 
-    <Container style={{ width: "2000px" }}> 
+    <Container fluid>
       <Row>
-        <Col>
+        {/* Sidebar */}
+        <Col xs={2} className="p-0">
+          <Sidebar />
+        </Col>
+
+        {/* Main Content */}
+        <Col xs={10}>
           <UserAuthContextProvider>
             <Routes>
               <Route path="/" element={<Home />} />
@@ -30,7 +33,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/chat" element={<Chat />} />
-              <Route path="/group" element={<Group />}/>
+              <Route path="/group" element={<Group />} />
               <Route path="/leaderboard" element={<Leaderboard />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/calendar" element={<Calendar />} />
@@ -40,7 +43,6 @@ function App() {
         </Col>
       </Row>
     </Container>
-
   );
 }
 
