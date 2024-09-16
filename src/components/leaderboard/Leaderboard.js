@@ -11,14 +11,16 @@ const Leaderboard = () => {
   useEffect(() => {
     const fetchLeaders = async () => {
       try {
+        // Query the top 10 users ordered by points in descending order
         const q = query(collection(db, "users"), orderBy("points", "desc"), limit(10));
         const querySnapshot = await getDocs(q);
 
+        // Map the data and generate leaderboard data
         const leaderboardData = querySnapshot.docs.map((doc, index) => ({
           id: doc.id,
           username: doc.data().username,
           points: doc.data().points,
-          rank: index + 1, 
+          rank: index + 1,
         }));
 
         setLeaders(leaderboardData);
@@ -58,7 +60,7 @@ const Leaderboard = () => {
         <tbody>
           {leaders.map((leader) => (
             <tr key={leader.id}>
-              <td>{leader.rank}</td> 
+              <td>{leader.rank}</td>
               <td>{leader.username}</td>
               <td>{leader.points}</td>
             </tr>
