@@ -42,6 +42,7 @@ const Chat = () =>{
 
     const [msg, setMsg] = useState('');
     const [user, setUser] = useState('');
+    const [username, setUsername] = useState('');
     //const [data, setData] = useState([]);
 
 
@@ -124,6 +125,23 @@ const Chat = () =>{
         }
     };
 
+    const getUsername = async () =>{
+        const docRef = doc(db, "users", auth.currentUser.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            const userData = docSnap.data();
+            
+            setUsername(userData.username);
+
+            console.log(username); 
+
+        } else {
+            // docSnap.data() will be undefined in this case
+            console.log("No such document!");
+        }
+    }
+
 
     //handle sending a message to the chat
     const handleSend = async () => {
@@ -136,7 +154,7 @@ const Chat = () =>{
             await addDoc(messagesRef, {
                 text: msg,
                 senderId: user.uid, // Store the current user's ID
-                senderName: userName.username, //get the users user name
+                senderName: username || "No username", //get the users user name
                 createdAt: serverTimestamp(), //save the timestamp of the message
             });
 
@@ -156,6 +174,9 @@ const Chat = () =>{
 
     };
 
+
+
+    
 
 
 
@@ -192,6 +213,9 @@ const Chat = () =>{
                 //console.log("You are in the group");
                 //console.log(members);
                 setShow(true); //show the chat if user in group
+                
+                getUsername();
+
             } else {
                 //console.log("You are NOT in the group");
                 //console.log(members);
@@ -250,7 +274,7 @@ const Chat = () =>{
                     <div className="messages">
                         {chat.map(message => (
                             <div className='message' key={message.id}>
-                                <h1>{/*message.senderId*/}</h1>
+                                <h1>{message.senderName}</h1>
                                 <p>{message.text}</p>
                                 <span>{message.createdAt?.toDate().toLocaleString()}</span>
                             </div>
