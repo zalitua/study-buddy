@@ -16,7 +16,7 @@ import { useParams } from "react-router-dom";
 //firebase database imports
 import { 
      addDoc, collection, deleteDoc, doc,
-     getDoc,
+     getDoc, serverTimestamp,
      getDocs, onSnapshot, orderBy, 
      query, updateDoc } 
     from 'firebase/firestore'
@@ -106,19 +106,48 @@ const Chat = () =>{
 
 
     //get all the messages from the chat
+    //fetch chat messages from the messages sub-collection inside the chats collection
     const fetchMessages = async () => {
-
+        try {
+            const messagesRef = collection(db, "chats", chatId, "messages");//collection from the message
+            const q = query(messagesRef, orderBy("createdAt", "asc"));
+            onSnapshot(q, (snapshot) => {
+                const messagesData = snapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+                setChat(messagesData);
+            });
+        } catch (error) {
+            console.log("Error fetching messages:", error);
+        }
     };
-
 
 
     //handle sending a message to the chat
     const handleSend = async () => {
+        if (!msg.trim()) return; // Do not send empty messages
 
-        const ref = collection(db, )
+        try {
 
-        await addDoc
+            //get the senders user name so you can save the usename of the sender
+            
 
+
+            const messagesRef = collection(db, "chats", chatId, "messages"); //collection inside the collection
+
+            // Add the new message to Firestore with sender ID, message text, and timestamp
+            await addDoc(messagesRef, {
+                text: msg,
+                senderId: user.uid, // Store the current user's ID
+                //senderName: user.username, get the users user name
+                createdAt: serverTimestamp(), //save the timestamp of the message
+            });
+
+            setMsg(''); //clear the message input after sending
+        } catch (error) {
+            console.log("Error sending message:", error);
+        }
     };
 
     //be able to edit a message you sent
@@ -140,6 +169,7 @@ const Chat = () =>{
 
         fetchGroupData();
         fetchChat();
+        fetchMessages();
 
         //console.log("Current chat from chat" + chat);
 
@@ -221,27 +251,22 @@ const Chat = () =>{
                 <div className="inGroup">
                     <h2>Chat for: {groupName}</h2>
 
-                    {chat?.messsages?.map(message=>(
-                        <div className='message' key={message?.createAt}>
-                            <h1>Sender</h1>
-                            <p>{message.text}</p>
-                            <span>{/*message.createAt*/}</span>
-                        </div>
-                        ))
-                    }
-                    <div className='sender'>
-                        <input  />
-                        <div className="emoji">
-                            <img
-                                src="./emoji.png"
-                                alt=""
-                                
-                            />
-                            <div className="picker">
-                                
+                    <div className="messages">
+                        {chat.map(message => (
+                            <div className='message' key={message.id}>
+                                <h1>{/*message.senderId*/}</h1>
+                                <p>{message.text}</p>
+                                <span>{message.createdAt?.toDate().toLocaleString()}</span>
                             </div>
-                        </div>
-                        <button >send</button>
+                        ))}
+                    </div>
+                    <div className='sender'>
+                        <input 
+                            value={msg} 
+                            onChange={(e) => setMsg(e.target.value)} 
+                            placeholder="Type a message"
+                        />
+                        <button onClick={handleSend}>Send</button>
                     </div>
                 </div>:
                 //the user isn't in the group
