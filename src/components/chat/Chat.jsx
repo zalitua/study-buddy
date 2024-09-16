@@ -18,7 +18,8 @@ import {
      addDoc, collection, deleteDoc, doc,
      getDoc, serverTimestamp,
      getDocs, onSnapshot, orderBy, 
-     query, updateDoc } 
+     query, updateDoc, 
+     where} 
     from 'firebase/firestore'
 
 import { useNavigate } from "react-router-dom"; //used for react router to get to this page
@@ -41,7 +42,7 @@ const Chat = () =>{
 
     const [msg, setMsg] = useState('');
     const [user, setUser] = useState('');
-    const [data, setData] = useState([]);
+    //const [data, setData] = useState([]);
 
 
     const [groupName, setGroupName] = useState('');
@@ -129,18 +130,13 @@ const Chat = () =>{
         if (!msg.trim()) return; // Do not send empty messages
 
         try {
-
-            //get the senders user name so you can save the usename of the sender
-            
-
-
             const messagesRef = collection(db, "chats", chatId, "messages"); //collection inside the collection
 
             // Add the new message to Firestore with sender ID, message text, and timestamp
             await addDoc(messagesRef, {
                 text: msg,
                 senderId: user.uid, // Store the current user's ID
-                //senderName: user.username, get the users user name
+                senderName: userName.username, //get the users user name
                 createdAt: serverTimestamp(), //save the timestamp of the message
             });
 
