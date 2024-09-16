@@ -32,7 +32,7 @@ const Chat = () =>{
     const [show, setShow] = useState(false); //check to make sure the user is in thr group
 
 
-    const [chat, setChat] = useState();
+    const [chat, setChat] = useState([]);
 
     // used for testing the passing of the IDs
     //console.log("chatId from chat: " + chatId);
@@ -73,6 +73,7 @@ const Chat = () =>{
         }
     };
 
+    //fetch all the chat data
     const fetchChat = async () =>{
         try{
             const docRef = doc(db, "chats", chatId);
@@ -80,11 +81,11 @@ const Chat = () =>{
             if (chatDocSnap.exists()) {
                 //console.log(groupDocSnap.data())
                 const chatData = chatDocSnap.data();
-                console.log( chatData);
+                console.log(chatData);
 
 
-                setChat(chatData);
-                console.log(chat);
+                //setChat(chatData);
+                //console.log({chat});
                 
                 //setGroupName(chatData.); //set the group name here
                 //console.log(groupName);
@@ -245,7 +246,7 @@ const Chat = () =>{
                 </div>:
                 //the user isn't in the group
                 <div className="notInGroup">
-                    <h2>You are not a member of this group.</h2>
+                    <h2>You are not a member of this group. Please exit this page</h2>
                 </div>
             }
         </div>

@@ -29,6 +29,8 @@ const Group = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
 
+
+
   //Create group
   const [groupName, setGroupName] = useState(""); //used for changing group name
   const [showCreateGroupModal, setShowCreateGroupModal] = useState(false);
@@ -75,6 +77,10 @@ const Group = () => {
     setSelectedUsers([...selectedUsers, user]);
   };
 
+  //grey out button if the user is already added to the selected user list
+  const isUserSelected = (user) => {
+    return selectedUsers.includes(user);
+  };
 
   //Group creation
   const handleCreateGroup = async () => {
@@ -358,16 +364,23 @@ const Group = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <button onClick={handleSearch}>Search</button>
+          <Button onClick={handleSearch}>Search</Button>
           <ul>
             {searchResults.map((user) => (
               <li key={user.id}>
                 {user.username || user.email} {/*show either the users username or email*/}
-                <button onClick={() => handleSelectUser(user)}>Add</button>
+                <Button
+                    onClick={() => handleSelectUser(user)}
+                    disabled={isUserSelected(user)} // Disable if user is selected
+                    style={{
+                      backgroundColor: isUserSelected(user) ? 'grey' : 'blue',
+                    }}>
+                    {isUserSelected(user) ? 'Added' : 'Add'}
+                </Button>
               </li>
             ))}
           </ul>
-          <button onClick={openCreateGroupModal}>Create Group</button>
+          <Button onClick={openCreateGroupModal}>Create Group</Button>
         </div>
       </div>
       <div className="current">
