@@ -140,12 +140,26 @@ const Chat = () =>{
                 createdAt: serverTimestamp(), //save the timestamp of the message
             });
 
+
+            // After successfully adding the message, update the latest message in the group's document
+            await updateDoc(doc(db, "groups", groupId), {
+                latestMessage: {
+                    text: msg,
+                    senderName: username || "No username", //store the user's username
+                    createdAt: serverTimestamp(), //timestamp of the latest message
+                }
+            });
+
+
+
             setMsg(''); //clear the message input after sending
         } catch (error) {
             console.log("Error sending message:", error);
         }
     };
 
+
+    
 
 
     //additional featues with no user story

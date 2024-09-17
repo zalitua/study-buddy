@@ -3,6 +3,8 @@
     display: flex;
     flex-direction: column;
 
+    flex: 3;
+
     .nav { 
         
         display: flex;

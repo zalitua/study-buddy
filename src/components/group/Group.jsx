@@ -108,6 +108,7 @@ const Group = () => {
         members: uniqueUserIDs,
         createdAt: serverTimestamp(),
         createdBy: currentUserID,
+        latestMessage: [],//holds the latest message in the gorup
       };
 
       //create the group and get the new group ID
