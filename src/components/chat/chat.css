@@ -1,75 +1,58 @@
-
-.chat{
-    height: 100%;
+.chat {
+    height: 100vh; 
     display: flex;
     flex-direction: column;
 
-
-    
-
-    .nav{ 
-        /*nav bar used on the the chat page to be able to leave the chat*/
+    .nav { 
+        
         display: flex;
         justify-content: flex-start;
         align-items: center;
-
         width: 100%;
         height: 50px;
     }
 
-    .messages{
+    .messages {
         padding: 20px;
         flex: 1;
-        overflow: scroll;
+        overflow-y: auto; /*esure scrolling only happens inside messages */
         display: flex;
         flex-direction: column;
         gap: 20px;
-        max-height: 60%;
-
-        .message {
-            max-width: 70%;
-            display: flex;
-            gap: 20px;
-            align-self: end;
-            
-      
-            &.own {
-              align-self: flex-start;
-      
-              .texts {
-                p {
-                  background-color: #5183fe;
-                }
-              }
-            }
-
-            .username{
-                text-decoration: underline;
-                font-size: 20;
-                
-            }
-
-            .text{
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                gap: 5px;
-                font-size: 14px;
-            }
-            .time{
-                font-size: 12px;
-            }
-        }
+        max-height: calc(100vh - 200px); /* Adjust height based on screen size */
+        /*calc() function ensures that the messages area adjusts based on the screen size, with 200px left for other content */
     }
 
-    .sender{
+    .message {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #f1f1f1;
+
+        /*Handle long messages*/
+        max-width: 100%; 
+        word-wrap: break-word;
+        word-break: break-word; 
+        overflow-wrap: break-word; 
+    }
+
+    .own {
+        align-self: flex-end; /*align current user's messages to the right*/
+        background-color: #b3d1ff; /*different background color for own messages */
+        text-align: left;
+    }
+
+    .sender {
+        
         display: flex;
         height: 10vh;
         background: rgb(197, 193, 193);
         align-items: center;
         justify-content: center;
-
-        input{
+        
+        input {
             flex: 1;
             background-color: rgba(115, 128, 153, 0.5);
             border: none;
@@ -78,25 +61,11 @@
             padding: 20px;
             border-radius: 10px;
             font-size: 16px;
-
         }
 
-        .emoji{
+        button {
             height: 100%;
             width: 20%;
-            position: relative;
-
-            .picker {
-                position: absolute;
-                bottom: 50px;
-                left: 0;
-            }
-        }
-
-        button{
-            height: 100%;
-            width: 20%;
-            
         }
     }
 }

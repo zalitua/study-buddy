@@ -25,4 +25,5 @@ what it can do now:
     -Send messages
     -see messages from others users in the group
     -view the history of the chat
-    -
+    -auto scroll
+    

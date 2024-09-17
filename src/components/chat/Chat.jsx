@@ -28,23 +28,19 @@ import { useNavigate } from "react-router-dom"; //used for react router to get t
 
 const Chat = () =>{
 
-    const {groupId,  chatId} = useParams(); // Extracts groupId and chatId from the URL
+    const {groupId,  chatId} = useParams(); //get group and chat ids
 
     const [show, setShow] = useState(false); //check to make sure the user is in thr group
 
-
+    //save what chat is going on
     const [chat, setChat] = useState([]);
 
-    // used for testing the passing of the IDs
-    //console.log("chatId from chat: " + chatId);
-    //console.log("groupId from chat: " + groupId);
-
+    
 
     const [msg, setMsg] = useState('');
     const [user, setUser] = useState('');
     const [username, setUsername] = useState('');
-    //const [data, setData] = useState([]);
-
+    
 
     const [groupName, setGroupName] = useState('');
 
@@ -55,16 +51,13 @@ const Chat = () =>{
             const docRef = doc(db, "groups", groupId);
             const groupDocSnap = await getDoc(docRef);
             if (groupDocSnap.exists()) {
-                //console.log(groupDocSnap.data())
-                const groupData = groupDocSnap.data();
-                //console.log(groupData);
                 
-                setGroupName(groupData.groupName); //set the group name here
-                //console.log(groupName);
-
-                //groupData.members.forEach((member)=>setMembers());
-                setMembers(groupData.members || []); //set members in the group
-                //console.log(members);
+                const groupData = groupDocSnap.data();
+                
+                setGroupName(groupData.groupName);//set the group name
+                
+                setMembers(groupData.members || []);//set members in the group
+               
 
 
             } else {
@@ -81,20 +74,9 @@ const Chat = () =>{
             const docRef = doc(db, "chats", chatId);
             const chatDocSnap = await getDoc(docRef);
             if (chatDocSnap.exists()) {
-                //console.log(groupDocSnap.data())
+
                 const chatData = chatDocSnap.data();
                 console.log(chatData);
-
-
-                //setChat(chatData);
-                //console.log({chat});
-                
-                //setGroupName(chatData.); //set the group name here
-                //console.log(groupName);
-
-                //groupData.members.forEach((member)=>setMembers());
-                //setMembers(groupData.members || []); //set members in the group
-                //console.log(members);
 
 
             } else {
@@ -125,6 +107,7 @@ const Chat = () =>{
         }
     };
 
+    //fetch the users user name so it can be stored for messages
     const getUsername = async () =>{
         const docRef = doc(db, "users", auth.currentUser.uid);
         const docSnap = await getDoc(docRef);
@@ -137,7 +120,6 @@ const Chat = () =>{
             console.log(username); 
 
         } else {
-            // docSnap.data() will be undefined in this case
             console.log("No such document!");
         }
     }
@@ -145,15 +127,15 @@ const Chat = () =>{
 
     //handle sending a message to the chat
     const handleSend = async () => {
-        if (!msg.trim()) return; // Do not send empty messages
+        if (!msg.trim()) return; //do not send empty messages
 
         try {
             const messagesRef = collection(db, "chats", chatId, "messages"); //collection inside the collection
 
-            // Add the new message to Firestore with sender ID, message text, and timestamp
+            //dd the new message to Firestore with sender ID message text and current time
             await addDoc(messagesRef, {
                 text: msg,
-                senderId: user.uid, // Store the current user's ID
+                senderId: user.uid, //store the current user id
                 senderName: username || "No username", //get the users user name
                 createdAt: serverTimestamp(), //save the timestamp of the message
             });
@@ -164,6 +146,9 @@ const Chat = () =>{
         }
     };
 
+
+
+    //additional featues with no user story
     //be able to edit a message you sent
     const handleEdit = async () => {
 
@@ -188,8 +173,6 @@ const Chat = () =>{
         fetchChat();
         fetchMessages();
 
-        //console.log("Current chat from chat" + chat);
-
         // Check the auth state of the user
         const unsubscribe = auth.onAuthStateChanged((currentUser) => {
             if (currentUser) {
@@ -202,7 +185,16 @@ const Chat = () =>{
         return () => unsubscribe();  // Cleanup the auth listener
 
     }, [groupId]);
+
+    //auto scroll to bottom
+    const endRef = useRef(null);
+    useEffect(() => {
+        if (endRef.current) {
+            endRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+      }, [show, chat]);
     
+
     //used to check if the user is in the group
     //if in the group allow them to message
     //if not tell them page not found return to the main page
@@ -225,27 +217,7 @@ const Chat = () =>{
     }, [members, user]);  // Re-run this effect whenever `members` or `user` changes
 
 
-    const endRef = useRef(null);
-
-    //auto scroll to bottom
-    useEffect(() => {
-        endRef.current?.scrollIntoView({ behavior: "smooth" });
-      }, [chat.messages]);
     
-
-    //trying to fix the auto scroll
-    /*useEffect(() => {
-        const unSub = onSnapshot(doc(db, "chats", chatId), (res) => {
-            setChat(res.data());
-        });
-
-        return () => {
-            unSub();
-        };
-    }, [chatId]);
-    */
-
-
     
     //react router code to be able to naviate around the site
     const navigate = useNavigate();
@@ -291,8 +263,11 @@ const Chat = () =>{
 
                     <div className="messages">
                         {chat.map(message => (
-                            <div className={message.senderId === user?.id ? "message own" : "message"} key={message.id}>
-                                <p className="username">{message.senderName}</p>
+                            <div
+                            className={message.senderId === user?.uid ? "message own" : "message"}
+                            key={message.id}
+                            >
+                            <p className="username">From: {message.senderName}</p>
                                 <p className="text">{message.text}</p>
                                 <span className="time">Sent at: {message.createdAt?.toDate().toLocaleString()}</span>
                             </div>
