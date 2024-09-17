@@ -13,17 +13,14 @@ const Leaderboard = () => {
       try {
         const q = query(collection(db, "users"), orderBy("points", "desc"), limit(10));
         const querySnapshot = await getDocs(q);
-  
-        const leaderboardData = querySnapshot.docs.map((doc, index) => {
-          const data = doc.data();
-          return {
-            id: doc.id,
-            username: data.username,
-            points: data.points || 0, // Ensure points is a number and set default if missing
-            rank: index + 1, 
-          };
-        });
-  
+
+        const leaderboardData = querySnapshot.docs.map((doc, index) => ({
+          id: doc.id,
+          username: doc.data().username,
+          points: doc.data().points,
+          rank: index + 1, 
+        }));
+
         setLeaders(leaderboardData);
         setLoading(false);
       } catch (err) {
@@ -31,10 +28,9 @@ const Leaderboard = () => {
         setLoading(false);
       }
     };
-  
+
     fetchLeaders();
   }, []);
-  
 
   if (loading) {
     return (
