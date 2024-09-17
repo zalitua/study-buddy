@@ -1,47 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { Table, Spinner, Alert } from "react-bootstrap";
-import { db } from "../../lib/firebase"; 
-import { collection, query, orderBy, getDocs, limit } from "firebase/firestore"; 
+import { db } from "../../lib/firebase";
+import { collection, query, orderBy, getDocs, limit } from "firebase/firestore";
 
-const Leaderboard = ({ userId }) => {
+const Leaderboard = () => {
   const [leaders, setLeaders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [userRank, setUserRank] = useState(null);
-  const [userPoints, setUserPoints] = useState(null);
 
   useEffect(() => {
     const fetchLeaders = async () => {
       try {
-        const q = query(
-          collection(db, "users"), 
-          orderBy("points", "desc"), 
-          limit(10) 
-        );
+        const q = query(collection(db, "users"), orderBy("points", "desc"), limit(10));
         const querySnapshot = await getDocs(q);
-        const leaderboardData = querySnapshot.docs.map((doc) => ({
+
+        const leaderboardData = querySnapshot.docs.map((doc, index) => ({
           id: doc.id,
-          ...doc.data(), 
+          username: doc.data().username,
+          points: doc.data().points,
+          rank: index + 1, 
         }));
+
         setLeaders(leaderboardData);
-
-        if (userId) {
-          const rankQuery = query(
-            collection(db, "users"),
-            orderBy("points", "desc")
-          );
-          const rankSnapshot = await getDocs(rankQuery);
-          const rank = rankSnapshot.docs.findIndex(
-            (doc) => doc.id === userId
-          );
-          setUserRank(rank + 1); 
-
-          const userDoc = rankSnapshot.docs.find((doc) => doc.id === userId);
-          if (userDoc) {
-            setUserPoints(userDoc.data().points);
-          }
-        }
-
         setLoading(false);
       } catch (err) {
         setError("Failed to fetch leaderboard data: " + err.message);
@@ -50,7 +30,7 @@ const Leaderboard = ({ userId }) => {
     };
 
     fetchLeaders();
-  }, [userId]);
+  }, []);
 
   if (loading) {
     return (
@@ -76,20 +56,13 @@ const Leaderboard = ({ userId }) => {
           </tr>
         </thead>
         <tbody>
-          {leaders.map((leader, index) => (
+          {leaders.map((leader) => (
             <tr key={leader.id}>
-              <td>{index + 1}</td>
-              <td>{leader.username}</td> 
-              <td>{leader.points}</td> 
+              <td>{leader.rank}</td> 
+              <td>{leader.username}</td>
+              <td>{leader.points}</td>
             </tr>
           ))}
-          {userRank && userRank > 10 && (
-            <tr>
-              <td>{userRank}</td>
-              <td>{leaders.find((leader) => leader.id === userId)?.username || "You"}</td>
-              <td>{userPoints}</td>
-            </tr>
-          )}
         </tbody>
       </Table>
     </div>

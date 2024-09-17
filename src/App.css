@@ -15,6 +15,13 @@ body {
   background-color: #fff;
 }
 
+.p-4 {
+  max-height: 100vh; /* Set maximum height to the viewport height */
+  overflow-y: auto;  /* Allow vertical scrolling */
+  padding: 20px;     /* Ensure the content inside has space */
+  box-sizing: border-box; /* Include padding in the element’s height */
+}
+
 .g-btn {
   width: 100% !important;
   height: 40px !important;
@@ -25,4 +32,18 @@ body {
 .g-btn > div > svg {
   width: 40px !important;
   height: 38px !important;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  background-color: #f8f9fa;
+  padding-top: 1rem;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.container-fluid {
+  padding-left: 250px; /* Adjust padding according to sidebar width */
 }
