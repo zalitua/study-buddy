@@ -366,21 +366,23 @@ const Group = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <Button onClick={handleSearch}>Search</Button>
-          <ul>
-            {searchResults.map((user) => (
-              <li key={user.id}>
-                {user.username || user.email} {/*show either the users username or email*/}
-                <Button
-                    onClick={() => handleSelectUser(user)}
-                    disabled={isUserSelected(user)} // Disable if user is selected
-                    style={{
-                      backgroundColor: isUserSelected(user) ? 'grey' : 'blue',
-                    }}>
-                    {isUserSelected(user) ? 'Added' : 'Add'}
-                </Button>
-              </li>
-            ))}
-          </ul>
+          <div className="searchResults">
+            <ul>
+              {searchResults.map((user) => (
+                <li key={user.id}>
+                  {user.username || user.email} {/*show either the users username or email*/}
+                  <Button
+                      onClick={() => handleSelectUser(user)}
+                      disabled={isUserSelected(user)} // Disable if user is selected
+                      style={{
+                        backgroundColor: isUserSelected(user) ? 'grey' : 'blue',
+                      }}>
+                      {isUserSelected(user) ? 'Added' : 'Add'}
+                  </Button>
+                </li>
+              ))}
+            </ul>
+          </div>
           <Button onClick={openCreateGroupModal}>Create Group</Button>
         </div>
       </div>
@@ -435,9 +437,7 @@ const Group = () => {
       </Modal>
 
       {/*edit group modal*/}
-
-      {/*Need to fix it showing the user who created the group*/}
-      <Modal show={showEditGroupModal} onHide={closeEditGroupModal}>
+      <Modal show={showEditGroupModal} onHide={closeEditGroupModal} className="edit-group-modal">
         <Modal.Header closeButton>
           <Modal.Title>Edit Group</Modal.Title>
         </Modal.Header>
@@ -470,14 +470,16 @@ const Group = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <button onClick={handleSearch}>Search</button>
-          <ul>
-            {searchResults.map((user) => (
-              <li key={user.id}>
-                {user.username || user.email}
-                <button onClick={() => handleAddUser(user)}>Add</button>
-              </li>
-            ))}
-          </ul>
+          <div className="searchResults">
+            <ul>
+              {searchResults.map((user) => (
+                <li key={user.id}>
+                  {user.username || user.email}
+                  <button onClick={() => handleAddUser(user)}>Add</button>
+                </li>
+              ))}
+            </ul>
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={closeEditGroupModal}>

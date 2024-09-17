@@ -2,7 +2,7 @@
     background-color: #f7f8fac7; /* Background color of the page */
     margin: auto;
     padding: 20px; /* Add padding around the main content */
-    height: 90vh;
+    height: 100vh;
     display: flex;
     flex-direction: column; /* Stack the sections vertically */
 
@@ -13,6 +13,13 @@
         padding: 10px 0;
         width: 100%;
     }
+
+    .searchResults {
+        max-height: 300px; /*adjust height as needed */
+        overflow-y: auto;
+    }
+
+      
 
     .groups {
         display: flex;
@@ -105,5 +112,16 @@
 
     .create button:hover {
         background-color: #0056b3;
+    }
+
+
+
+    .edit-group-modal .searchResults {
+        max-height: 300px; /* Adjust the height as needed */
+        overflow-y: auto;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
     }
 }
