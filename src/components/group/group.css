@@ -1,58 +1,109 @@
-.group{
-    
-    background-color: #f7f8fac7; /*sites color*/
-    
+.group {
+    background-color: #f7f8fac7; /* Background color of the page */
     margin: auto;
-
-    
-    align-items: top;
-
+    padding: 20px; /* Add padding around the main content */
     height: 90vh;
+    display: flex;
+    flex-direction: column; /* Stack the sections vertically */
 
-    .nav{
-        /*nav bar used on the the chat page to be able to leave the chat*/
+    .nav {
         display: flex;
         justify-content: flex-start;
         align-items: flex-start;
-
-        padding-top: 6px; 
-        padding-bottom: 6px;
+        padding: 10px 0;
         width: 100%;
-        
-        
     }
 
-    .groups{
+    .groups {
         display: flex;
-        
-        
-        align-content: center;
-        justify-content:flex-start ;
-
-        
+        flex-direction: column;
         width: 100%;
-        
+        margin-bottom: 20px;
 
-        background-color: rgb(242, 247, 247);
-
-
-        .create{
-            padding: 50px;
-            display: flex;
+        .create {
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px; /* Add space between sections */
             width: 100%;
-            clear:both;
-            float: left;
         }
     }
 
-    .current{
-        width: 100%;
-        float: left;
-        clear: left;
+    .current {
         display: flex;
-        
+        flex-direction: column;
+        width: 100%;
+        padding: 20px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        overflow-y: auto; /* Allow scrolling if content overflows */
     }
 
+    .current ul {
+        list-style: none;
+        padding: 0;
+    }
 
-    
+    .current ul li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        margin: 10px 0;
+        background-color: #f0f0f0;
+        border-radius: 8px;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s, box-shadow 0.2s; /* Add hover effect */
+    }
+
+    .current ul li:hover {
+        transform: translateY(-5px);
+        box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .current ul li button {
+        margin-left: 10px;
+    }
+
+    .current ul li:first-child {
+        margin-top: 0;
+    }
+
+    .create ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .create ul li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        margin: 5px 0;
+        background-color: #e7e7e7;
+        border-radius: 8px;
+    }
+
+    .create input[type="text"] {
+        width: 60%;
+        margin-right: 10px;
+        padding: 5px 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    .create button {
+        background-color: #007bff;
+        color: white;
+        padding: 5px 15px;
+        border: none;
+        border-radius: 5px;
+        transition: background-color 0.2s ease-in-out;
+    }
+
+    .create button:hover {
+        background-color: #0056b3;
+    }
 }
