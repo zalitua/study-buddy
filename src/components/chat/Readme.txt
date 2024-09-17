@@ -22,3 +22,8 @@ Could have:
 
 what it can do now:
     -go back to the home page
+    -Send messages
+    -see messages from others users in the group
+    -view the history of the chat
+    -auto scroll
+    

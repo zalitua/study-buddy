@@ -106,9 +106,7 @@ const Home = () => {
         <Button variant="primary" onClick={handleNavProfile}>
           Profile
         </Button>
-        <Button variant="primary" onClick={handleNavChat}>
-          Chat
-        </Button>
+        
         <Button variant="primary" onClick={handleNavGroup}>
           Group
         </Button>
