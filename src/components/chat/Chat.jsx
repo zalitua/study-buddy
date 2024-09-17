@@ -5,7 +5,7 @@ import './chat.css'
 import { auth } from "../../lib/firebase";
 import { db } from "../../lib/firebase";
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import EmojiPicker from "emoji-picker-react";
 
@@ -225,7 +225,25 @@ const Chat = () =>{
     }, [members, user]);  // Re-run this effect whenever `members` or `user` changes
 
 
+    const endRef = useRef(null);
 
+    //auto scroll to bottom
+    useEffect(() => {
+        endRef.current?.scrollIntoView({ behavior: "smooth" });
+      }, [chat.messages]);
+    
+
+    //trying to fix the auto scroll
+    /*useEffect(() => {
+        const unSub = onSnapshot(doc(db, "chats", chatId), (res) => {
+            setChat(res.data());
+        });
+
+        return () => {
+            unSub();
+        };
+    }, [chatId]);
+    */
 
 
     
@@ -273,13 +291,17 @@ const Chat = () =>{
 
                     <div className="messages">
                         {chat.map(message => (
-                            <div className='message' key={message.id}>
-                                <h1>{message.senderName}</h1>
-                                <p>{message.text}</p>
-                                <span>{message.createdAt?.toDate().toLocaleString()}</span>
+                            <div className={message.senderId === user?.id ? "message own" : "message"} key={message.id}>
+                                <p className="username">{message.senderName}</p>
+                                <p className="text">{message.text}</p>
+                                <span className="time">Sent at: {message.createdAt?.toDate().toLocaleString()}</span>
                             </div>
                         ))}
+                        <div ref={endRef}></div>
                     </div>
+
+
+
                     <div className='sender'>
                         <input 
                             value={msg} 

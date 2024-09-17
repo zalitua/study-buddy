@@ -1,6 +1,8 @@
 
 .chat{
-    
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 
 
     
@@ -16,11 +18,48 @@
     }
 
     .messages{
+        padding: 20px;
+        flex: 1;
+        overflow: scroll;
         display: flex;
-        height: 80vh;
-        justify-content: center;
-        align-items: center;
-        background: rgb(218, 217, 217);
+        flex-direction: column;
+        gap: 20px;
+        max-height: 60%;
+
+        .message {
+            max-width: 70%;
+            display: flex;
+            gap: 20px;
+            align-self: end;
+            
+      
+            &.own {
+              align-self: flex-start;
+      
+              .texts {
+                p {
+                  background-color: #5183fe;
+                }
+              }
+            }
+
+            .username{
+                text-decoration: underline;
+                font-size: 20;
+                
+            }
+
+            .text{
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                font-size: 14px;
+            }
+            .time{
+                font-size: 12px;
+            }
+        }
     }
 
     .sender{

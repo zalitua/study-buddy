@@ -25,7 +25,7 @@
     "webpack": "^5.94.0",
     "webpack-cli": "^5.1.4"
   },
-  "scripts": {
+  "scripts": {   
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
