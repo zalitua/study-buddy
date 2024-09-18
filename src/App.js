@@ -25,7 +25,7 @@ function App() {
         </Col>
 
         {/* Main Content */}
-        <Col xs={10}>
+        <Col xs={10} className='col'>
           <UserAuthContextProvider>
             <Routes>
               <Route path="/" element={<Home />} />
