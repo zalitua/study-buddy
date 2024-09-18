@@ -3,7 +3,7 @@ body {
   display: flex;
   justify-content: center;
   align-content: center;
-  width: 700px; /*One of the places where the sizing is messing up*/
+  width: 100%;
   /*commented out add for each own page you want makes it so not everything starts in the center
   align-items: center;
   */
@@ -46,8 +46,4 @@ body {
 
 .container-fluid {
   padding-left: 250px; /* Adjust padding according to sidebar width */
-}
-
-.this{
-  width: 1000px;
 }

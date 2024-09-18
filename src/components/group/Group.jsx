@@ -357,6 +357,8 @@ const Group = () => {
         
       </div>
       <div className="contentHolder">
+
+        
         <div className="groups">
           <div className="create">
             <h1>Group Creation: </h1>
@@ -391,7 +393,7 @@ const Group = () => {
 
 
         <div className="current">
-          <h1>Users Groups: </h1>
+          <h1>Curent Groups: </h1>
           <ul>
             {userGroups.map((group) => (
               <li key={group.id}>
