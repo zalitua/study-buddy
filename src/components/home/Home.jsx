@@ -40,6 +40,14 @@ const Home = () => {
     }
   };
 
+  const handleNavGroup = async () => {
+    try {
+      navigate("/group");
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   const handleNavCalendar = async () => {
     try {
       navigate("/calendar");
@@ -59,6 +67,15 @@ const Home = () => {
   const handleNavLeaderboard = async () => {
     try {
       navigate("/leaderboard");
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  // New: Handle navigation to Tasks
+  const handleNavTasks = async () => {
+    try {
+      navigate("/tasks");
     } catch (error) {
       console.log(error.message);
     }
@@ -89,8 +106,9 @@ const Home = () => {
         <Button variant="primary" onClick={handleNavProfile}>
           Profile
         </Button>
-        <Button variant="primary" onClick={handleNavChat}>
-          Chat
+        
+        <Button variant="primary" onClick={handleNavGroup}>
+          Group
         </Button>
         <Button variant="primary" onClick={handleNavCalendar}>
           Calendar
@@ -100,6 +118,10 @@ const Home = () => {
         </Button>
         <Button variant="primary" onClick={handleNavLeaderboard}>
           Leaderboard
+        </Button>
+        {/* New Button for Tasks */}
+        <Button variant="primary" onClick={handleNavTasks}>
+          Tasks
         </Button>
         <Button variant="primary" onClick={handleLogout}>
           Log out

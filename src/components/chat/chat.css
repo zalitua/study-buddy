@@ -1,0 +1,75 @@
+.chat {
+    height: 100vh; 
+    display: flex;
+    flex-direction: column;
+
+    min-width:1000px ;
+    flex: 3;
+    /*margin-left: 100px;/*shift content away from side bar*/
+
+    .nav { 
+        
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+        height: 50px;
+    }
+
+    .messages {
+        padding: 20px;
+        flex: 1;
+        overflow-y: auto; /*esure scrolling only happens inside messages */
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        max-height: calc(100vh - 200px); /* Adjust height based on screen size */
+        /*calc() function ensures that the messages area adjusts based on the screen size, with 200px left for other content */
+    }
+
+    .message {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #f1f1f1;
+
+        /*Handle long messages*/
+        max-width: 100%; 
+        word-wrap: break-word;
+        word-break: break-word; 
+        overflow-wrap: break-word; 
+    }
+
+    .own {
+        align-self: flex-end; /*align current user's messages to the right*/
+        background-color: #b3d1ff; /*different background color for own messages */
+        text-align: left;
+    }
+
+    .sender {
+        
+        display: flex;
+        height: 10vh;
+        background: rgb(197, 193, 193);
+        align-items: center;
+        justify-content: center;
+        
+        input {
+            flex: 1;
+            background-color: rgba(115, 128, 153, 0.5);
+            border: none;
+            outline: none;
+            color: rgb(0, 0, 0);
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            height: 100%;
+            width: 20%;
+        }
+    }
+}

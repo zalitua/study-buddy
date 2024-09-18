@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Alert } from "react-bootstrap";
 import { Button } from "react-bootstrap";
-import GoogleButton from "react-google-button";
+//import GoogleButton from "react-google-button";
 import { useUserAuth } from "../../context/userAuthContext";
 
 //Creates a function to export that handles the Login process
@@ -10,7 +10,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { logIn, googleSignIn } = useUserAuth();
+  const { logIn } = useUserAuth();
   const navigate = useNavigate();
 
   //Deals with submitting the login information
@@ -27,7 +27,7 @@ const Login = () => {
   };
 
   //Deals with submitting the Google login information
-  const handleGoogleSignIn = async (e) => {
+  /* const handleGoogleSignIn = async (e) => {
     e.preventDefault();
     try {
       //Authenticate with Google credentials
@@ -36,7 +36,7 @@ const Login = () => {
     } catch (error) {
       console.log(error.message);
     }
-  };
+  }; */
 
   //Displays form for login options using react-bootstrap
   return (
@@ -73,13 +73,14 @@ const Login = () => {
           </div>
         </Form>
         <hr />
-        <div>
+        {/* comment */}
+        {/* <div>
           <GoogleButton
             className="g-btn"
             type="dark"
             onClick={handleGoogleSignIn}
           />
-        </div>
+        </div> */}
       </div>
       <div className="p-4 box mt-3 text-center">
         Don't have an account? <Link to="/signup">Sign up</Link>

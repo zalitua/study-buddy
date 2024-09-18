@@ -1,100 +1,115 @@
-import { Button } from "react-bootstrap";
-import { useNavigate } from "react-router";
-import { useUserAuth } from "../../context/userAuthContext";
+import React, { useEffect, useState } from "react";
+import { db } from "../../lib/firebase"; // Adjust Firebase path as needed
+import { collection, query, orderBy, getDocs } from "firebase/firestore";
+import { useUserAuth } from "../../context/userAuthContext"; // Assuming you have user context
+import "./Dashboard.css";
 
-//Main UI. Displays relevant information for the user and allows site navigation
 const Dashboard = () => {
-  //logout option
-  const { logOut } = useUserAuth();
-  const navigate = useNavigate();
+  const { user } = useUserAuth(); // Accessing the logged-in user's info
+  const [userRank, setUserRank] = useState(null);
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [profilePicture] = useState(""); // Removed setProfilePicture
 
-  const handleNavLogin = async () => {
-    try {
-      navigate("/login");
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  // Fetch leaderboard and find user's rank
+  useEffect(() => {
+    const fetchUserRank = async () => {
+      try {
+        const q = query(collection(db, "leaderboard"), orderBy("score", "desc"));
+        const querySnapshot = await getDocs(q);
+        const leaderboardData = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
 
-  const handleNavSignup = async () => {
-    try {
-      navigate("/signup");
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+        const rank = leaderboardData.findIndex((leader) => leader.id === user.uid) + 1;
+        setUserRank(rank);
+      } catch (error) {
+        console.error("Error fetching leaderboard data:", error);
+      }
+    };
 
-  const handleNavProfile = async () => {
-    try {
-      navigate("/profile");
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+    const fetchUpcomingEvents = async () => {
+      try {
+        const today = new Date();
+        const thirtyDaysFromNow = new Date(today);
+        thirtyDaysFromNow.setDate(today.getDate() + 30);
 
-  const handleNavChat = async () => {
-    try {
-      navigate("/chat");
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+        const eventsQuery = query(
+          collection(db, "events"),
+          orderBy("date", "asc")
+        );
+        const querySnapshot = await getDocs(eventsQuery);
+        const eventData = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
 
-  const handleNavCalendar = async () => {
-    try {
-      navigate("/calendar");
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+        const filteredEvents = eventData.filter((event) => {
+          const eventDate = new Date(event.date);
+          return eventDate >= today && eventDate <= thirtyDaysFromNow;
+        });
 
-  const handleNavLeaderboard = async () => {
-    try {
-      navigate("/leaderboard");
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+        setUpcomingEvents(filteredEvents);
+      } catch (error) {
+        console.error("Error fetching upcoming events:", error);
+      }
+    };
 
-  const handleLogout = async () => {
-    try {
-      await logOut();
-      navigate("/login");
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+    setLoading(true);
+    fetchUserRank();
+    fetchUpcomingEvents();
+    setLoading(false);
+  }, [user]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  
 
   return (
-    <>
-      <div className="p-4 box mt-3 text-center">
-        Welcome to StudyBuddy
-        <br />
+    <div className="dashboard-container">
+      {/* Profile Picture in Corner */}
+      <div className="profile-picture-frame">
+        <img
+          src={profilePicture || "https://via.placeholder.com/50"} // Placeholder if no profile picture is available
+          alt="Profile"
+          className="profile-picture"
+        />
       </div>
-      <div className="d-grid gap-2">
-        <Button variant="primary" onClick={handleNavLogin}>
-          Login
-        </Button>
-        <Button variant="primary" onClick={handleNavSignup}>
-          Sign Up
-        </Button>
-        <Button variant="primary" onClick={handleNavProfile}>
-          Profile
-        </Button>
-        <Button variant="primary" onClick={handleNavChat}>
-          Chat
-        </Button>
-        <Button variant="primary" onClick={handleNavCalendar}>
-          Calendar
-        </Button>
-        <Button variant="primary" onClick={handleNavLeaderboard}>
-          Leaderboard
-        </Button>
-        <Button variant="primary" onClick={handleLogout}>
-          Log out
-        </Button>
-      </div>
-    </>
+
+      <h1>Dashboard Overview</h1>
+
+      {/* User's Rank Section */}
+      <section className="dashboard-section">
+        <h2>Your Rank</h2>
+        {userRank ? (
+          <p>
+            You are currently ranked <strong>{userRank}</strong> on the
+            leaderboard!
+          </p>
+        ) : (
+          <p>Your rank is not available.</p>
+        )}
+      </section>
+
+      {/* Upcoming Events Section */}
+      <section className="dashboard-section">
+        <h2>Upcoming Events</h2>
+        {upcomingEvents.length > 0 ? (
+          <ul>
+            {upcomingEvents.map((event) => (
+              <li key={event.id}>
+                <strong>{event.title}</strong> - {new Date(event.date).toDateString()}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No upcoming events.</p>
+        )}
+      </section>
+    </div>
   );
 };
 
