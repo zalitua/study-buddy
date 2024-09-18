@@ -356,49 +356,55 @@ const Group = () => {
         </Button>
         
       </div>
-      <div className="groups">
-        <div className="create">
-          <h1>Group Creation: </h1>
-          <input
-            type="text"
-            placeholder="Search for users"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <Button onClick={handleSearch}>Search</Button>
-          <div className="searchResults">
-            <ul>
-              {searchResults.map((user) => (
-                <li key={user.id}>
-                  {user.username || user.email} {/*show either the users username or email*/}
-                  <Button
-                      onClick={() => handleSelectUser(user)}
-                      disabled={isUserSelected(user)} // Disable if user is selected
-                      style={{
-                        backgroundColor: isUserSelected(user) ? 'grey' : 'blue',
-                      }}>
-                      {isUserSelected(user) ? 'Added' : 'Add'}
-                  </Button>
-                </li>
-              ))}
-            </ul>
+      <div className="contentHolder">
+        <div className="groups">
+          <div className="create">
+            <h1>Group Creation: </h1>
+            <input
+              type="text"
+              placeholder="Search for users"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <Button onClick={handleSearch}>Search</Button>
+            <div className="searchResults">
+              <ul>
+                {searchResults.map((user) => (
+                  <li key={user.id}>
+                    {user.username || user.email} {/*show either the users username or email*/}
+                    <Button
+                        onClick={() => handleSelectUser(user)}
+                        disabled={isUserSelected(user)} // Disable if user is selected
+                        style={{
+                          backgroundColor: isUserSelected(user) ? 'grey' : 'blue',
+                        }}>
+                        {isUserSelected(user) ? 'Added' : 'Add'}
+                    </Button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <Button onClick={openCreateGroupModal}>Create Group</Button>
           </div>
-          <Button onClick={openCreateGroupModal}>Create Group</Button>
         </div>
-      </div>
-      <div className="current">
-        <h1>Users Groups: </h1>
-        <ul>
-          {userGroups.map((group) => (
-            <li key={group.id}>
-              {group.groupName}
-              <Button onClick={() => openEditGroupModal(group)}>Edit</Button>
-              <Button onClick={() => handleNavChat(group.id, group.chatId)}>Chat</Button>
-            </li>
-          ))}
-        </ul>
-      </div>
 
+
+
+        <div className="current">
+          <h1>Users Groups: </h1>
+          <ul>
+            {userGroups.map((group) => (
+              <li key={group.id}>
+                {group.groupName}
+                <Button onClick={() => openEditGroupModal(group)}>Edit</Button>
+                <Button onClick={() => handleNavChat(group.id, group.chatId)}>Chat</Button>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+
+      </div>    
       {/*create group modal*/}
       <Modal show={showCreateGroupModal} onHide={closeCreateGroupModal}>
         <Modal.Header closeButton>
