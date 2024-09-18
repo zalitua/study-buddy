@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Form, Button, Alert } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Form, Button, Alert, Spinner } from "react-bootstrap";
 import {
   setDoc,
   doc,
@@ -7,6 +7,7 @@ import {
   where,
   getDocs,
   collection,
+  getDoc,
 } from "firebase/firestore";
 import { db } from "../../lib/firebase";
 import { useUserAuth } from "../../context/userAuthContext";
@@ -51,7 +52,9 @@ const Profile = () => {
   const [other, setOther] = useState("");
   const [otherPN, setOtherPN] = useState("");
   const [selectedAvatar, setSelectedAvatar] = useState(avatarOptions[0]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [profileState, setProfileState] = useState(false);
   const navigate = useNavigate();
 
   const points = 0; //set points to zero for new users
@@ -64,13 +67,55 @@ const Profile = () => {
     return !querySnapshot.empty; //return true if username exists
   };
 
+  useEffect(() => {
+    const fetchProfile = async () => {
+      if (!user) {
+        setError("No authenticated user found!");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const userDocRef = doc(db, "users", user.uid);
+        const userDoc = await getDoc(userDocRef);
+
+        if (userDoc.exists()) {
+          const data = userDoc.data();
+          if (data.username) {
+            // Profile exists
+            setProfileState(true);
+            // Populate state with existing data
+            setFirstName(data.firstName || "");
+            setLastName(data.lastName || "");
+            setUsername(data.username || "");
+            setPhone(data.phone || "");
+            setDate(data.date || "");
+            setGender(data.gender || "");
+            setPronouns(data.pronouns || "");
+            setOther(data.gender === "other" ? data.other : "");
+            setOtherPN(data.pronouns === "other" ? data.otherPN : "");
+            setSelectedAvatar(data.avatarUrl || avatarOptions[0]);
+          }
+        }
+      } catch (err) {
+        setError("Failed to fetch profile data.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, [user]);
+
   //submit button actions
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!firstName || !lastName || !username) {
-      setError("Please fill out required fields."); //error if not all fields completed
-      return;
+    if (!profileState) {
+      if (!firstName || !lastName || !username) {
+        setError("Please fill out required fields."); //error if not all fields completed
+        return;
+      }
     }
 
     setError(""); //clear error message
@@ -85,79 +130,109 @@ const Profile = () => {
       setError(""); //clear error message
 
       //check if username is taken
-      const invalidUsername = await checkUsername(username);
-      if (invalidUsername) {
-        setError("That username is already in use. Please choos another.");
-        return;
+      if (!profileState) {
+        const invalidUsername = await checkUsername(username);
+        if (invalidUsername) {
+          setError("That username is already in use. Please choose another.");
+          return;
+        }
       }
 
       setError(""); //clear error message
 
+      const profileData = {};
+
+      if (!profileState) {
+        profileData.firstName = firstName;
+        profileData.lastName = lastName;
+        profileData.username = username;
+        profileData.points = points;
+        profileData.uid = user.uid;
+      }
+
+      profileData.phone = phone;
+      profileData.date = date;
+      profileData.gender = gender === "other" ? other : gender;
+      profileData.pronouns = pronouns === "other" ? otherPN : pronouns;
+
       //write the profile image to the user's document in firestore
+
       await setDoc(
         doc(db, "users", user.uid),
         {
-          firstName,
-          lastName,
-          username,
-          phone,
-          dateOfBirth: date,
-          gender: gender === "other" ? other : gender,
-          points,
-          avatarUrl: selectedAvatar, // Save selected avatar URL
-          uid: user.uid,
+          profileData,
         },
         { merge: true }
       );
 
-      await alert("Profile created successfully"); //success message
+      await alert(
+        profileState
+          ? "Profile updated successfully!"
+          : "Profile created successfully!"
+      ); //success message
       navigate("/"); //go to home page
     } catch (err) {
       setError(err.message);
     }
   };
 
+  if (loading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <Spinner animation="border" variant="primary" />
+      </div>
+    );
+  }
+
   //return form for entering profile information
   return (
     <>
       <div className="p-4 box">
-        <h2 className="mb-3">Create Profile</h2>
-        <h4 className="mb-3">Required Fields:</h4>
+        <h2 className="mb-3">
+          {!profileState ? "Update Profile" : "Create Profile"}
+        </h2>
+        {profileState && <h4 className="mb-3">Required Fields:</h4>}
         {error && <Alert variant="primary">{error}</Alert>}
 
-        {/* input field for first name */}
         <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3" controlId="formFirstName">
-            <Form.Label>First Name</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="First Name"
-              onChange={(e) => setFirstName(e.target.value)}
-            />
-          </Form.Group>
+          {profileState && (
+            <>
+              {/* input field for first name */}
+              <Form.Group className="mb-3" controlId="formFirstName">
+                <Form.Label>First Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="First Name"
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
+              </Form.Group>
 
-          {/* input field for last name */}
-          <Form.Group className="mb-3" controlId="formLastName">
-            <Form.Label>Last Name</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Last Name"
-              onChange={(e) => setLastName(e.target.value)}
-            />
-          </Form.Group>
+              {/* input field for last name */}
+              <Form.Group className="mb-3" controlId="formLastName">
+                <Form.Label>Last Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Last Name"
+                  onChange={(e) => setLastName(e.target.value)}
+                />
+              </Form.Group>
 
-          {/* input field for username */}
-          <Form.Group className="mb-3" controlId="formUsername">
-            <Form.Label>Username</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Username"
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </Form.Group>
+              {/* input field for username */}
+              <Form.Group className="mb-3" controlId="formUsername">
+                <Form.Label>Username</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Username"
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </Form.Group>
+            </>
+          )}
 
+          <h4 className="mb-3">
+            {profileState ? "Additional Information:" : "Optional Fields:"}
+          </h4>
           {/* input field for phone number */}
-          <h4 className="mb-3">Optional Fields:</h4>
           <Form.Group className="mb-3" controlId="formPhone">
             <Form.Label>Phone Number</Form.Label>
             <Form.Control
