@@ -145,7 +145,7 @@ const Chat = () =>{
             await updateDoc(doc(db, "groups", groupId), {
                 latestMessage: {
                     text: msg,
-                    senderName: username || "No username", //store the user's username
+                    senderName: username || "No username", //store the user username
                     createdAt: serverTimestamp(), //timestamp of the latest message
                 }
             });
@@ -257,13 +257,13 @@ const Chat = () =>{
     return(
         <div className="chat">
             <div className="nav">
-
+                {/*
                 <Button variant="primary" onClick={handleNavDash}>
                     Dashboard
                 </Button>
-
+                */}
                 <Button variant="primary" onClick={handleNavGroup}>
-                    Groups
+                    Back to Groups
                 </Button>
                 
             </div>
