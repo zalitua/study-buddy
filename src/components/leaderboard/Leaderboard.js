@@ -13,16 +13,15 @@ const Leaderboard = () => {
       try {
         const q = query(collection(db, "users"), orderBy("points", "desc"), limit(10));
         const querySnapshot = await getDocs(q);
-    
+        console.log("Raw Firestore data:", querySnapshot.docs.map(doc => doc.data()));
+
         const leaderboardData = querySnapshot.docs.map((doc, index) => ({
           id: doc.id,
           username: doc.data().username,
           points: doc.data().points,
-          rank: index + 1,
+          rank: index + 1, 
         }));
-    
-        console.log("Leaderboard Data:", leaderboardData); // Log to see the fetched data
-    
+
         setLeaders(leaderboardData);
         setLoading(false);
       } catch (err) {
