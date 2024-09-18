@@ -189,7 +189,7 @@ const Profile = () => {
     <>
       <div className="p-4 box">
         <h2 className="mb-3">
-          {!profileState ? "Update Profile" : "Create Profile"}
+          {!profileState ? "Complete Profile" : "Create Profile"}
         </h2>
         {profileState && <h4 className="mb-3">Required Fields:</h4>}
         {error && <Alert variant="primary">{error}</Alert>}
@@ -237,7 +237,8 @@ const Profile = () => {
             <Form.Label>Phone Number</Form.Label>
             <Form.Control
               type="tel"
-              placeholder="Phone Number"
+              placeholder={phone || "Phone Number"}
+              value={phone}
               onChange={(e) => setPhone(e.target.value)}
             />
           </Form.Group>
