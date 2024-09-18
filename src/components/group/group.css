@@ -1,3 +1,4 @@
+/*whole page*/
 .group {
     background-color: #f7f8fac7;
     margin: auto;
@@ -7,6 +8,7 @@
     flex-direction: column;
 }
 
+/*for testing nav to easliy get around*/
 .nav {
     display: flex;
     justify-content: flex-start;
@@ -27,25 +29,31 @@
 }
 
 
-
+/*Group creation*/
 .groups {
     flex: 1;
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
-    height: 700px;
+    height: 800px;
     max-height: 800px;
 }
+/*Change height and stuff here*/
 
-.create {
+
+
+
+.create { 
+    margin-right: 40px;
     padding: 20px;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
     width: 100%;
-    max-height: 800px; /* Increased size */
-    overflow-y: auto; /* Scrollable if content exceeds max-height */
+    /*height: 800px; /* default height */
+    max-height: 800px; /*maximum height */
+    
 }
 
 .create ul {
@@ -86,6 +94,9 @@
 
 
 
+
+
+/*current user groups*/
 .current {
     flex: 1;
     padding: 20px;
@@ -121,7 +132,7 @@
 
 
 
-
+/*modals*/
 .edit-group-modal .searchResults {
     max-height: 350px; /* Increased size */
     overflow-y: auto;

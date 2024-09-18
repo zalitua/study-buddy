@@ -352,13 +352,13 @@ const Group = () => {
     <div className="group">
       <div className="nav">
         <Button variant="primary" onClick={handleNavDash}>
-          Dashboard
+          Back to home
         </Button>
         
       </div>
       <div className="contentHolder">
 
-        
+
         <div className="groups">
           <div className="create">
             <h1>Group Creation: </h1>

@@ -257,13 +257,13 @@ const Chat = () =>{
     return(
         <div className="chat">
             <div className="nav">
-
+                {/*
                 <Button variant="primary" onClick={handleNavDash}>
                     Dashboard
                 </Button>
-
+                */}
                 <Button variant="primary" onClick={handleNavGroup}>
-                    Groups
+                    Back to Groups
                 </Button>
                 
             </div>
