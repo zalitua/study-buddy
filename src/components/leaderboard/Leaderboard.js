@@ -20,6 +20,9 @@ const Leaderboard = () => {
           points: doc.data().points,
           rank: index + 1, 
         }));
+        
+        console.log(leaderboardData);  // Add this line to log the data
+
 
         setLeaders(leaderboardData);
         setLoading(false);
