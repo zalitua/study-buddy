@@ -18,6 +18,7 @@ const CalendarPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Redirect to login if the user is not authenticated
     if (!user) {
       toast.warn("You need to be logged in to view availabilities.");
       navigate("/login");
@@ -27,6 +28,7 @@ const CalendarPage = () => {
     const fetchAvailabilities = async () => {
       setLoading(true);
       try {
+        // Query to fetch availabilities for the selected date
         const q = query(
           collection(db, "availabilities"),
           where("date", "==", selectedDate.toDateString())
@@ -44,17 +46,20 @@ const CalendarPage = () => {
     fetchAvailabilities();
   }, [selectedDate, user, navigate]);
 
+  // Update the selected date when a new one is chosen
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
 
   const handleAddAvailability = async () => {
+    // Check if both start and end times are filled in
     if (!startTime || !endTime) {
       toast.warn("Please fill in both start and end times.");
       return;
     }
 
     try {
+      // Add new availability to the Firestore database
       await addDoc(collection(db, "availabilities"), {
         date: selectedDate.toDateString(),
         startTime,
@@ -71,6 +76,7 @@ const CalendarPage = () => {
     }
   };
 
+  // Render the list of availabilities for the selected date
   const renderAvailabilities = () => {
     if (loading) {
       return <p>Loading availabilities...</p>;

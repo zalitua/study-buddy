@@ -7,7 +7,7 @@ import { db } from "../../lib/firebase";
 
 import React, { useEffect, useRef, useState } from 'react'
 
-import EmojiPicker from "emoji-picker-react";
+//import EmojiPicker from "emoji-picker-react"; used in second sprint
 
 
 import { useParams } from "react-router-dom";
@@ -15,11 +15,10 @@ import { useParams } from "react-router-dom";
 
 //firebase database imports
 import { 
-     addDoc, collection, deleteDoc, doc,
+     addDoc, collection,  doc,
      getDoc, serverTimestamp,
-     getDocs, onSnapshot, orderBy, 
-     query, updateDoc, 
-     where} 
+     onSnapshot, orderBy, 
+     query, updateDoc} 
     from 'firebase/firestore'
 
 import { useNavigate } from "react-router-dom"; //used for react router to get to this page
@@ -36,14 +35,14 @@ const Chat = () =>{
     const [chat, setChat] = useState([]);
 
     
-
+    //
     const [msg, setMsg] = useState('');
     const [user, setUser] = useState('');
+
     const [username, setUsername] = useState('');
     
-
+    //set informaiton about the group
     const [groupName, setGroupName] = useState('');
-
     const [members, setMembers] = useState([]);
 
     const fetchGroupData = async () => {
@@ -58,8 +57,6 @@ const Chat = () =>{
                 
                 setMembers(groupData.members || []);//set members in the group
                
-
-
             } else {
                 console.log("Group does not exist");
             }
@@ -132,7 +129,7 @@ const Chat = () =>{
         try {
             const messagesRef = collection(db, "chats", chatId, "messages"); //collection inside the collection
 
-            //dd the new message to Firestore with sender ID message text and current time
+            //add the new message to Firestore with sender ID message text and current time
             await addDoc(messagesRef, {
                 text: msg,
                 senderId: user.uid, //store the current user id
@@ -141,11 +138,12 @@ const Chat = () =>{
             });
 
 
-            // After successfully adding the message, update the latest message in the group's document
+            //after successfully adding the message update the latest message in the group document
+            //this so so latest meassage is traped
             await updateDoc(doc(db, "groups", groupId), {
                 latestMessage: {
                     text: msg,
-                    senderName: username || "No username", //store the user's username
+                    senderName: username || "No username", //store the user username
                     createdAt: serverTimestamp(), //timestamp of the latest message
                 }
             });
@@ -159,11 +157,9 @@ const Chat = () =>{
     };
 
 
-    
-
-
     //additional featues with no user story
     //be able to edit a message you sent
+    /*will be used in the second sprint to imporve user control and how they interact
     const handleEdit = async () => {
 
     };
@@ -172,12 +168,7 @@ const Chat = () =>{
     const handleDelete = async () =>{
 
     };
-
-
-
-    
-
-
+    */
 
     //to get the groups data
     //runs everytime the group id changes
@@ -190,13 +181,13 @@ const Chat = () =>{
         // Check the auth state of the user
         const unsubscribe = auth.onAuthStateChanged((currentUser) => {
             if (currentUser) {
-                setUser(currentUser);  // Set the logged-in user
+                setUser(currentUser);  //set the user
             } else {
-                setShow(false); // No user is logged in
+                setShow(false); //no user
             }
         });
 
-        return () => unsubscribe();  // Cleanup the auth listener
+        return () => unsubscribe();  //cleanup the auth listener
 
     }, [groupId]);
 
@@ -228,7 +219,7 @@ const Chat = () =>{
                 setShow(false); //hide the chat if user not in group
             }
         }
-    }, [members, user]);  // Re-run this effect whenever `members` or `user` changes
+    }, [members, user]);  //re-run this effect whenever members or user changes
 
 
     
@@ -257,13 +248,13 @@ const Chat = () =>{
     return(
         <div className="chat">
             <div className="nav">
-
+                {/*used to get back to the home page
                 <Button variant="primary" onClick={handleNavDash}>
                     Dashboard
                 </Button>
-
+                */}
                 <Button variant="primary" onClick={handleNavGroup}>
-                    Groups
+                    Back to Groups
                 </Button>
                 
             </div>
@@ -300,7 +291,7 @@ const Chat = () =>{
                         <button onClick={handleSend}>Send</button>
                     </div>
                 </div>:
-                //the user isn't in the group
+                //the user not in the group
                 <div className="notInGroup">
                     <h2>You are not a member of this group. Please exit this page</h2>
                 </div>

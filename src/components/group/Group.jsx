@@ -10,10 +10,8 @@ import {
   collection, doc, getDoc,
   getDocs, query, serverTimestamp,
   updateDoc, where, addDoc,
-  setDoc,
-  arrayUnion,
+  
   onSnapshot,
-  orderBy,
 } from "firebase/firestore";
 
 import { useNavigate } from "react-router-dom";//Used for react router to get to this page
@@ -30,7 +28,6 @@ const Group = () => {
   const [selectedUsers, setSelectedUsers] = useState([]);
 
 
-
   //Create group
   const [groupName, setGroupName] = useState(""); //used for changing group name
   const [showCreateGroupModal, setShowCreateGroupModal] = useState(false);
@@ -45,7 +42,6 @@ const Group = () => {
 
   //Seach users
   //to be able to search users i had to edit the fire base permessions so it would be able to sort
-
   const handleSearch = async (e) => {
     e.preventDefault();
     try {
@@ -72,6 +68,7 @@ const Group = () => {
       console.log("Error searching users: ", error);
     }
   };
+
   //used when the user clicks the add button so they can add a user to the group
   const handleSelectUser = (user) => {
     setSelectedUsers([...selectedUsers, user]);
@@ -89,11 +86,9 @@ const Group = () => {
       alert("Please enter a group name before creating the group.");
       return;
     }
-
     try {
       const currentUserID = auth.currentUser.uid;
       let updatedSelectedUsers = [...selectedUsers];
-
       //add the current user to the group 
       if (!selectedUsers.some((user) => user.id === currentUserID)) {
         updatedSelectedUsers.push({ id: currentUserID });
@@ -110,11 +105,9 @@ const Group = () => {
         createdBy: currentUserID,
         latestMessage: [],//holds the latest message in the gorup
       };
-
       //create the group and get the new group ID
       const groupRef = await addDoc(collection(db, 'groups'), groupData);
       const groupId = groupRef.id;
-
       //create a new chat for the group
       const chatData = {
         groupId: groupId,
@@ -123,12 +116,10 @@ const Group = () => {
       };
 
       const chatRef = await addDoc(collection(db, 'chats'), chatData);
-
       //link the created chat to the group
       await updateDoc(groupRef, {
         chatId: chatRef.id,
       });
-
       //finish up
       alert("Group and chat created successfully!");
       setShowCreateGroupModal(false);
@@ -149,7 +140,6 @@ const Group = () => {
         alert("User not logged in!!!");
         return;
       }
-
       //ref to groups
       const groupsRef = collection(db, 'groups');
       const q = query(groupsRef, where('members', 'array-contains', user.uid));//would like to order by group name but doesn't work
@@ -268,15 +258,13 @@ const Group = () => {
       const uniqueUserIDs = [...new Set(validUsers.map(user => user.id))];
 
 
-      console.log("Unique User IDs: ", uniqueUserIDs);//ONLY RETURNING THE OWNER WHICH WAS JUST ADDED
-
-      //reference the group's document in Firestore
+      //reference the group's document in db
       const docRef = doc(db, 'groups', editingGroup.id);
 
-      //update the group document in Firestore
+      //update the group document in db
       await updateDoc(docRef, {
-        groupName: editGroupName, // Update group name
-        members: uniqueUserIDs,  // Update the members list
+        groupName: editGroupName, //update group name
+        members: uniqueUserIDs,  //update the members list
       });
 
       alert("Group updated successfully!");
@@ -352,51 +340,63 @@ const Group = () => {
     <div className="group">
       <div className="nav">
         <Button variant="primary" onClick={handleNavDash}>
-          Dashboard
+          Back to home
         </Button>
         
       </div>
-      <div className="groups">
-        <div className="create">
-          <h1>Group Creation: </h1>
-          <input
-            type="text"
-            placeholder="Search for users"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <Button onClick={handleSearch}>Search</Button>
+      <div className="contentHolder">
+
+        {/*creating a new group*/}
+        <div className="groups">
+          <div className="create">
+            <h1>Group Creation: </h1>
+            <input
+              type="text"
+              placeholder="Search for users"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <Button onClick={handleSearch}>Search</Button>
+            <div className="searchResults">
+              <ul>
+                {searchResults.map((user) => (
+                  <li key={user.id}>
+                    {user.username || user.email} {/*show either the users username or email*/}
+                    <Button
+                        onClick={() => handleSelectUser(user)}
+                        disabled={isUserSelected(user)} //disable if user is selected
+                        style={{
+                          backgroundColor: isUserSelected(user) ? 'grey' : 'blue',
+                        }}>
+                        {isUserSelected(user) ? 'Added' : 'Add'}
+                    </Button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <Button onClick={openCreateGroupModal}>Create Group</Button>
+          </div>
+        </div>
+
+
+        {/*the users current groups*/}
+        <div className="current">
+          <h1>Curent Groups: </h1>
           <ul>
-            {searchResults.map((user) => (
-              <li key={user.id}>
-                {user.username || user.email} {/*show either the users username or email*/}
-                <Button
-                    onClick={() => handleSelectUser(user)}
-                    disabled={isUserSelected(user)} // Disable if user is selected
-                    style={{
-                      backgroundColor: isUserSelected(user) ? 'grey' : 'blue',
-                    }}>
-                    {isUserSelected(user) ? 'Added' : 'Add'}
-                </Button>
+            {userGroups.map((group) => (
+              <li key={group.id}>
+                {group.groupName}
+                <div className="buttonContainer">
+                  <Button onClick={() => openEditGroupModal(group)}>Edit</Button>
+                  <Button onClick={() => handleNavChat(group.id, group.chatId)}>Chat</Button>
+                </div>
               </li>
             ))}
           </ul>
-          <Button onClick={openCreateGroupModal}>Create Group</Button>
         </div>
-      </div>
-      <div className="current">
-        <h1>Users Groups: </h1>
-        <ul>
-          {userGroups.map((group) => (
-            <li key={group.id}>
-              {group.groupName}
-              <Button onClick={() => openEditGroupModal(group)}>Edit</Button>
-              <Button onClick={() => handleNavChat(group.id, group.chatId)}>Chat</Button>
-            </li>
-          ))}
-        </ul>
-      </div>
 
+
+      </div>    
       {/*create group modal*/}
       <Modal show={showCreateGroupModal} onHide={closeCreateGroupModal}>
         <Modal.Header closeButton>
@@ -435,9 +435,7 @@ const Group = () => {
       </Modal>
 
       {/*edit group modal*/}
-
-      {/*Need to fix it showing the user who created the group*/}
-      <Modal show={showEditGroupModal} onHide={closeEditGroupModal}>
+      <Modal show={showEditGroupModal} onHide={closeEditGroupModal} className="edit-group-modal">
         <Modal.Header closeButton>
           <Modal.Title>Edit Group</Modal.Title>
         </Modal.Header>
@@ -470,14 +468,16 @@ const Group = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <button onClick={handleSearch}>Search</button>
-          <ul>
-            {searchResults.map((user) => (
-              <li key={user.id}>
-                {user.username || user.email}
-                <button onClick={() => handleAddUser(user)}>Add</button>
-              </li>
-            ))}
-          </ul>
+          <div className="searchResults">
+            <ul>
+              {searchResults.map((user) => (
+                <li key={user.id}>
+                  {user.username || user.email}
+                  <button onClick={() => handleAddUser(user)}>Add</button>
+                </li>
+              ))}
+            </ul>
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={closeEditGroupModal}>
