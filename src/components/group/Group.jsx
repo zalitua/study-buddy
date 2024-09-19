@@ -153,6 +153,9 @@ const Group = () => {
         setUserGroups(groups); //update with the real time data
       });
 
+
+      
+
       //return the unsubscribe function to stop listening 
       return unsubscribe;
 

@@ -41,6 +41,21 @@ const Dashboard = () => {
       }
     };
 
+    
+    const fetchLatestMessage = async () => {
+      try {
+        const groupDoc = doc(db, "groups", "groupId"); // Replace 'groupId' with actual group ID
+        const groupSnapshot = await getDoc(groupDoc);
+        if (groupSnapshot.exists()) {
+          const groupData = groupSnapshot.data();
+          setLatestMessage(groupData.latestMessage); // Assuming 'latestMessage' exists in the group document
+        }
+      } catch (error) {
+        console.error("Error fetching latest message:", error);
+      }
+    };
+
+
     const fetchTopThreeUsers = async () => {
       try {
         const leaderboardQuery = query(
