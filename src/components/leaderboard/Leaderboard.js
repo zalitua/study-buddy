@@ -1,19 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { Table, Spinner, Alert } from "react-bootstrap";
-import { db } from "../../lib/firebase";
-import { collection, query, orderBy, limit, onSnapshot } from "firebase/firestore";
+import { db, auth } from "../../lib/firebase"; // Import Firebase auth
+import { collection, query, orderBy, limit, onSnapshot, getDocs } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth"; // Firebase auth state listener
 
 const Leaderboard = () => {
   const [leaders, setLeaders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [currentUserRank, setCurrentUserRank] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null); // Track the current user
 
   useEffect(() => {
-    const q = query(collection(db, "users"), orderBy("points", "desc"), limit(10));
+    // Listen to auth changes to get the current logged-in user
+    const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setCurrentUser(user);
+      } else {
+        setCurrentUser(null);
+      }
+    });
 
-    // Use onSnapshot to listen to real-time updates
-    const unsubscribe = onSnapshot(
-      q,
+    // Query for top 10 leaderboard data
+    const leaderboardQuery = query(collection(db, "users"), orderBy("points", "desc"), limit(10));
+
+    const unsubscribeLeaderboard = onSnapshot(
+      leaderboardQuery,
       (querySnapshot) => {
         const leaderboardData = querySnapshot.docs.map((doc, index) => ({
           id: doc.id,
@@ -21,9 +33,7 @@ const Leaderboard = () => {
           points: doc.data().points,
           rank: index + 1,
         }));
-
         setLeaders(leaderboardData);
-        setLoading(false);
       },
       (err) => {
         setError("Failed to fetch leaderboard data: " + err.message);
@@ -31,9 +41,36 @@ const Leaderboard = () => {
       }
     );
 
-    // Cleanup subscription on unmount
-    return () => unsubscribe();
-  }, []);
+    if (currentUser) {
+      const getUserRank = async () => {
+        try {
+          const allUsersSnapshot = await getDocs(query(collection(db, "users"), orderBy("points", "desc")));
+          const allUsers = allUsersSnapshot.docs.map((doc, index) => ({
+            id: doc.id,
+            username: doc.data().username,
+            points: doc.data().points,
+            rank: index + 1,
+          }));
+
+          const currentUserData = allUsers.find((u) => u.id === currentUser.uid);
+          if (currentUserData) {
+            setCurrentUserRank(currentUserData.rank);
+          }
+          setLoading(false);
+        } catch (err) {
+          setError("Failed to fetch current user rank: " + err.message);
+          setLoading(false);
+        }
+      };
+
+      getUserRank();
+    }
+
+    return () => {
+      unsubscribeAuth();
+      unsubscribeLeaderboard();
+    };
+  }, [currentUser]);
 
   if (loading) {
     return (
@@ -50,6 +87,11 @@ const Leaderboard = () => {
   return (
     <div>
       <h2>Leaderboard</h2>
+      {currentUserRank && (
+        <div className="mb-3">
+          <h4>Your Current Rank: {currentUserRank}</h4>
+        </div>
+      )}
       <Table striped bordered hover>
         <thead>
           <tr>
