@@ -8,6 +8,70 @@ sophiaullrich - Sophia,
 kny725979 - Lucy,
 zalitua - Zali
 
+
+list of needed dependencies to be installed for the thing to work:
+
+- npm node: npm install
+- react router: npm install react-router-dom
+- react toastfiy: npm install --save react-toastify
+
+By: Zali
+react-dom: npm install react react-dom
+react-firebase-hooks: npm install --save react-firebase-hooks
+react-router-dom: npm install react-router-dom@6
+react-toastify: npm install --save react-toastify //currently not being used. bootstrap components do this already
+react-bootstrap: npm install react-bootstrap bootstrap
+react-google-button: npm install --save react-google-button
+uuid: npm install uuid
+
+react-calendar: npm install react-calendar
+
+Chat:
+React emoji: npm i emoji-picker-react
+
+
+How to start the app:
+  -cd to the correct directory
+  -run: npm start
+
+
+How to create a group:
+  - Navigate to the group page
+  - Type in the user name you want into the search for users bar (case sensitive) or just 
+  - Click the Search button (if you have no input in the search a list of all the users will turn up)
+    - if the user you are looking for hasn't turned up check if the username is typed in correctly with all of the same capital letters
+  - Click the add button on the user you want to add to your group (will grey out if done correctly)
+  - After you have added all the users you want press the Create Group button
+  - A modal allowing you to confirm your choices and rename the group (group needs to be named before they are created)
+  - After submitting all the details and confirming your choices press the Create Group button
+  - If everything works correctly an alert will pop up saying group and chat created successfully
+
+How to chat:
+  - Navigate to the group page
+  - Make sure you are currently part of a group (if you are it will show up in the current group's section if not follow the how to create a group section above)
+  - Click on the Chat button in the group which you want to chat in
+  - Now you are in the chat it will automatically scroll to the bottom of the chat so you can see the most recent messages being sent
+  - To send a message type your message in the type a message section and press send once you have written what you want to send
+  - After you press send your message will appear in the chat box with your: user name, the message, the time the message was sent at
+
+How to edit a group after its been created:
+  - Navigate to the group page
+  - Make sure you are currently part of a group (if you are it will show up in the current group's section if not follow the how to create a group section above)
+  - Click on the edit group button for the group you want to edit
+  - A modal allowing you to: Change the name of the group, Remove users, and search/add new users to the group will open
+  - To confirm any changes you made press the save changes and the group will be updated and an alert will pop up saying the group updated
+  - To cancel any change to the group you made to the group click on the Cancel button or press on the X button at the top right of the modal
+
+
+
+
+
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
