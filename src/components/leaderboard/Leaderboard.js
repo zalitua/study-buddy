@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Table, Spinner, Alert } from "react-bootstrap";
 import { db } from "../../lib/firebase";
-import { collection, query, orderBy, limit, onSnapshot, where, getDocs } from "firebase/firestore";
-import { useAuth } from "../../lib/auth"; // Assuming you have authentication context to get the current user
+import { collection, query, orderBy, limit, onSnapshot } from "firebase/firestore";
 
 const Leaderboard = () => {
   const [leaders, setLeaders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [userRank, setUserRank] = useState(null); // State to store the current user's rank
-  const { user } = useAuth(); // Assuming useAuth hook provides the current user's info
 
   useEffect(() => {
-    // Query the top 10 users for leaderboard
     const q = query(collection(db, "users"), orderBy("points", "desc"), limit(10));
 
-    // Listen for real-time updates
+    // Use onSnapshot to listen to real-time updates
     const unsubscribe = onSnapshot(
       q,
       (querySnapshot) => {
@@ -35,30 +31,9 @@ const Leaderboard = () => {
       }
     );
 
-    // If the user is logged in, find their rank
-    if (user) {
-      const userRankQuery = query(collection(db, "users"), orderBy("points", "desc"));
-      getDocs(userRankQuery).then((snapshot) => {
-        let rank = 0;
-        let foundUser = false;
-        snapshot.forEach((doc) => {
-          rank += 1;
-          if (doc.id === user.uid) {
-            setUserRank(rank);
-            foundUser = true;
-          }
-        });
-        if (!foundUser) {
-          setError("User not found in the leaderboard.");
-        }
-      }).catch((err) => {
-        setError("Failed to fetch user rank: " + err.message);
-      });
-    }
-
     // Cleanup subscription on unmount
     return () => unsubscribe();
-  }, [user]);
+  }, []);
 
   if (loading) {
     return (
@@ -75,11 +50,6 @@ const Leaderboard = () => {
   return (
     <div>
       <h2>Leaderboard</h2>
-      {user && userRank && (
-        <Alert variant="info">
-          Your current rank: {userRank}
-        </Alert>
-      )}
       <Table striped bordered hover>
         <thead>
           <tr>
