@@ -284,7 +284,6 @@ const Profile = () => {
               onChange={(e) => setGender(e.target.value)}
             >
               {/* gender options */}
-              <option value="">Select Gender</option>
               <option value="female">Female</option>
               <option value="male">Male</option>
               <option value="nonbinary">Nonbinary</option>
@@ -312,10 +311,9 @@ const Profile = () => {
               onChange={(e) => setPronouns(e.target.value)}
             >
               {/* pronoun options */}
-              <option value="">Select Gender</option>
-              <option value="she/her">Female</option>
-              <option value="he/him">Male</option>
-              <option value="they/them">Nonbinary</option>
+              <option value="she/her">she/her</option>
+              <option value="he/him">he/him</option>
+              <option value="they/them">they/them</option>
               <option value="other">Other</option>
             </Form.Select>
           </Form.Group>
