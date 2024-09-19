@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Table, Spinner, Alert } from "react-bootstrap";
 import { db } from "../../lib/firebase";
-import { collection, query, orderBy, getDocs, limit } from "firebase/firestore";
+import { collection, query, orderBy, limit, onSnapshot } from "firebase/firestore";
 
 const Leaderboard = () => {
   const [leaders, setLeaders] = useState([]);
@@ -9,30 +9,30 @@ const Leaderboard = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const fetchLeaders = async () => {
-      try {
-        const q = query(collection(db, "users"), orderBy("points", "desc"), limit(10));
-        const querySnapshot = await getDocs(q);
+    const q = query(collection(db, "users"), orderBy("points", "desc"), limit(10));
 
+    // Use onSnapshot to listen to real-time updates
+    const unsubscribe = onSnapshot(
+      q,
+      (querySnapshot) => {
         const leaderboardData = querySnapshot.docs.map((doc, index) => ({
           id: doc.id,
           username: doc.data().username,
           points: doc.data().points,
-          rank: index + 1, 
+          rank: index + 1,
         }));
-        
-        console.log(leaderboardData);  // Add this line to log the data
-
 
         setLeaders(leaderboardData);
         setLoading(false);
-      } catch (err) {
+      },
+      (err) => {
         setError("Failed to fetch leaderboard data: " + err.message);
         setLoading(false);
       }
-    };
+    );
 
-    fetchLeaders();
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
   }, []);
 
   if (loading) {
@@ -61,7 +61,7 @@ const Leaderboard = () => {
         <tbody>
           {leaders.map((leader) => (
             <tr key={leader.id}>
-              <td>{leader.rank}</td> 
+              <td>{leader.rank}</td>
               <td>{leader.username}</td>
               <td>{leader.points}</td>
             </tr>
