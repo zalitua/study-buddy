@@ -22,16 +22,9 @@ what it can do now:
         - Search for users in this
     - Change name of group
     - Edit and remove users from a group
-    -
+    -Create the group
+        -addusers to the group
+    
 
 
-Current bugs: (need to be work on / will be fixed at some point)
-    - user who created the group name not showing up in the edit menu
-        - not sure why
-    - user search bar expanding when searching for a user to add to the group in edit group
-        - handle overflow
-    - hard to understand user interface
-        - sprint 2
-    - some users don't seem to turn up????????
-        - idk why just is silly and doesn't work
     

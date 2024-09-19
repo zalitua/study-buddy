@@ -18,7 +18,7 @@
 }
 
 .searchResults {
-    max-height: 650px; /* Increased size */
+    max-height: 650px; /*max height for all the search results */
     overflow-y: auto;
 }
 
@@ -38,10 +38,6 @@
     height: 800px;
     max-height: 800px;
 }
-/*Change height and stuff here*/
-
-
-
 
 .create { 
     margin-right: 40px;
@@ -92,10 +88,6 @@
     background-color: #0056b3;
 }
 
-
-
-
-
 /*current user groups*/
 .current {
     flex: 1;
@@ -103,8 +95,8 @@
     background-color: white;
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    max-height: 800px; /* Increased size */
-    overflow-y: auto; /* Scrollable if content exceeds max-height */
+    max-height: 800px; /* increased size */
+    overflow-y: auto; /*scrollable if content exceeds max-height */
 }
 
 .current ul {
@@ -128,13 +120,16 @@
     transform: translateY(-5px);
     box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
 }
-
+.current ul li .button-container {
+    display: flex;
+    gap: 30px; /* spacing between buttons */
+}
 
 
 
 /*modals*/
 .edit-group-modal .searchResults {
-    max-height: 350px; /* Increased size */
+    max-height: 350px; /* max height*/
     overflow-y: auto;
     padding: 10px;
     border: 1px solid #ccc;
@@ -143,7 +138,7 @@
 }
 
 .modal-body .selected-users {
-    max-height: 300px; /* Increased size */
+    max-height: 300px; /* max height */
     overflow-y: auto;
 }
 
