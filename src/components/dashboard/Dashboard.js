@@ -40,6 +40,7 @@ const Dashboard = () => {
       }
     };
 
+    
     const fetchLatestMessage = async () => {
       try {
         const groupDoc = doc(db, "groups", "groupId"); // Replace 'groupId' with actual group ID
