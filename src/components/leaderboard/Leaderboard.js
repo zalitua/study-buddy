@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Table, Spinner, Alert } from "react-bootstrap";
-import { db, auth } from "../../lib/firebase"; // Import auth to get the current user
+import { db, auth } from "../../lib/firebase"; // Import Firebase auth
 import { collection, query, orderBy, limit, onSnapshot, getDocs } from "firebase/firestore";
 
 const Leaderboard = () => {
@@ -11,7 +11,7 @@ const Leaderboard = () => {
 
   const getCurrentUserRank = async () => {
     try {
-      const user = auth.currentUser; //get the currently authenticated user
+      const user = auth.currentUser; // Get the currently authenticated user
       if (!user) return;
 
       const userId = user.uid;
@@ -38,7 +38,7 @@ const Leaderboard = () => {
   useEffect(() => {
     const q = query(collection(db, "users"), orderBy("points", "desc"), limit(10));
 
-    //use onSnapshot to listen to real-time updates
+    // Use onSnapshot to listen to real-time updates
     const unsubscribe = onSnapshot(
       q,
       (querySnapshot) => {
@@ -58,10 +58,10 @@ const Leaderboard = () => {
       }
     );
 
-    //fetch the current user's rank
+    // Fetch the current user's rank
     getCurrentUserRank();
 
-    //cleanup subscription on unmount
+    // Cleanup subscription on unmount
     return () => unsubscribe();
   }, []);
 
@@ -112,7 +112,7 @@ const Leaderboard = () => {
             </thead>
             <tbody>
               <tr key={currentUserData.id}>
-                <td>NA</td>
+                <td>{currentUserData.rank}</td>
                 <td>{currentUserData.username}</td>
                 <td>{currentUserData.points}</td>
               </tr>
