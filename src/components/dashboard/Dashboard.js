@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { db } from "../../lib/firebase"; // Adjust Firebase path as needed
-import { collection, query, orderBy, getDocs, doc, getDoc, limit } from "firebase/firestore"; // Added 'limit'
+import { db, auth } from "../../lib/firebase"; // Adjust Firebase path as needed
+import { collection, query, orderBy, getDocs, doc, getDoc, limit, where, onSnapshot } from "firebase/firestore"; 
 import { useUserAuth } from "../../context/userAuthContext"; // Assuming you have user context
 import "./Dashboard.css";
 
 const Dashboard = () => {
   const { user } = useUserAuth(); // Accessing the logged-in user's info
   const [upcomingEvents, setUpcomingEvents] = useState([]);
-  const [latestMessage, setLatestMessage] = useState(null);
+  const [latestMessages, setLatestMessages] = useState([]); // To store latest messages from all groups
   const [topThreeUsers, setTopThreeUsers] = useState([]);
+  const [userGroups, setUserGroups] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch upcoming events, latest message, and leaderboard data
+  // Fetch upcoming events, latest message, leaderboard data, and user groups
   useEffect(() => {
     const fetchUpcomingEvents = async () => {
       try {
@@ -40,19 +41,6 @@ const Dashboard = () => {
       }
     };
 
-    const fetchLatestMessage = async () => {
-      try {
-        const groupDoc = doc(db, "groups", "groupId"); // Replace 'groupId' with actual group ID
-        const groupSnapshot = await getDoc(groupDoc);
-        if (groupSnapshot.exists()) {
-          const groupData = groupSnapshot.data();
-          setLatestMessage(groupData.latestMessage); // Assuming 'latestMessage' exists in the group document
-        }
-      } catch (error) {
-        console.error("Error fetching latest message:", error);
-      }
-    };
-
     const fetchTopThreeUsers = async () => {
       try {
         const leaderboardQuery = query(
@@ -73,11 +61,82 @@ const Dashboard = () => {
       }
     };
 
+    // Fetch the groups that the current user is a member of and get the latest messages
+    const fetchLatestMessagesFromGroups = async () => {
+      try {
+        const currentUser = auth.currentUser;
+        if (!currentUser) {
+          console.error("User not logged in!");
+          return;
+        }
+
+        const groupsRef = collection(db, "groups");
+        const q = query(groupsRef, where("members", "array-contains", currentUser.uid));
+
+        const querySnapshot = await getDocs(q);
+        const latestMessagesData = [];
+
+        querySnapshot.forEach((doc) => {
+          const groupData = doc.data();
+          if (groupData.latestMessage) {
+            latestMessagesData.push({
+              groupName: groupData.groupName,
+              latestMessage: groupData.latestMessage,
+            });
+          }
+        });
+
+        if (latestMessagesData.length > 0) {
+          setLatestMessages(latestMessagesData); // Display the latest message from all groups
+        } else {
+          console.log("No latest messages available in any groups.");
+        }
+      } catch (error) {
+        console.error("Error fetching latest messages from groups:", error);
+      }
+    };
+
+    // Fetch user groups
+    const fetchUserGroups = () => {
+      try {
+        const currentUser = auth.currentUser;
+        if (!currentUser) {
+          console.error("User not logged in!");
+          return;
+        }
+
+        const groupsRef = collection(db, 'groups');
+        const q = query(groupsRef, where('members', 'array-contains', currentUser.uid));
+
+        // Real-time listener to get updated group data
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+          const groups = [];
+          querySnapshot.forEach((doc) => {
+            groups.push({ id: doc.id, ...doc.data() });
+          });
+          setUserGroups(groups);
+        });
+
+        // Return the unsubscribe function to stop listening when the component unmounts
+        return unsubscribe;
+      } catch (error) {
+        console.error("Error fetching user groups:", error);
+      }
+    };
+
     setLoading(true);
     fetchUpcomingEvents();
-    fetchLatestMessage();
     fetchTopThreeUsers();
+    fetchLatestMessagesFromGroups();
+    const unsubscribeFromGroups = fetchUserGroups();
     setLoading(false);
+
+    // Cleanup: Unsubscribe from the group listener
+    return () => {
+      if (unsubscribeFromGroups) {
+        unsubscribeFromGroups();
+      }
+    };
   }, [user]);
 
   if (loading) {
@@ -107,17 +166,20 @@ const Dashboard = () => {
         )}
       </section>
 
-      {/* Latest Chat Message Section */}
+      {/* Latest Chat Messages from All Groups Section */}
       <section className="dashboard-section">
-        <h2>Latest Message</h2>
-        {latestMessage ? (
-          <div>
-            <strong>From:</strong> {latestMessage.senderName}<br />
-            <strong>Message:</strong> {latestMessage.text}<br />
-            <strong>Sent At:</strong> {new Date(latestMessage.createdAt.toDate()).toLocaleString()}
-          </div>
+        <h2>Latest Messages from Your Groups</h2>
+        {latestMessages && latestMessages.length > 0 ? (
+          latestMessages.map((messageInfo, index) => (
+            <div key={index}>
+              <h3>{messageInfo.groupName}</h3>
+              <p><strong>From:</strong> {messageInfo.latestMessage.senderName}</p>
+              <p><strong>Message:</strong> {messageInfo.latestMessage.text}</p>
+              <p><strong>Sent At:</strong> {new Date(messageInfo.latestMessage.createdAt.toDate()).toLocaleString()}</p>
+            </div>
+          ))
         ) : (
-          <p>No messages available.</p>
+          <p>No latest messages available.</p>
         )}
       </section>
 
@@ -136,6 +198,23 @@ const Dashboard = () => {
           </ul>
         ) : (
           <p>No leaderboard data available.</p>
+        )}
+      </section>
+
+      {/* User Groups Section */}
+      <section className="dashboard-section">
+        <h2>Your Groups</h2>
+        {userGroups.length > 0 ? (
+          <ul>
+            {userGroups.map((group) => (
+              <li key={group.id}>
+                <strong>Group Name:</strong> {group.groupName}<br />
+                <strong>Members:</strong> {group.members.length}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No groups available.</p>
         )}
       </section>
     </div>
