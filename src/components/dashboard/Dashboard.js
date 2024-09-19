@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { db, auth } from "../../lib/firebase"; // Adjust Firebase path as needed
-import { collection, query, orderBy, getDocs, doc, getDoc, limit, where, onSnapshot } from "firebase/firestore"; 
+import { collection, query, orderBy, getDocs, doc, limit, where, onSnapshot } from "firebase/firestore"; 
 import { useUserAuth } from "../../context/userAuthContext"; // Assuming you have user context
 import "./Dashboard.css";
 
@@ -12,8 +12,13 @@ const Dashboard = () => {
   const [userGroups, setUserGroups] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch upcoming events, latest message, leaderboard data, and user groups
+  // Fetch upcoming events, latest messages, leaderboard data, and user groups
   useEffect(() => {
+    if (!user) {
+      setLoading(false);
+      return;
+    }
+
     const fetchUpcomingEvents = async () => {
       try {
         const today = new Date();
@@ -40,21 +45,6 @@ const Dashboard = () => {
         console.error("Error fetching upcoming events:", error);
       }
     };
-
-    
-    const fetchLatestMessage = async () => {
-      try {
-        const groupDoc = doc(db, "groups", "groupId"); // Replace 'groupId' with actual group ID
-        const groupSnapshot = await getDoc(groupDoc);
-        if (groupSnapshot.exists()) {
-          const groupData = groupSnapshot.data();
-          setLatestMessage(groupData.latestMessage); // Assuming 'latestMessage' exists in the group document
-        }
-      } catch (error) {
-        console.error("Error fetching latest message:", error);
-      }
-    };
-
 
     const fetchTopThreeUsers = async () => {
       try {
@@ -101,11 +91,7 @@ const Dashboard = () => {
           }
         });
 
-        if (latestMessagesData.length > 0) {
-          setLatestMessages(latestMessagesData); // Display the latest message from all groups
-        } else {
-          console.log("No latest messages available in any groups.");
-        }
+        setLatestMessages(latestMessagesData); // Display the latest message from all groups
       } catch (error) {
         console.error("Error fetching latest messages from groups:", error);
       }
@@ -139,6 +125,7 @@ const Dashboard = () => {
       }
     };
 
+    // Fetch all data
     setLoading(true);
     fetchUpcomingEvents();
     fetchTopThreeUsers();
@@ -184,7 +171,7 @@ const Dashboard = () => {
       {/* Latest Chat Messages from All Groups Section */}
       <section className="dashboard-section">
         <h2>Latest Messages from Your Groups</h2>
-        {latestMessages && latestMessages.length > 0 ? (
+        {latestMessages.length > 0 ? (
           latestMessages.map((messageInfo, index) => (
             <div key={index}>
               <h3>{messageInfo.groupName}</h3>
