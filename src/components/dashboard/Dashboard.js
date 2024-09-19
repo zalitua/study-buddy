@@ -180,7 +180,7 @@ const Dashboard = () => {
               <h3>{messageInfo.groupName}</h3>
               <p><strong>From:</strong> {messageInfo.latestMessage.senderName}</p>
               <p><strong>Message:</strong> {messageInfo.latestMessage.text}</p>
-              <p><strong>Sent At:</strong> {new Date(messageInfo.latestMessage.createdAt.toDate()).toLocaleString()}</p>
+              {/*<p><strong>Sent At:</strong> {new Date(messageInfo.latestMessage.createdAt.toDate()).toLocaleString() || ""}</p>*/}
             </div>
           ))
         ) : (
