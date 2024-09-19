@@ -9,8 +9,10 @@ const Leaderboard = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    // Setting up the query
     const q = query(collection(db, "users"), orderBy("points", "desc"), limit(10));
     
+    // Setting up the real-time subscription
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const leaderboardData = [];
       querySnapshot.forEach((doc, index) => {
@@ -18,7 +20,7 @@ const Leaderboard = () => {
           id: doc.id,
           username: doc.data().username,
           points: doc.data().points,
-          rank: index + 1,
+          rank: index + 1, // Calculate rank based on the order in the query
         });
       });
 
@@ -29,10 +31,11 @@ const Leaderboard = () => {
       setLoading(false);
     });
 
-    // Cleanup function to unsubscribe from the listener when the component unmounts
+    // Cleanup function to unsubscribe when the component unmounts
     return () => unsubscribe();
   }, []);
 
+  // Handling loading state
   if (loading) {
     return (
       <Spinner animation="border" role="status">
@@ -41,10 +44,12 @@ const Leaderboard = () => {
     );
   }
 
+  // Handling error state
   if (error) {
     return <Alert variant="danger">{error}</Alert>;
   }
 
+  // Rendering the leaderboard table
   return (
     <div>
       <h2>Leaderboard</h2>
