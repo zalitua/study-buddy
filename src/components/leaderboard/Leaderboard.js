@@ -19,16 +19,19 @@ const Leaderboard = () => {
       const querySnapshot = await getDocs(q);
 
       let currentUserRank = -1;
-      querySnapshot.forEach((doc, index) => {
+      let rank = 1; // Track the rank as a number starting from 1
+
+      querySnapshot.forEach((doc) => {
         if (doc.id === userId) {
-          currentUserRank = index + 1;
+          currentUserRank = rank; // Assign the current rank to currentUserRank
           setCurrentUserData({
             id: doc.id,
             username: doc.data().username,
             points: doc.data().points,
-            rank: currentUserRank,
+            rank: currentUserRank, // Set the rank in the state
           });
         }
+        rank++; // Increment the rank for each user
       });
     } catch (err) {
       setError("Failed to fetch current user's rank: " + err.message);
@@ -112,7 +115,7 @@ const Leaderboard = () => {
             </thead>
             <tbody>
               <tr key={currentUserData.id}>
-                <td>{currentUserData.rank}</td>
+                <td>{currentUserData.rank}</td> {/* Display the correct rank */}
                 <td>{currentUserData.username}</td>
                 <td>{currentUserData.points}</td>
               </tr>
