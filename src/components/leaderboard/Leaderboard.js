@@ -9,20 +9,6 @@ const Leaderboard = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-<<<<<<< Updated upstream
-    const fetchLeaders = async () => {
-      try {
-        const q = query(collection(db, "users"), orderBy("points", "desc"), limit(10));
-        const querySnapshot = await getDocs(q);
-        console.log("Raw Firestore data:", querySnapshot.docs.map(doc => doc.data()));
-
-        const leaderboardData = querySnapshot.docs.map((doc, index) => ({
-          id: doc.id,
-          username: doc.data().username,
-          points: doc.data().points,
-          rank: index + 1, 
-        }));
-=======
     const q = query(collection(db, "users"), orderBy("points", "desc"), limit(10));
     
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -42,7 +28,6 @@ const Leaderboard = () => {
       setError("Failed to fetch leaderboard data: " + err.message);
       setLoading(false);
     });
->>>>>>> Stashed changes
 
     // Cleanup function to unsubscribe from the listener when the component unmounts
     return () => unsubscribe();
