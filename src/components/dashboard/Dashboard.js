@@ -1,34 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../../lib/firebase"; // Adjust Firebase path as needed
-import { collection, query, orderBy, getDocs } from "firebase/firestore";
+import { collection, query, orderBy, getDocs, doc, getDoc, limit } from "firebase/firestore"; // Added 'limit'
 import { useUserAuth } from "../../context/userAuthContext"; // Assuming you have user context
 import "./Dashboard.css";
 
 const Dashboard = () => {
   const { user } = useUserAuth(); // Accessing the logged-in user's info
-  const [userRank, setUserRank] = useState(null);
   const [upcomingEvents, setUpcomingEvents] = useState([]);
+  const [latestMessage, setLatestMessage] = useState(null);
+  const [topThreeUsers, setTopThreeUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [profilePicture] = useState(""); // Removed setProfilePicture
 
-  // Fetch leaderboard and find user's rank
+  // Fetch upcoming events, latest message, and leaderboard data
   useEffect(() => {
-    const fetchUserRank = async () => {
-      try {
-        const q = query(collection(db, "leaderboard"), orderBy("score", "desc"));
-        const querySnapshot = await getDocs(q);
-        const leaderboardData = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-
-        const rank = leaderboardData.findIndex((leader) => leader.id === user.uid) + 1;
-        setUserRank(rank);
-      } catch (error) {
-        console.error("Error fetching leaderboard data:", error);
-      }
-    };
-
     const fetchUpcomingEvents = async () => {
       try {
         const today = new Date();
@@ -37,7 +21,7 @@ const Dashboard = () => {
 
         const eventsQuery = query(
           collection(db, "events"),
-          orderBy("date", "asc")
+          orderBy("date", "asc") // Order events by date
         );
         const querySnapshot = await getDocs(eventsQuery);
         const eventData = querySnapshot.docs.map((doc) => ({
@@ -56,9 +40,43 @@ const Dashboard = () => {
       }
     };
 
+    const fetchLatestMessage = async () => {
+      try {
+        const groupDoc = doc(db, "groups", "groupId"); // Replace 'groupId' with actual group ID
+        const groupSnapshot = await getDoc(groupDoc);
+        if (groupSnapshot.exists()) {
+          const groupData = groupSnapshot.data();
+          setLatestMessage(groupData.latestMessage); // Assuming 'latestMessage' exists in the group document
+        }
+      } catch (error) {
+        console.error("Error fetching latest message:", error);
+      }
+    };
+
+    const fetchTopThreeUsers = async () => {
+      try {
+        const leaderboardQuery = query(
+          collection(db, "leaderboard"),
+          orderBy("score", "desc"),
+          limit(3) // Get the top 3 users
+        );
+        const querySnapshot = await getDocs(leaderboardQuery);
+        const leaderboardData = querySnapshot.docs.map((doc, index) => ({
+          id: doc.id,
+          rank: index + 1,
+          ...doc.data(),
+        }));
+
+        setTopThreeUsers(leaderboardData);
+      } catch (error) {
+        console.error("Error fetching top 3 users from the leaderboard:", error);
+      }
+    };
+
     setLoading(true);
-    fetchUserRank();
     fetchUpcomingEvents();
+    fetchLatestMessage();
+    fetchTopThreeUsers();
     setLoading(false);
   }, [user]);
 
@@ -66,33 +84,9 @@ const Dashboard = () => {
     return <div>Loading...</div>;
   }
 
-  
-
   return (
     <div className="dashboard-container">
-      {/* Profile Picture in Corner */}
-      <div className="profile-picture-frame">
-        <img
-          src={profilePicture || "https://via.placeholder.com/50"} // Placeholder if no profile picture is available
-          alt="Profile"
-          className="profile-picture"
-        />
-      </div>
-
       <h1>Dashboard Overview</h1>
-
-      {/* User's Rank Section */}
-      <section className="dashboard-section">
-        <h2>Your Rank</h2>
-        {userRank ? (
-          <p>
-            You are currently ranked <strong>{userRank}</strong> on the
-            leaderboard!
-          </p>
-        ) : (
-          <p>Your rank is not available.</p>
-        )}
-      </section>
 
       {/* Upcoming Events Section */}
       <section className="dashboard-section">
@@ -101,12 +95,47 @@ const Dashboard = () => {
           <ul>
             {upcomingEvents.map((event) => (
               <li key={event.id}>
-                <strong>{event.title}</strong> - {new Date(event.date).toDateString()}
+                <strong>Event Title:</strong> {event.title}<br />
+                <strong>Event Date:</strong> {new Date(event.date).toDateString()}<br />
+                <strong>Event Time:</strong> {event.time}<br />
+                <strong>Event Location:</strong> {event.location}
               </li>
             ))}
           </ul>
         ) : (
           <p>No upcoming events.</p>
+        )}
+      </section>
+
+      {/* Latest Chat Message Section */}
+      <section className="dashboard-section">
+        <h2>Latest Message</h2>
+        {latestMessage ? (
+          <div>
+            <strong>From:</strong> {latestMessage.senderName}<br />
+            <strong>Message:</strong> {latestMessage.text}<br />
+            <strong>Sent At:</strong> {new Date(latestMessage.createdAt.toDate()).toLocaleString()}
+          </div>
+        ) : (
+          <p>No messages available.</p>
+        )}
+      </section>
+
+      {/* Top 3 Users from Leaderboard */}
+      <section className="dashboard-section">
+        <h2>Top 3 Users on the Leaderboard</h2>
+        {topThreeUsers.length > 0 ? (
+          <ul>
+            {topThreeUsers.map((user) => (
+              <li key={user.id}>
+                <strong>Rank:</strong> {user.rank}<br />
+                <strong>Username:</strong> {user.username}<br />
+                <strong>Points:</strong> {user.points}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No leaderboard data available.</p>
         )}
       </section>
     </div>
