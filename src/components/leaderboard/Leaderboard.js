@@ -1,32 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Table, Spinner, Alert } from "react-bootstrap";
-import { db, auth } from "../../lib/firebase";
-import { collection, query, orderBy, limit, onSnapshot, getDocs } from "firebase/firestore";
-import { onAuthStateChanged } from "firebase/auth";
+import { db } from "../../lib/firebase";
+import { collection, query, orderBy, limit, onSnapshot } from "firebase/firestore";
 
 const Leaderboard = () => {
   const [leaders, setLeaders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [currentUserRank, setCurrentUserRank] = useState(null);
-  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
-    // Listen to auth changes to get the current logged-in user
-    const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setCurrentUser(user);
-        console.log("Current User:", user);
-      } else {
-        setCurrentUser(null);
-      }
-    });
+    const q = query(collection(db, "users"), orderBy("points", "desc"), limit(10));
 
-    // Query for top 10 leaderboard data
-    const leaderboardQuery = query(collection(db, "users"), orderBy("points", "desc"), limit(10));
-
-    const unsubscribeLeaderboard = onSnapshot(
-      leaderboardQuery,
+    // Use onSnapshot to listen to real-time updates
+    const unsubscribe = onSnapshot(
+      q,
       (querySnapshot) => {
         const leaderboardData = querySnapshot.docs.map((doc, index) => ({
           id: doc.id,
@@ -34,7 +21,7 @@ const Leaderboard = () => {
           points: doc.data().points,
           rank: index + 1,
         }));
-        console.log("Leaderboard Data:", leaderboardData);
+
         setLeaders(leaderboardData);
         setLoading(false);
       },
@@ -44,36 +31,9 @@ const Leaderboard = () => {
       }
     );
 
-    if (currentUser) {
-      const getUserRank = async () => {
-        try {
-          const allUsersSnapshot = await getDocs(query(collection(db, "users"), orderBy("points", "desc")));
-          const allUsers = allUsersSnapshot.docs.map((doc, index) => ({
-            id: doc.id,
-            username: doc.data().username,
-            points: doc.data().points,
-            rank: index + 1,
-          }));
-
-          const currentUserData = allUsers.find((u) => u.id === currentUser.uid);
-          if (currentUserData) {
-            setCurrentUserRank(currentUserData.rank);
-          }
-          setLoading(false);
-        } catch (err) {
-          setError("Failed to fetch current user rank: " + err.message);
-          setLoading(false);
-        }
-      };
-
-      getUserRank();
-    }
-
-    return () => {
-      unsubscribeAuth();
-      unsubscribeLeaderboard();
-    };
-  }, [currentUser]);
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, []);
 
   if (loading) {
     return (
@@ -90,11 +50,6 @@ const Leaderboard = () => {
   return (
     <div>
       <h2>Leaderboard</h2>
-      {currentUserRank && (
-        <div className="mb-3">
-          <h4>Your Current Rank: {currentUserRank}</h4>
-        </div>
-      )}
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -104,19 +59,13 @@ const Leaderboard = () => {
           </tr>
         </thead>
         <tbody>
-          {leaders.length > 0 ? (
-            leaders.map((leader) => (
-              <tr key={leader.id}>
-                <td>{leader.rank}</td>
-                <td>{leader.username}</td>
-                <td>{leader.points}</td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="3">No data available</td>
+          {leaders.map((leader) => (
+            <tr key={leader.id}>
+              <td>{leader.rank}</td>
+              <td>{leader.username}</td>
+              <td>{leader.points}</td>
             </tr>
-          )}
+          ))}
         </tbody>
       </Table>
     </div>
