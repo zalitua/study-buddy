@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { db, auth } from "../../lib/firebase"; // Adjust Firebase path as needed
-import { collection, query, orderBy, getDocs, doc, limit, where, onSnapshot } from "firebase/firestore"; 
+import { collection, query, orderBy, getDocs, limit, where, onSnapshot } from "firebase/firestore"; 
 import { useUserAuth } from "../../context/userAuthContext"; // Assuming you have user context
 import "./Dashboard.css";
 
@@ -19,126 +19,129 @@ const Dashboard = () => {
       return;
     }
 
-    const fetchUpcomingEvents = async () => {
+    const fetchAllData = async () => {
       try {
-        const today = new Date();
-        const thirtyDaysFromNow = new Date(today);
-        thirtyDaysFromNow.setDate(today.getDate() + 30);
+        setLoading(true);
 
-        const eventsQuery = query(
-          collection(db, "events"),
-          orderBy("date", "asc") // Order events by date
-        );
-        const querySnapshot = await getDocs(eventsQuery);
-        const eventData = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
+        // Fetch upcoming events
+        const fetchUpcomingEvents = async () => {
+          const today = new Date();
+          const thirtyDaysFromNow = new Date(today);
+          thirtyDaysFromNow.setDate(today.getDate() + 30);
 
-        const filteredEvents = eventData.filter((event) => {
-          const eventDate = new Date(event.date);
-          return eventDate >= today && eventDate <= thirtyDaysFromNow;
-        });
+          const eventsQuery = query(
+            collection(db, "events"),
+            orderBy("date", "asc") // Order events by date
+          );
+          const querySnapshot = await getDocs(eventsQuery);
+          const eventData = querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
 
-        setUpcomingEvents(filteredEvents);
-      } catch (error) {
-        console.error("Error fetching upcoming events:", error);
-      }
-    };
-
-    const fetchTopThreeUsers = async () => {
-      try {
-        const leaderboardQuery = query(
-          collection(db, "leaderboard"),
-          orderBy("score", "desc"),
-          limit(3) // Get the top 3 users
-        );
-        const querySnapshot = await getDocs(leaderboardQuery);
-        const leaderboardData = querySnapshot.docs.map((doc, index) => ({
-          id: doc.id,
-          rank: index + 1,
-          ...doc.data(),
-        }));
-
-        setTopThreeUsers(leaderboardData);
-      } catch (error) {
-        console.error("Error fetching top 3 users from the leaderboard:", error);
-      }
-    };
-
-    // Fetch the groups that the current user is a member of and get the latest messages
-    const fetchLatestMessagesFromGroups = async () => {
-      try {
-        const currentUser = auth.currentUser;
-        if (!currentUser) {
-          console.error("User not logged in!");
-          return;
-        }
-
-        const groupsRef = collection(db, "groups");
-        const q = query(groupsRef, where("members", "array-contains", currentUser.uid));
-
-        const querySnapshot = await getDocs(q);
-        const latestMessagesData = [];
-
-        querySnapshot.forEach((doc) => {
-          const groupData = doc.data();
-          if (groupData.latestMessage) {
-            latestMessagesData.push({
-              groupName: groupData.groupName,
-              latestMessage: groupData.latestMessage,
-            });
-          }
-        });
-
-        setLatestMessages(latestMessagesData); // Display the latest message from all groups
-      } catch (error) {
-        console.error("Error fetching latest messages from groups:", error);
-      }
-    };
-
-    // Fetch user groups
-    const fetchUserGroups = () => {
-      try {
-        const currentUser = auth.currentUser;
-        if (!currentUser) {
-          console.error("User not logged in!");
-          return;
-        }
-
-        const groupsRef = collection(db, 'groups');
-        const q = query(groupsRef, where('members', 'array-contains', currentUser.uid));
-
-        // Real-time listener to get updated group data
-        const unsubscribe = onSnapshot(q, (querySnapshot) => {
-          const groups = [];
-          querySnapshot.forEach((doc) => {
-            groups.push({ id: doc.id, ...doc.data() });
+          const filteredEvents = eventData.filter((event) => {
+            const eventDate = new Date(event.date);
+            return eventDate >= today && eventDate <= thirtyDaysFromNow;
           });
-          setUserGroups(groups);
-        });
 
-        // Return the unsubscribe function to stop listening when the component unmounts
-        return unsubscribe;
+          setUpcomingEvents(filteredEvents);
+        };
+
+        // Fetch top 3 users
+        const fetchTopThreeUsers = async () => {
+          const leaderboardQuery = query(
+            collection(db, "leaderboard"),
+            orderBy("score", "desc"),
+            limit(3) // Get the top 3 users
+          );
+          const querySnapshot = await getDocs(leaderboardQuery);
+          const leaderboardData = querySnapshot.docs.map((doc, index) => ({
+            id: doc.id,
+            rank: index + 1,
+            ...doc.data(),
+          }));
+
+          setTopThreeUsers(leaderboardData);
+        };
+
+        // Fetch latest messages from groups
+        const fetchLatestMessagesFromGroups = async () => {
+          const currentUser = auth.currentUser;
+          if (!currentUser) {
+            console.error("User not logged in!");
+            return;
+          }
+
+          const groupsRef = collection(db, "groups");
+          const q = query(groupsRef, where("members", "array-contains", currentUser.uid));
+
+          const querySnapshot = await getDocs(q);
+          const latestMessagesData = [];
+
+          querySnapshot.forEach((doc) => {
+            const groupData = doc.data();
+            if (groupData.latestMessage) {
+              latestMessagesData.push({
+                groupName: groupData.groupName,
+                latestMessage: groupData.latestMessage,
+              });
+            }
+          });
+
+          setLatestMessages(latestMessagesData); // Display the latest message from all groups
+        };
+
+        // Fetch user groups
+        const fetchUserGroups = () => {
+          try {
+            const currentUser = auth.currentUser;
+            if (!currentUser) {
+              console.error("User not logged in!");
+              return;
+            }
+
+            const groupsRef = collection(db, 'groups');
+            const q = query(groupsRef, where('members', 'array-contains', currentUser.uid));
+
+            // Real-time listener to get updated group data
+            const unsubscribe = onSnapshot(q, (querySnapshot) => {
+              const groups = [];
+              querySnapshot.forEach((doc) => {
+                groups.push({ id: doc.id, ...doc.data() });
+              });
+              setUserGroups(groups);
+            });
+
+            // Return the unsubscribe function to stop listening when the component unmounts
+            return unsubscribe;
+          } catch (error) {
+            console.error("Error fetching user groups:", error);
+          }
+        };
+
+        // Execute the fetch functions
+        await Promise.all([
+          fetchUpcomingEvents(),
+          fetchTopThreeUsers(),
+          fetchLatestMessagesFromGroups(),
+        ]);
+
+        const unsubscribeFromGroups = fetchUserGroups();
+        setLoading(false);
+
+        // Cleanup: Unsubscribe from the group listener
+        return () => {
+          if (unsubscribeFromGroups) {
+            unsubscribeFromGroups();
+          }
+        };
       } catch (error) {
-        console.error("Error fetching user groups:", error);
+        console.error("Error fetching data:", error);
+        setLoading(false);
       }
     };
 
-    // Fetch all data
-    setLoading(true);
-    fetchUpcomingEvents();
-    fetchTopThreeUsers();
-    fetchLatestMessagesFromGroups();
-    const unsubscribeFromGroups = fetchUserGroups();
-    setLoading(false);
-
-    // Cleanup: Unsubscribe from the group listener
-    return () => {
-      if (unsubscribeFromGroups) {
-        unsubscribeFromGroups();
-      }
-    };
+    fetchAllData();
   }, [user]);
 
   if (loading) {
