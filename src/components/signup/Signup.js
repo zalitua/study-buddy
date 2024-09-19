@@ -6,11 +6,14 @@ import { useUserAuth } from "../../context/userAuthContext";
 import { db } from "../../lib/firebase";
 import { setDoc, doc } from "firebase/firestore";
 import Success from "./SuccessModal";
+import { toast } from "react-toastify";
+
+// Email validation regex
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 //Creates function for the sign up process
 const Signup = () => {
   const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
   const [password, setPassword] = useState("");
   const { signUp, logIn } = useUserAuth();
   const [showSuccess, setShowSuccess] = useState(false);
@@ -19,7 +22,25 @@ const Signup = () => {
   //Deals with submitting sign up information
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+
+    // Validate email format
+    if (!emailRegex.test(email)) {
+      toast.warn("Please enter a valid email address.", {
+        position: "top-center",
+        autoClose: 3000,
+      });
+      return;
+    }
+
+    // Check password length
+    if (password.length < 8) {
+      toast.warn("Password must be at least 8 characters long.", {
+        position: "top-center",
+        autoClose: 3000,
+      });
+      return;
+    }
+
     try {
       //Create user authentication entry
       const userCredential = await signUp(email, password);
@@ -38,7 +59,9 @@ const Signup = () => {
 
       setShowSuccess(true);
     } catch (err) {
-      setError(err.message);
+      toast.error("Login failed.", {
+        position: "top-center",
+      });
     }
   };
 
@@ -53,7 +76,8 @@ const Signup = () => {
     <>
       <div className="p-4 box">
         <h2 className="mb-3">StudyBuddy Signup</h2>
-        {error && <Alert variant="secondary">{error}</Alert>}
+        {/*         {error && <Alert variant="secondary">{error}</Alert>}
+         */}{" "}
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Control

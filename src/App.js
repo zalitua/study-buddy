@@ -23,12 +23,12 @@ function App() {
       <ToastContainer />
       <Row>
         {/* Sidebar */}
-        <Col xs={2} className="p-0">
+        <Col xs={2} md={1} className="p-0">
           <Sidebar />
         </Col>
 
         {/* Main Content */}
-        <Col xs={10}>
+        <Col xs={10} md={12}>
           <UserAuthContextProvider>
             <Routes>
               <Route path="/" element={<Home />} />

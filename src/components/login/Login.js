@@ -4,25 +4,55 @@ import { Form, Alert } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 //import GoogleButton from "react-google-button";
 import { useUserAuth } from "../../context/userAuthContext";
+import { toast } from "react-toastify";
+
+// Email validation regex
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 //Creates a function to export that handles the Login process
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const { logIn } = useUserAuth();
   const navigate = useNavigate();
 
   //Deals with submitting the login information
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+
+    // Validate email format
+    if (!emailRegex.test(email)) {
+      toast.warn("Please enter a valid email address.", {
+        position: "top-center",
+        autoClose: 3000,
+      });
+      return;
+    }
+
+    // Check password length
+    if (password.length < 8) {
+      toast.warn("Password must be at least 8 characters long.", {
+        position: "top-center",
+        autoClose: 3000,
+      });
+      return;
+    }
+
     try {
       //Create user authentication entry
       await logIn(email, password);
-      navigate("/");
+      toast.success("Login successful!", {
+        position: "top-center",
+        autoClose: 1000,
+      });
+      // Wait for toast to disappear before navigating
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
     } catch (err) {
-      setError(err.message);
+      toast.error("Login failed. Please check your email and password.", {
+        position: "top-center",
+      });
     }
   };
 
@@ -43,12 +73,12 @@ const Login = () => {
     <>
       <div className="p-4 box">
         <h2 className="mb-3">StudyBuddy Login</h2>
-        {error && (
+        {/* {error && (
           <Alert variant="primary">
             Please enter your email and password. Your password must be at least
             8 characters long.
           </Alert>
-        )}
+        )} */}
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Control
