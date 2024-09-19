@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { Table, Spinner, Alert } from "react-bootstrap";
-import { db, auth } from "../../lib/firebase"; // Import Firebase auth
+import { db, auth } from "../../lib/firebase";
 import { collection, query, orderBy, limit, onSnapshot, getDocs } from "firebase/firestore";
-import { onAuthStateChanged } from "firebase/auth"; // Firebase auth state listener
+import { onAuthStateChanged } from "firebase/auth";
 
 const Leaderboard = () => {
   const [leaders, setLeaders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [currentUserRank, setCurrentUserRank] = useState(null);
-  const [currentUser, setCurrentUser] = useState(null); // Track the current user
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
     // Listen to auth changes to get the current logged-in user
     const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
       if (user) {
         setCurrentUser(user);
+        console.log("Current User:", user);
       } else {
         setCurrentUser(null);
       }
@@ -33,7 +34,9 @@ const Leaderboard = () => {
           points: doc.data().points,
           rank: index + 1,
         }));
+        console.log("Leaderboard Data:", leaderboardData);
         setLeaders(leaderboardData);
+        setLoading(false);
       },
       (err) => {
         setError("Failed to fetch leaderboard data: " + err.message);
@@ -101,13 +104,19 @@ const Leaderboard = () => {
           </tr>
         </thead>
         <tbody>
-          {leaders.map((leader) => (
-            <tr key={leader.id}>
-              <td>{leader.rank}</td>
-              <td>{leader.username}</td>
-              <td>{leader.points}</td>
+          {leaders.length > 0 ? (
+            leaders.map((leader) => (
+              <tr key={leader.id}>
+                <td>{leader.rank}</td>
+                <td>{leader.username}</td>
+                <td>{leader.points}</td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="3">No data available</td>
             </tr>
-          ))}
+          )}
         </tbody>
       </Table>
     </div>
