@@ -10,7 +10,7 @@ import Login from "./components/login/Login";
 import Signup from "./components/signup/Signup";
 import Chat from "./components/chat/Chat";
 import Leaderboard from "./components/leaderboard/Leaderboard";
-import Profile from "./components/profile/Profile";
+import ProfileForm from "./components/profile/ProfileForm";
 import Calendar from "./components/calendar/Calendar";
 import Home from "./components/home/Home";
 import Tasks from "./components/tasks/Tasks";
@@ -28,7 +28,7 @@ function App() {
         </Col>
 
         {/* Main Content */}
-        <Col xs={10} md={12} className='this'>
+        <Col xs={10} md={12} className="this">
           <UserAuthContextProvider>
             <Routes>
               <Route path="/" element={<Home />} />
@@ -38,7 +38,7 @@ function App() {
               <Route path="/chat/:groupId/:chatId" element={<Chat />} />
               <Route path="/group" element={<Group />} />
               <Route path="/leaderboard" element={<Leaderboard />} />
-              <Route path="/profile" element={<Profile />} />
+              <Route path="/profile" element={<ProfileForm />} />
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/tasks" element={<Tasks />} />
             </Routes>

@@ -41,7 +41,7 @@ const avatarOptions = [
 ];
 
 //creates a form to add profile information to a user
-const Profile = () => {
+const ProfileForm = () => {
   const { user } = useUserAuth(); //get the current user
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -378,4 +378,4 @@ const Profile = () => {
 };
 
 //export Profile function
-export default Profile;
+export default ProfileForm;
