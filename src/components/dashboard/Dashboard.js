@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { db, auth } from "../../lib/firebase"; // Adjust Firebase path as needed
-import { collection, query, orderBy, getDocs, limit, where, onSnapshot } from "firebase/firestore"; 
-import { useUserAuth } from "../../context/userAuthContext"; // Assuming you have user context
+import {
+  collection,
+  query,
+  orderBy,
+  getDocs,
+  limit,
+  where,
+  onSnapshot,
+} from "firebase/firestore";
+import { useUserAuth } from "../../context/UserAuthContext"; // Assuming you have user context
 import "./Dashboard.css";
 
 const Dashboard = () => {
@@ -73,7 +81,10 @@ const Dashboard = () => {
           }
 
           const groupsRef = collection(db, "groups");
-          const q = query(groupsRef, where("members", "array-contains", currentUser.uid));
+          const q = query(
+            groupsRef,
+            where("members", "array-contains", currentUser.uid)
+          );
 
           const querySnapshot = await getDocs(q);
           const latestMessagesData = [];
@@ -100,8 +111,11 @@ const Dashboard = () => {
               return;
             }
 
-            const groupsRef = collection(db, 'groups');
-            const q = query(groupsRef, where('members', 'array-contains', currentUser.uid));
+            const groupsRef = collection(db, "groups");
+            const q = query(
+              groupsRef,
+              where("members", "array-contains", currentUser.uid)
+            );
 
             // Real-time listener to get updated group data
             const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -159,9 +173,13 @@ const Dashboard = () => {
           <ul>
             {upcomingEvents.map((event) => (
               <li key={event.id}>
-                <strong>Event Title:</strong> {event.title}<br />
-                <strong>Event Date:</strong> {new Date(event.date).toDateString()}<br />
-                <strong>Event Time:</strong> {event.time}<br />
+                <strong>Event Title:</strong> {event.title}
+                <br />
+                <strong>Event Date:</strong>{" "}
+                {new Date(event.date).toDateString()}
+                <br />
+                <strong>Event Time:</strong> {event.time}
+                <br />
                 <strong>Event Location:</strong> {event.location}
               </li>
             ))}
@@ -178,8 +196,12 @@ const Dashboard = () => {
           latestMessages.map((messageInfo, index) => (
             <div key={index}>
               <h3>{messageInfo.groupName}</h3>
-              <p><strong>From:</strong> {messageInfo.latestMessage.senderName}</p>
-              <p><strong>Message:</strong> {messageInfo.latestMessage.text}</p>
+              <p>
+                <strong>From:</strong> {messageInfo.latestMessage.senderName}
+              </p>
+              <p>
+                <strong>Message:</strong> {messageInfo.latestMessage.text}
+              </p>
               {/*<p><strong>Sent At:</strong> {new Date(messageInfo.latestMessage.createdAt.toDate()).toLocaleString() || ""}</p>*/}
             </div>
           ))
@@ -195,8 +217,10 @@ const Dashboard = () => {
           <ul>
             {topThreeUsers.map((user) => (
               <li key={user.id}>
-                <strong>Rank:</strong> {user.rank}<br />
-                <strong>Username:</strong> {user.username}<br />
+                <strong>Rank:</strong> {user.rank}
+                <br />
+                <strong>Username:</strong> {user.username}
+                <br />
                 <strong>Points:</strong> {user.points}
               </li>
             ))}
@@ -213,7 +237,8 @@ const Dashboard = () => {
           <ul>
             {userGroups.map((group) => (
               <li key={group.id}>
-                <strong>Group Name:</strong> {group.groupName}<br />
+                <strong>Group Name:</strong> {group.groupName}
+                <br />
                 <strong>Members:</strong> {group.members.length}
               </li>
             ))}

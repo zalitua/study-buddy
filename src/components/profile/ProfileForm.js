@@ -10,7 +10,7 @@ import {
   getDoc,
 } from "firebase/firestore";
 import { db } from "../../lib/firebase";
-import { useUserAuth } from "../../context/userAuthContext";
+import { useUserAuth } from "../../context/UserAuthContext";
 import { useNavigate } from "react-router-dom";
 import ProfilePic from "./ProfilePic";
 import { toast } from "react-toastify";
