@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Form, Alert } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { useUserAuth } from "../../context/UserAuthContext";
 import { db } from "../../lib/firebase";
@@ -68,7 +68,7 @@ const Signup = () => {
   //Handles closing the success modal and navigating to the dashboard
   const handleCloseSuccess = () => {
     setShowSuccess(false);
-    navigate("/profile");
+    navigate("/profileForm");
   };
 
   //Displays sign up form

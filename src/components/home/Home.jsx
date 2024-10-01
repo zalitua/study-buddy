@@ -26,19 +26,19 @@ const Home = () => {
 
   const handleNavProfile = async () => {
     try {
-      navigate("/profile");
+      navigate("/profileForm");
     } catch (error) {
       console.log(error.message);
     }
   };
 
-  const handleNavChat = async () => {
+  /* const handleNavChat = async () => {
     try {
       navigate("/chat");
     } catch (error) {
       console.log(error.message);
     }
-  };
+  }; */
 
   const handleNavGroup = async () => {
     try {
