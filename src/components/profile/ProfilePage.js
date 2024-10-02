@@ -19,25 +19,30 @@ const ProfilePage = () => {
         <div className="image-container">
           <img
             src={profileData.profileImageUrl || "default-avatar.png"}
-            alt=""
+            alt="profile"
+            height="100px"
+            width="100"
+          />
+          <img
+            src={profileData.avatarURL || "default-avatar.png"}
+            alt="avatar"
             height="100px"
             width="100"
           />
         </div>
       </div>
       <div className="lower-container">
-        <h3> {profileData.profileData.username} </h3>
+        <h3> {profileData.username} </h3>
         <h3>
           {" "}
-          {profileData.profileData.firstName} {profileData.profileData.lastName}
-          , {profileData.profileData.pronouns}{" "}
+          {profileData.firstName} {profileData.lastName}, {profileData.pronouns}{" "}
         </h3>
         <h3>
           {" "}
-          {profileData.profileData.gender}, {profileData.age || " "}{" "}
+          {profileData.gender}, {profileData.age || " "}{" "}
         </h3>
         <h3> {profileData.email || "No email"} </h3>
-        <p> {profileData.profileData.bio || "No bio available"} </p>
+        <p> {profileData.bio || "No bio available"} </p>
       </div>
     </div>
   );
