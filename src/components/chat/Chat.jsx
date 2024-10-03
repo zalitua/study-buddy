@@ -157,18 +157,17 @@ const Chat = () =>{
     };
 
 
-    //additional featues with no user story
-    //be able to edit a message you sent
-    /*will be used in the second sprint to imporve user control and how they interact
+    
+    //Sprint 2 features
+    //able to handle editing any of the messages you have sent
     const handleEdit = async () => {
 
     };
-
     //be able to delete a message you sent
     const handleDelete = async () =>{
 
     };
-    */
+    
 
     //to get the groups data
     //runs everytime the group id changes

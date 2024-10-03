@@ -26,4 +26,6 @@ what it can do now:
     -see messages from others users in the group
     -view the history of the chat
     -auto scroll
+    -Edit messages
+    -delete messages
     
