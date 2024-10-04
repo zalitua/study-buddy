@@ -10,7 +10,7 @@ import {
   getDoc,
 } from "firebase/firestore";
 import { db } from "../../lib/firebase";
-import { useUserAuth } from "../../context/userAuthContext";
+import { useUserAuth } from "../../context/UserAuthContext";
 import { useNavigate } from "react-router-dom";
 import ProfilePic from "./ProfilePic";
 import { toast } from "react-toastify";
@@ -41,7 +41,7 @@ const avatarOptions = [
 ];
 
 //creates a form to add profile information to a user
-const Profile = () => {
+const ProfileForm = () => {
   const { user } = useUserAuth(); //get the current user
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -378,4 +378,4 @@ const Profile = () => {
 };
 
 //export Profile function
-export default Profile;
+export default ProfileForm;

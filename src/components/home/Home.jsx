@@ -1,6 +1,6 @@
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router";
-import { useUserAuth } from "../../context/userAuthContext";
+import { useUserAuth } from "../../context/UserAuthContext";
 
 //Main UI. Displays relevant information for the user and allows site navigation
 const Home = () => {
@@ -26,19 +26,19 @@ const Home = () => {
 
   const handleNavProfile = async () => {
     try {
-      navigate("/profile");
+      navigate("/profileForm");
     } catch (error) {
       console.log(error.message);
     }
   };
 
-  const handleNavChat = async () => {
+  /* const handleNavChat = async () => {
     try {
       navigate("/chat");
     } catch (error) {
       console.log(error.message);
     }
-  };
+  }; */
 
   const handleNavGroup = async () => {
     try {
