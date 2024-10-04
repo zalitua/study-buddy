@@ -103,7 +103,8 @@ const ProfileForm = () => {
 
   return (
     <div className="p-4 box profile-form-container">
-      <h2 className="mb-3">Edit Profile</h2>
+      <h2 className="mb-3">Create Profile</h2>
+      <h4 className="mb-3">Required Information:</h4>
 
       <Form onSubmit={handleSubmit}>
         {/* First Name */}
@@ -142,6 +143,7 @@ const ProfileForm = () => {
           />
         </Form.Group>
 
+        <h4 className="mb-3">Optional Information:</h4>
         {/* Phone */}
         <Form.Group className="mb-3" controlId="formPhone">
           <Form.Label>Phone Number</Form.Label>
