@@ -6,14 +6,26 @@ import { useNavigate } from "react-router-dom";
 import ProfilePic from "./ProfilePic";
 import avatar1 from "../../assets/avatar1.png";
 import avatar2 from "../../assets/avatar2.png";
-// Additional avatars...
+import avatar3 from "../../assets/avatar3.png";
+import avatar4 from "../../assets/avatar4.png";
+import avatar5 from "../../assets/avatar5.png";
+import avatar6 from "../../assets/avatar6.png";
+import avatar7 from "../../assets/avatar7.png";
+import avatar8 from "../../assets/avatar8.png";
+import avatar9 from "../../assets/avatar9.png";
 import avatar10 from "../../assets/avatar10.png";
 
 // Array of avatar image imports
 const avatarOptions = [
   avatar1,
   avatar2,
-  // Add the other avatars
+  avatar3,
+  avatar4,
+  avatar5,
+  avatar6,
+  avatar7,
+  avatar8,
+  avatar9,
   avatar10,
 ];
 
