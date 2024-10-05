@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Routes, Route } from "react-router-dom";
-import { UserAuthContextProvider } from "./context/userAuthContext";
+import { UserAuthContextProvider } from "./context/UserAuthContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
@@ -10,12 +10,14 @@ import Login from "./components/login/Login";
 import Signup from "./components/signup/Signup";
 import Chat from "./components/chat/Chat";
 import Leaderboard from "./components/leaderboard/Leaderboard";
-import Profile from "./components/profile/Profile";
+import ProfileForm from "./components/profile/ProfileForm";
+import ProfilePage from "./components/profile/ProfilePage";
 import Calendar from "./components/calendar/Calendar";
 import Home from "./components/home/Home";
 import Tasks from "./components/tasks/Tasks";
 import Group from "./components/group/Group";
 import Sidebar from "./components/sidebar/Sidebar"; // Import the Sidebar
+import { ProfileProvider } from "./context/ProfileContext";
 
 function App() {
   return (
@@ -28,20 +30,23 @@ function App() {
         </Col>
 
         {/* Main Content */}
-        <Col xs={10} md={12} className='this'>
+        <Col xs={10} md={12} className="this">
           <UserAuthContextProvider>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/chat/:groupId/:chatId" element={<Chat />} />
-              <Route path="/group" element={<Group />} />
-              <Route path="/leaderboard" element={<Leaderboard />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/calendar" element={<Calendar />} />
-              <Route path="/tasks" element={<Tasks />} />
-            </Routes>
+            <ProfileProvider>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/chat/:groupId/:chatId" element={<Chat />} />
+                <Route path="/group" element={<Group />} />
+                <Route path="/leaderboard" element={<Leaderboard />} />
+                <Route path="/profileForm" element={<ProfileForm />} />
+                <Route path="/profilePage" element={<ProfilePage />} />
+                <Route path="/calendar" element={<Calendar />} />
+                <Route path="/tasks" element={<Tasks />} />
+              </Routes>
+            </ProfileProvider>
           </UserAuthContextProvider>
         </Col>
       </Row>
