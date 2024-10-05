@@ -1,5 +1,8 @@
 //file which stores the majority of the chat functions
-import { Button } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
+
+
+
 
 import './chat.css'
 import { auth } from "../../lib/firebase";
@@ -18,7 +21,7 @@ import {
      addDoc, collection,  doc,
      getDoc, serverTimestamp,
      onSnapshot, orderBy, 
-     query, updateDoc} 
+     query, updateDoc, deleteDoc} 
     from 'firebase/firestore'
 
 import { useNavigate } from "react-router-dom"; //used for react router to get to this page
@@ -44,6 +47,16 @@ const Chat = () =>{
     //set informaiton about the group
     const [groupName, setGroupName] = useState('');
     const [members, setMembers] = useState([]);
+
+
+    //track the messsage being edited and save its content
+    const [editingMsgId, setEditingMsgId] = useState(null);  
+    const [editMsgContent, setEditMsgContent] = useState('');  
+
+    //track the message that needs deletion
+    const [showDeleteModal, setShowDeleteModal] = useState(false); 
+    const [messageToDelete, setMessageToDelete] = useState(null);
+
 
     const fetchGroupData = async () => {
         try {
@@ -114,7 +127,7 @@ const Chat = () =>{
             
             setUsername(userData.username);
 
-            console.log(username); 
+            //console.log(username); 
 
         } else {
             console.log("No such document!");
@@ -160,14 +173,70 @@ const Chat = () =>{
     
     //Sprint 2 features
     //able to handle editing any of the messages you have sent
-    const handleEdit = async () => {
+    const handleEdit = async (message) => {
+        //get the message that is wanting to be edited
+        //check if the user is the one who sent it
 
+        if (message.senderId === user.uid) { //only allow the user to edit their own messages
+            setEditingMsgId(message.id); //store the message ID being edited
+            setEditMsgContent(message.text); //set the content to be edited in the input
+        }
     };
+
+    const saveEditedMessage = async () => {
+        if (!editMsgContent.trim()) return;//DON'T allow empty message
+
+        try {
+            //get the ref for the specific message
+            const messageRef = doc(db, "chats", chatId, "messages", editingMsgId);
+
+            //update the message text and time stamp
+            await updateDoc(messageRef, {
+                text: editMsgContent,
+                editedAt: serverTimestamp()//when the message was edited
+            });
+
+            //clear the editing state
+            setEditingMsgId(null);
+            setEditMsgContent('');
+        } catch (error) {
+            console.log("Error editing message:", error);
+        }
+    };
+
+    //caneling editing the message
+    const cancelEdit = () => {
+        setEditingMsgId(null);//no longer editing a message
+        setEditMsgContent('');//clear the input
+    };
+
+
+
     //be able to delete a message you sent
-    const handleDelete = async () =>{
-
+    const handleDelete = (messageId) => {
+        setMessageToDelete(messageId); // Set the message to be deleted
+        setShowDeleteModal(true); // Show the delete confirmation modal
     };
-    
+
+    // Confirm deletion
+    const confirmDelete = async () => {
+        if (messageToDelete) {
+            try {
+                const delRef = doc(db, "chats", chatId, "messages", messageToDelete);
+                await deleteDoc(delRef);
+                setMessageToDelete(null); // Clear after deletion
+                setShowDeleteModal(false); // Close modal
+            } catch (error) {
+                console.log("Error deleting message:", error);
+            }
+        }
+    };
+
+    // Cancel deletion
+    const cancelDelete = () => {
+        setMessageToDelete(null); // Clear the message to delete
+        setShowDeleteModal(false); // Close modal
+    };
 
     //to get the groups data
     //runs everytime the group id changes
@@ -206,15 +275,13 @@ const Chat = () =>{
     useEffect(() => {
         if (user && members.length > 0) {
             if (members.includes(user.uid)) {
-                //console.log("You are in the group");
-                //console.log(members);
+                
                 setShow(true); //show the chat if user in group
                 
                 getUsername();
 
             } else {
-                //console.log("You are NOT in the group");
-                //console.log(members);
+                
                 setShow(false); //hide the chat if user not in group
             }
         }
@@ -268,12 +335,45 @@ const Chat = () =>{
                     <div className="messages">
                         {chat.map(message => (
                             <div
-                            className={message.senderId === user?.uid ? "message own" : "message"}
-                            key={message.id}
+                                className={message.senderId === user?.uid ? "message own" : "message"}
+                                key={message.id}
                             >
-                            <p className="username">From: {message.senderName}</p>
-                                <p className="text">{message.text}</p>
-                                <span className="time">Sent at: {message.createdAt?.toDate().toLocaleString()}</span>
+                                <p className="username">From: {message.senderName}</p>
+
+                                {/*check to see if message is being edited display the editing options if it needs editing*/}
+                                {editingMsgId === message.id ? (
+                                    <div className="edit-message">
+                                        <input 
+                                            value={editMsgContent}
+                                            onChange={(e) => setEditMsgContent(e.target.value)}
+                                        />
+                                        <button onClick={saveEditedMessage}>Save</button>
+                                        <button onClick={cancelEdit}>Cancel</button>
+                                    </div>
+                                ) : (
+                                    <div>
+                                        {/*check and display the messageexists*/}
+                                        <p className="text">{message?.text}</p>
+
+                                        {/*check and display the time sent*/}
+                                        <p className="time">Sent at: {message.createdAt?.toDate ? message.createdAt.toDate().toLocaleString() : 'Unknown time'}</p>
+                                        
+                                        {/*if a message has been edited display when it was edited*/}
+                                        {message.editedAt && (
+                                            <p className="edited">
+                                                Edited at: {message.editedAt.toDate().toLocaleString()}
+                                            </p>
+                                        )}
+
+                                        {/* Show edit/delete buttons only for the user's own messages */}
+                                        {message.senderId === user?.uid && (
+                                            <div>
+                                                <button onClick={() => handleEdit(message)}>Edit</button>
+                                                <button onClick={() => handleDelete(message.id)}>Delete</button>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
                             </div>
                         ))}
                         <div ref={endRef}></div>
@@ -283,7 +383,7 @@ const Chat = () =>{
 
                     <div className='sender'>
                         <input 
-                            value={msg} 
+                            value={msg}  
                             onChange={(e) => setMsg(e.target.value)} 
                             placeholder="Type a message"
                         />
@@ -295,6 +395,19 @@ const Chat = () =>{
                     <h2>You are not a member of this group. Please exit this page</h2>
                 </div>
             }
+            {/*deletion confirmation*/}
+            <Modal show={showDeleteModal} onHide={cancelDelete}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Delete message?</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    This will remove the message for everyone, but people may have seen it already.
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={cancelDelete}>Cancel</Button>
+                    <Button variant="danger" onClick={confirmDelete}>Delete</Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     );
     
