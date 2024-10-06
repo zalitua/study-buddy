@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, Button, Spinner } from "react-bootstrap";
-import { useProfile } from "../../context/ProfileContext"; // Import ProfileContext
+import { useProfile } from "../../context/ProfileContext";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import ProfilePic from "./ProfilePic";
@@ -43,10 +43,16 @@ const ProfileForm = () => {
   const [selectedAvatar, setSelectedAvatar] = useState(
     profileData?.avatarUrl || avatarOptions[0]
   );
-  const [profileImage] = useState(profileData?.profileImageUrl);
+  const [profileImage, setProfileImage] = useState(
+    profileData?.profileImageUrl
+  );
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const isEdit = firstName && lastName && username;
+
+  const handleImageUpload = (url) => {
+    setProfileImage(url);
+  };
 
   // Validate required fields before submission
   const validateForm = () => {
@@ -84,6 +90,7 @@ const ProfileForm = () => {
       await updateProfileData(updatedData); // Use context to update profile
       toast.success("Profile updated successfully!", {
         position: "top-center",
+        autoClose: 1000,
       });
       setTimeout(() => {
         navigate("/"); // Redirect to home page
@@ -256,8 +263,14 @@ const ProfileForm = () => {
         {/* Profile Picture Upload */}
         <div className="d-grid gap-2 mt-3">
           <h4>Upload Profile Picture</h4>
-          <img src={profileImage} alt="Please choose an image." width="50" />
-          <ProfilePic />
+          {profileImage && (
+            <img
+              src={profileImage}
+              alt="Profile"
+              style={{ width: "70px", height: "70px", borderRadius: "50%" }}
+            />
+          )}
+          <ProfilePic onImageUpload={handleImageUpload} />
         </div>
 
         {/* Submit Button */}
