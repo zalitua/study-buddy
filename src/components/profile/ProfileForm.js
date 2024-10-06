@@ -43,8 +43,10 @@ const ProfileForm = () => {
   const [selectedAvatar, setSelectedAvatar] = useState(
     profileData?.avatarUrl || avatarOptions[0]
   );
+  const [profileImage] = useState(profileData?.profileImageUrl);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const isEdit = firstName && lastName && username;
 
   // Validate required fields before submission
   const validateForm = () => {
@@ -103,7 +105,7 @@ const ProfileForm = () => {
 
   return (
     <div className="p-4 box profile-form-container">
-      <h2 className="mb-3">Create Profile</h2>
+      <h2 className="mb-3">{isEdit ? "Edit Profile" : "Create Profile"}</h2>
       <h4 className="mb-3">Required Information:</h4>
 
       <Form onSubmit={handleSubmit}>
@@ -253,7 +255,8 @@ const ProfileForm = () => {
 
         {/* Profile Picture Upload */}
         <div className="d-grid gap-2 mt-3">
-          <h2>Upload Profile Picture</h2>
+          <h4>Upload Profile Picture</h4>
+          <img src={profileImage} alt="Please choose an image." width="50" />
           <ProfilePic />
         </div>
 
