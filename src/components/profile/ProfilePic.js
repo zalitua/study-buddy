@@ -1,4 +1,3 @@
-//import { useState } from "react";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../lib/firebase";
 import { db } from "../../lib/firebase";
@@ -8,7 +7,7 @@ import { toast } from "react-toastify";
 import { v4 } from "uuid";
 
 // add a user's profile pic
-function ProfilePic() {
+function ProfilePic({ onImageUpload }) {
   const { user } = useUserAuth();
 
   const uploadFile = async (imageUpload) => {
@@ -28,13 +27,18 @@ function ProfilePic() {
         { merge: true } // Merge the new data with existing fields
       );
 
+      onImageUpload(url);
+
       // success message
       toast.success("Profile image added successfully!", {
         position: "top-center",
         autoClose: 1000,
       });
     } catch (err) {
-      toast.error("Failed to add profile image!", { position: "top-center" });
+      toast.error("Failed to add profile image!", {
+        position: "top-center",
+        autoClose: 2000,
+      });
     }
   };
 
