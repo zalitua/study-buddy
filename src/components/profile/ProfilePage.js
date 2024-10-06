@@ -1,5 +1,6 @@
 import React from "react";
 import { useProfile } from "../../context/ProfileContext";
+import { Link } from "react-router-dom";
 import "./ProfilePage.css";
 
 const ProfilePage = () => {
@@ -16,6 +17,7 @@ const ProfilePage = () => {
   return (
     <div className="Profile">
       <div className="upper-container">
+        <h4> {profileData.username} </h4>
         <div className="image-container">
           <img
             src={profileData.profileImageUrl || "default-avatar.png"}
@@ -23,26 +25,34 @@ const ProfilePage = () => {
             height="100px"
             width="100"
           />
+        </div>
+        {/* <div className="image-container">
           <img
             src={profileData.avatarURL || "default-avatar.png"}
             alt="avatar"
             height="100px"
             width="100"
           />
-        </div>
+        </div> */}
       </div>
       <div className="lower-container">
-        <h3> {profileData.username} </h3>
-        <h3>
-          {" "}
-          {profileData.firstName} {profileData.lastName}, {profileData.pronouns}{" "}
-        </h3>
-        <h3>
-          {" "}
-          {profileData.gender}, {profileData.age || " "}{" "}
-        </h3>
-        <h3> {profileData.email || "No email"} </h3>
+        <br />
+        <h2>
+          {profileData.firstName} {profileData.lastName}
+        </h2>
+        <h5>{profileData.pronouns} </h5>
+        <h5>
+          {profileData.gender} {profileData.age || " "}{" "}
+        </h5>
+        <h5>
+          <a href={`mailto:${profileData.email}`}>
+            {profileData.email || "No email"}
+          </a>
+        </h5>
         <p> {profileData.bio || "No bio available"} </p>
+        <div className="edit-profile-link">
+          <Link to="/ProfileForm">Edit Profile</Link>
+        </div>
       </div>
     </div>
   );
