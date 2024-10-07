@@ -57,6 +57,12 @@ const Chat = () =>{
     //emoji picker
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
+    //track if the user is at the bottom of the chat
+    //used for if a user wants to scroll up in the chat to edit and delete a message so it won't automatically go down
+    //const [isAtBottom, setIsAtBottom] = useState(true); 
+
+    //^not used yet
+
 
     const fetchGroupData = async () => {
         try {
@@ -140,7 +146,7 @@ const Chat = () =>{
         if (!msg.trim()) return; //do not send empty messages
 
         try {
-            toggleEmojiPicker(false);//close the emoji picker
+            //toggleEmojiPicker(false);//close the emoji picker
 
 
             const messagesRef = collection(db, "chats", chatId, "messages"); //collection inside the collection
@@ -165,7 +171,7 @@ const Chat = () =>{
             });
 
 
-
+            //toggleEmojiPicker(false);//close the emoji picker
             setMsg(''); //clear the message input after sending
             
         } catch (error) {

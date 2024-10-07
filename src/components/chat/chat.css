@@ -4,6 +4,8 @@
     flex-direction: column;
 
     min-width:900px ;
+
+    max-width: 70vw;
     flex: 3;
     margin-left: 100px;/*shift content away from side bar*/
 
@@ -26,7 +28,6 @@
         min-height:calc(100vh - 200px);
 
         max-height: calc(100vh - 200px); /* adjust height based on screen size */
-        /*calc() function ensures that the messages area adjusts based on the screen size, with 200px left for other content */
     }
 
     .message {
@@ -38,11 +39,22 @@
         background-color: #f1f1f1;
 
         /*handle long messages*/
-        max-width: 100%; 
+        max-width: 80%; 
         word-wrap: break-word;
         word-break: break-word; 
         overflow-wrap: break-word; 
         
+        button {
+            
+            width: 50%;
+            border-radius: 10px;
+        }
+        .edit-message{
+            input{
+                width:100%;
+                overflow-wrap: break-word;
+            }
+        }
     }
 
     .own {
@@ -62,11 +74,9 @@
         position: sticky;
         bottom: 0;
 
-        
-        
-
         input {
             flex: 1;
+            height: 100%;
             background-color: rgba(197, 193, 193, 0.932);
             border: none;
             outline: none;
@@ -78,7 +88,7 @@
 
         button {
             height: 100%;
-            width: 20%;
+            width: 15%;
             border-radius: 10px;
         }
 
