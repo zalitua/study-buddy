@@ -1,6 +1,6 @@
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router";
-import { useUserAuth } from "../../context/userAuthContext";
+import { useUserAuth } from "../../context/UserAuthContext";
 
 //Main UI. Displays relevant information for the user and allows site navigation
 const Home = () => {
@@ -26,19 +26,19 @@ const Home = () => {
 
   const handleNavProfile = async () => {
     try {
-      navigate("/profile");
+      navigate("/profilePage");
     } catch (error) {
       console.log(error.message);
     }
   };
 
-  const handleNavChat = async () => {
+  /* const handleNavChat = async () => {
     try {
       navigate("/chat");
     } catch (error) {
       console.log(error.message);
     }
-  };
+  }; */
 
   const handleNavGroup = async () => {
     try {
@@ -92,9 +92,8 @@ const Home = () => {
 
   return (
     <>
-      <div className="p-4 box mt-3 text-center">
-        Welcome to StudyBuddy
-        <br />
+      <div className="p-4 box mt-4 text-center">
+        <h4>Welcome to StudyBuddy</h4>
       </div>
       <div className="d-grid gap-2">
         <Button variant="primary" onClick={handleNavLogin}>
@@ -106,7 +105,7 @@ const Home = () => {
         <Button variant="primary" onClick={handleNavProfile}>
           Profile
         </Button>
-        
+
         <Button variant="primary" onClick={handleNavGroup}>
           Group
         </Button>

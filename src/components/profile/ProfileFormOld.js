@@ -10,9 +10,10 @@ import {
   getDoc,
 } from "firebase/firestore";
 import { db } from "../../lib/firebase";
-import { useUserAuth } from "../../context/userAuthContext";
+import { useUserAuth } from "../../context/UserAuthContext";
 import { useNavigate } from "react-router-dom";
 import ProfilePic from "./ProfilePic";
+import { toast } from "react-toastify";
 
 import avatar1 from "../../assets/avatar1.png";
 import avatar2 from "../../assets/avatar2.png";
@@ -40,7 +41,7 @@ const avatarOptions = [
 ];
 
 //creates a form to add profile information to a user
-const Profile = () => {
+const ProfileForm = () => {
   const { user } = useUserAuth(); //get the current user
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -70,7 +71,9 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       if (!user) {
-        setError("No authenticated user found!");
+        toast.error("No authenticated user found!", {
+          position: "top-center",
+        });
         setLoading(false);
         return;
       }
@@ -95,10 +98,14 @@ const Profile = () => {
             setOther(data.gender === "other" ? data.other : "");
             setOtherPN(data.pronouns === "other" ? data.otherPN : "");
             setSelectedAvatar(data.avatarUrl || avatarOptions[0]);
+          } else {
+            setProfileState(false);
           }
         }
       } catch (err) {
-        setError("Failed to fetch profile data.");
+        toast.error("Failed to fetch profile data.", {
+          position: "top-center",
+        });
       } finally {
         setLoading(false);
       }
@@ -112,33 +119,34 @@ const Profile = () => {
     e.preventDefault();
 
     if (!profileState) {
+      //error if not all fields completed
       if (!firstName || !lastName || !username) {
-        setError("Please fill out required fields."); //error if not all fields completed
+        toast.warn("Please fill out required fields.", {
+          position: "top-center",
+        });
         return;
       }
     }
 
-    setError(""); //clear error message
-
     try {
       //make sure there is a current authenticated user
       if (!user) {
-        setError("No authenticated user found!");
+        toast.error("No authenticated user found!", {
+          position: "top-center",
+        });
         return;
       }
-
-      setError(""); //clear error message
 
       //check if username is taken
       if (!profileState) {
         const invalidUsername = await checkUsername(username);
         if (invalidUsername) {
-          setError("That username is already in use. Please choose another.");
+          toast.error("No authenticated user found!", {
+            position: "top-center",
+          });
           return;
         }
       }
-
-      setError(""); //clear error message
 
       const profileData = {};
 
@@ -165,14 +173,28 @@ const Profile = () => {
         { merge: true }
       );
 
-      await alert(
+      /* await alert(
         profileState
           ? "Profile updated successfully!"
           : "Profile created successfully!"
-      ); //success message
-      navigate("/"); //go to home page
+      );  */
+      //success message
+      toast.success(
+        profileState
+          ? "Profile updated successfully!"
+          : "Profile created successfully!",
+        {
+          position: "top-center",
+          autoClose: 1000,
+        }
+      );
+      setTimeout(() => {
+        navigate("/");
+      }, 2000); //go to home page
     } catch (err) {
-      setError(err.message);
+      toast.error("Failed to create profile!", {
+        position: "top-center",
+      });
     }
   };
 
@@ -187,15 +209,15 @@ const Profile = () => {
   //return form for entering profile information
   return (
     <>
-      <div className="p-4 box">
+      <div className="p-4 box profile-form-container">
         <h2 className="mb-3">
-          {!profileState ? "Complete Profile" : "Create Profile"}
+          {profileState ? "Complete Profile" : "Create Profile"}
         </h2>
-        {profileState && <h4 className="mb-3">Required Fields:</h4>}
-        {error && <Alert variant="primary">{error}</Alert>}
-
+        {!profileState && <h4 className="mb-3">Required Fields:</h4>}
+        {/*         {error && <Alert variant="primary">{error}</Alert>}
+         */}
         <Form onSubmit={handleSubmit}>
-          {profileState && (
+          {!profileState && (
             <>
               {/* input field for first name */}
               <Form.Group className="mb-3" controlId="formFirstName">
@@ -262,7 +284,6 @@ const Profile = () => {
               onChange={(e) => setGender(e.target.value)}
             >
               {/* gender options */}
-              <option value="">Select Gender</option>
               <option value="female">Female</option>
               <option value="male">Male</option>
               <option value="nonbinary">Nonbinary</option>
@@ -290,10 +311,9 @@ const Profile = () => {
               onChange={(e) => setPronouns(e.target.value)}
             >
               {/* pronoun options */}
-              <option value="">Select Gender</option>
-              <option value="she/her">Female</option>
-              <option value="he/him">Male</option>
-              <option value="they/them">Nonbinary</option>
+              <option value="she/her">she/her</option>
+              <option value="he/him">he/him</option>
+              <option value="they/them">they/them</option>
               <option value="other">Other</option>
             </Form.Select>
           </Form.Group>
@@ -358,4 +378,4 @@ const Profile = () => {
 };
 
 //export Profile function
-export default Profile;
+export default ProfileForm;

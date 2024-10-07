@@ -1,20 +1,17 @@
-import { useState } from "react";
-import { Button } from "react-bootstrap";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../lib/firebase";
 import { db } from "../../lib/firebase";
 import { setDoc, doc } from "firebase/firestore";
-import { useUserAuth } from "../../context/userAuthContext";
+import { useUserAuth } from "../../context/UserAuthContext";
+import { toast } from "react-toastify";
 import { v4 } from "uuid";
 
 // add a user's profile pic
-function ProfilePic() {
+function ProfilePic({ onImageUpload }) {
   const { user } = useUserAuth();
-  const [imageUpload, setImageUpload] = useState(null);
-  const [error, setError] = useState("");
 
-  const uploadFile = async () => {
-    if (imageUpload == null) return;
+  const uploadFile = async (imageUpload) => {
+    if (!imageUpload) return;
 
     try {
       // set up to save the image in firebase storage in the images directory
@@ -30,9 +27,18 @@ function ProfilePic() {
         { merge: true } // Merge the new data with existing fields
       );
 
-      alert("Profile image uploaded!"); // success message
+      onImageUpload(url);
+
+      // success message
+      toast.success("Profile image added successfully!", {
+        position: "top-center",
+        autoClose: 1000,
+      });
     } catch (err) {
-      setError("Error uploading image: " + err.message);
+      toast.error("Failed to add profile image!", {
+        position: "top-center",
+        autoClose: 2000,
+      });
     }
   };
 
@@ -41,15 +47,8 @@ function ProfilePic() {
     <div className="d-grid gap-2 mt-3">
       <input
         type="file"
-        onChange={(event) => {
-          setImageUpload(event.target.files[0]);
-        }}
+        onChange={(event) => uploadFile(event.target.files[0])}
       />
-      <Button variant="primary" onClick={uploadFile}>
-        {" "}
-        Upload Image
-      </Button>
-      {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
 }

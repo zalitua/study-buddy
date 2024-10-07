@@ -22,7 +22,7 @@ body {
   box-sizing: border-box; /* Include padding in the element’s height */
 }
 
-.g-btn {
+/* .g-btn {
   width: 100% !important;
   height: 40px !important;
   line-height: 40px !important;
@@ -32,6 +32,11 @@ body {
 .g-btn > div > svg {
   width: 40px !important;
   height: 38px !important;
+} */
+
+.profile-form-container {
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 .sidebar {

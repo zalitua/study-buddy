@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { db, auth } from "../../lib/firebase"; // Adjust Firebase path as needed
 import { collection, query, orderBy, getDocs, limit, where, onSnapshot } from "firebase/firestore"; 
 import { useUserAuth } from "../../context/userAuthContext"; // Assuming you have user context
-import './Dashboard.css'; 
+import "./Dashboard.css";
 
 const Dashboard = () => {
   const { user } = useUserAuth(); // Accessing the logged-in user's info
@@ -73,7 +73,10 @@ const Dashboard = () => {
           }
 
           const groupsRef = collection(db, "groups");
-          const q = query(groupsRef, where("members", "array-contains", currentUser.uid));
+          const q = query(
+            groupsRef,
+            where("members", "array-contains", currentUser.uid)
+          );
 
           const querySnapshot = await getDocs(q);
           const latestMessagesData = [];
@@ -100,8 +103,11 @@ const Dashboard = () => {
               return;
             }
 
-            const groupsRef = collection(db, 'groups');
-            const q = query(groupsRef, where('members', 'array-contains', currentUser.uid));
+            const groupsRef = collection(db, "groups");
+            const q = query(
+              groupsRef,
+              where("members", "array-contains", currentUser.uid)
+            );
 
             // Real-time listener to get updated group data
             const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -202,8 +208,10 @@ const Dashboard = () => {
           <ul>
             {topThreeUsers.map((user) => (
               <li key={user.id}>
-                <strong>Rank:</strong> {user.rank}<br />
-                <strong>Username:</strong> {user.username}<br />
+                <strong>Rank:</strong> {user.rank}
+                <br />
+                <strong>Username:</strong> {user.username}
+                <br />
                 <strong>Points:</strong> {user.points}
               </li>
             ))}
@@ -220,7 +228,8 @@ const Dashboard = () => {
           <ul>
             {userGroups.map((group) => (
               <li key={group.id}>
-                <strong>Group Name:</strong> {group.groupName}<br />
+                <strong>Group Name:</strong> {group.groupName}
+                <br />
                 <strong>Members:</strong> {group.members.length}
               </li>
             ))}
