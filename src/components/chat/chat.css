@@ -23,6 +23,8 @@
         display: flex;
         flex-direction: column;
         gap: 20px;
+        min-height:calc(100vh - 200px);
+
         max-height: calc(100vh - 200px); /* adjust height based on screen size */
         /*calc() function ensures that the messages area adjusts based on the screen size, with 200px left for other content */
     }
@@ -40,6 +42,7 @@
         word-wrap: break-word;
         word-break: break-word; 
         overflow-wrap: break-word; 
+        
     }
 
     .own {
@@ -49,14 +52,19 @@
     }
 
     .sender {
-        
         display: flex;
         height: 10vh;
         background: rgb(197, 193, 193);
         align-items: center;
         justify-content: center;
         border-radius: 10px;
+
+        position: sticky;
+        bottom: 0;
+
         
+        
+
         input {
             flex: 1;
             background-color: rgba(197, 193, 193, 0.932);
@@ -72,6 +80,19 @@
             height: 100%;
             width: 20%;
             border-radius: 10px;
+        }
+
+        .emoji{
+            /*the button to get the emojis*/
+            width:5%;
+            font-size: 20px;
+            position: relative;
+        }
+        .emoji-picker {
+            position: absolute;
+            bottom: 100px;/*position above the message bar*/
+            right:0;/*position the picker to the right*/
+            z-index: 1000;/*make the picker at the frount*/
         }
     }
 }
