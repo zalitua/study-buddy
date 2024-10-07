@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
+import "react-calendar/dist/Calendar.css"; // Make sure this import is correct for the calendar styling
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
-import { useUserAuth } from "../../context/userAuthContext";
-import { db } from "../../lib/firebase";
+import { useUserAuth } from "../../context/userAuthContext"; // Ensure this path is correct
+import { db } from "../../lib/firebase"; // Ensure your firebase setup is correct
 import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
-import "./CalendarPage.css";
+import './CalendarPage.css'; // Make sure the CSS for the Calendar page is correctly imported
 
 const CalendarPage = () => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [availabilities, setAvailabilities] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(new Date()); // Store selected date
+  const [availabilities, setAvailabilities] = useState([]); // Store availabilities
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [loading, setLoading] = useState(false);
-  const { user } = useUserAuth();
-  const navigate = useNavigate();
+  const { user } = useUserAuth(); // Get current user from context
+  const navigate = useNavigate(); // To navigate between pages
 
   useEffect(() => {
     // Redirect to login if the user is not authenticated
@@ -25,34 +25,34 @@ const CalendarPage = () => {
       return;
     }
 
+    // Fetch availabilities for the selected date
     const fetchAvailabilities = async () => {
       setLoading(true);
       try {
-        // Query to fetch availabilities for the selected date
         const q = query(
           collection(db, "availabilities"),
-          where("date", "==", selectedDate.toDateString())
+          where("date", "==", selectedDate.toDateString()) // Query for availabilities on the selected date
         );
         const querySnapshot = await getDocs(q);
         const data = querySnapshot.docs.map((doc) => doc.data());
-        setAvailabilities(data);
+        setAvailabilities(data); // Set the availabilities in state
       } catch (err) {
-        toast.error("Failed to fetch availabilities: " + err.message);
+        toast.error("Failed to fetch availabilities: " + err.message); // Show error toast
       } finally {
         setLoading(false);
       }
     };
 
-    fetchAvailabilities();
+    fetchAvailabilities(); // Call the function to fetch availabilities
   }, [selectedDate, user, navigate]);
 
-  // Update the selected date when a new one is chosen
+  // Handle date change in the calendar
   const handleDateChange = (date) => {
-    setSelectedDate(date);
+    setSelectedDate(date); // Set the selected date in state
   };
 
+  // Handle adding new availability
   const handleAddAvailability = async () => {
-    // Check if both start and end times are filled in
     if (!startTime || !endTime) {
       toast.warn("Please fill in both start and end times.");
       return;
@@ -65,14 +65,14 @@ const CalendarPage = () => {
         startTime,
         endTime,
         userId: user.uid,
-        userName: user.displayName || user.email,
+        userName: user.displayName || user.email, // Use display name or email as fallback
       });
 
-      toast.success("Availability added successfully!");
-      setStartTime("");
-      setEndTime("");
+      toast.success("Availability added successfully!"); // Show success toast
+      setStartTime(""); // Clear the start time
+      setEndTime(""); // Clear the end time
     } catch (err) {
-      toast.error("Failed to add availability: " + err.message);
+      toast.error("Failed to add availability: " + err.message); // Show error toast
     }
   };
 
@@ -90,8 +90,7 @@ const CalendarPage = () => {
       <ul>
         {availabilities.map((availability, index) => (
           <li key={index}>
-            <strong>{availability.userName}</strong>: {availability.startTime} -{" "}
-            {availability.endTime}
+            <strong>{availability.userName}</strong>: {availability.startTime} - {availability.endTime}
           </li>
         ))}
       </ul>
@@ -102,7 +101,7 @@ const CalendarPage = () => {
     <div className="calendar-page">
       <h2>Group Availabilities</h2>
       <div className="calendar-container">
-        <Calendar onChange={handleDateChange} value={selectedDate} />
+        <Calendar onChange={handleDateChange} value={selectedDate} /> {/* Calendar component */}
         <div className="selected-date">
           <h3>Selected Date: {selectedDate.toDateString()}</h3>
         </div>

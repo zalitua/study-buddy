@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { db, auth } from "../../lib/firebase"; // Adjust Firebase path as needed
 import { collection, query, orderBy, getDocs, limit, where, onSnapshot } from "firebase/firestore"; 
 import { useUserAuth } from "../../context/userAuthContext"; // Assuming you have user context
-import "./Dashboard.css";
+import './Dashboard.css'; 
 
 const Dashboard = () => {
   const { user } = useUserAuth(); // Accessing the logged-in user's info
@@ -160,7 +160,7 @@ const Dashboard = () => {
             {upcomingEvents.map((event) => (
               <li key={event.id}>
                 <strong>Event Title:</strong> {event.title}<br />
-                <strong>Event Date:</strong> {new Date(event.date).toDateString()}<br />
+                <strong>Event Date:</strong> {event.date ? new Date(event.date).toDateString() : "Date not available"}<br />
                 <strong>Event Time:</strong> {event.time}<br />
                 <strong>Event Location:</strong> {event.location}
               </li>
@@ -180,7 +180,14 @@ const Dashboard = () => {
               <h3>{messageInfo.groupName}</h3>
               <p><strong>From:</strong> {messageInfo.latestMessage.senderName}</p>
               <p><strong>Message:</strong> {messageInfo.latestMessage.text}</p>
-              <p><strong>Sent At:</strong> {new Date(messageInfo.latestMessage.createdAt.toDate()).toLocaleString()}</p>
+              <p>
+                <strong>Sent At:</strong> 
+                {messageInfo.latestMessage.createdAt 
+                  ? (typeof messageInfo.latestMessage.createdAt.toDate === 'function' 
+                      ? new Date(messageInfo.latestMessage.createdAt.toDate()).toLocaleString() 
+                      : new Date(messageInfo.latestMessage.createdAt).toLocaleString())
+                  : "Date not available"}
+              </p>
             </div>
           ))
         ) : (
