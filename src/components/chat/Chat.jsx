@@ -10,7 +10,7 @@ import { db } from "../../lib/firebase";
 
 import React, { useEffect, useRef, useState } from 'react'
 
-//import EmojiPicker from "emoji-picker-react"; used in second sprint
+import EmojiPicker from "emoji-picker-react"; //used in second sprint so users can add emojies
 
 
 import { useParams } from "react-router-dom";
@@ -36,9 +36,6 @@ const Chat = () =>{
 
     //save what chat is going on
     const [chat, setChat] = useState([]);
-
-    
-    //
     const [msg, setMsg] = useState('');
     const [user, setUser] = useState('');
 
@@ -56,6 +53,15 @@ const Chat = () =>{
     //track the message that needs deletion
     const [showDeleteModal, setShowDeleteModal] = useState(false); 
     const [messageToDelete, setMessageToDelete] = useState(null);
+
+    //emoji picker
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+
+    //track if the user is at the bottom of the chat
+    //used for if a user wants to scroll up in the chat to edit and delete a message so it won't automatically go down
+    //const [isAtBottom, setIsAtBottom] = useState(true); 
+
+    //^not used yet
 
 
     const fetchGroupData = async () => {
@@ -140,6 +146,9 @@ const Chat = () =>{
         if (!msg.trim()) return; //do not send empty messages
 
         try {
+            //toggleEmojiPicker(false);//close the emoji picker
+
+
             const messagesRef = collection(db, "chats", chatId, "messages"); //collection inside the collection
 
             //add the new message to Firestore with sender ID message text and current time
@@ -162,8 +171,9 @@ const Chat = () =>{
             });
 
 
-
+            //toggleEmojiPicker(false);//close the emoji picker
             setMsg(''); //clear the message input after sending
+            
         } catch (error) {
             console.log("Error sending message:", error);
         }
@@ -238,6 +248,23 @@ const Chat = () =>{
         setShowDeleteModal(false); // Close modal
     };
 
+
+
+    //handle emojies
+    const handleEmoji = (e) => {
+        setMsg((prev) => prev + e.emoji);
+
+        //leave the emoji picker open after one emoji is used so you can use more then one at once
+        //setShowEmojiPicker(false); 
+        //^ leaving this here becasue not sure if want more then one to be done at once
+    }
+
+    //toggle the emoji picker on/off
+    const toggleEmojiPicker = () => {
+        setShowEmojiPicker(prevState => !prevState);
+    };
+
+
     //to get the groups data
     //runs everytime the group id changes
     useEffect(() => {
@@ -275,13 +302,9 @@ const Chat = () =>{
     useEffect(() => {
         if (user && members.length > 0) {
             if (members.includes(user.uid)) {
-                
                 setShow(true); //show the chat if user in group
-                
                 getUsername();
-
             } else {
-                
                 setShow(false); //hide the chat if user not in group
             }
         }
@@ -379,14 +402,19 @@ const Chat = () =>{
                         <div ref={endRef}></div>
                     </div>
 
-
-
                     <div className='sender'>
                         <input 
                             value={msg}  
                             onChange={(e) => setMsg(e.target.value)} 
                             placeholder="Type a message"
                         />
+                        {/*emoji picker*/}
+                        <button onClick={toggleEmojiPicker} className="emoji">😊</button>
+                        {showEmojiPicker && (
+                            <div className="emoji-picker">
+                                <EmojiPicker onEmojiClick={handleEmoji} />
+                            </div>
+                        )}
                         <button onClick={handleSend}>Send</button>
                     </div>
                 </div>:

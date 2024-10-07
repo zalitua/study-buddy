@@ -4,6 +4,8 @@
     flex-direction: column;
 
     min-width:900px ;
+
+    max-width: 70vw;
     flex: 3;
     margin-left: 100px;/*shift content away from side bar*/
 
@@ -23,8 +25,9 @@
         display: flex;
         flex-direction: column;
         gap: 20px;
+        min-height:calc(100vh - 200px);
+
         max-height: calc(100vh - 200px); /* adjust height based on screen size */
-        /*calc() function ensures that the messages area adjusts based on the screen size, with 200px left for other content */
     }
 
     .message {
@@ -36,10 +39,22 @@
         background-color: #f1f1f1;
 
         /*handle long messages*/
-        max-width: 100%; 
+        max-width: 80%; 
         word-wrap: break-word;
         word-break: break-word; 
         overflow-wrap: break-word; 
+        
+        button {
+            align-content: center;
+            width: 40%;
+            border-radius: 10px;
+        }
+        .edit-message{
+            input{
+                width:100%;
+                overflow-wrap: break-word;
+            }
+        }
     }
 
     .own {
@@ -49,16 +64,19 @@
     }
 
     .sender {
-        
         display: flex;
         height: 10vh;
         background: rgb(197, 193, 193);
         align-items: center;
         justify-content: center;
         border-radius: 10px;
-        
+
+        position: sticky;
+        bottom: 0;
+
         input {
             flex: 1;
+            height: 100%;
             background-color: rgba(197, 193, 193, 0.932);
             border: none;
             outline: none;
@@ -70,8 +88,21 @@
 
         button {
             height: 100%;
-            width: 20%;
+            width: 15%;
             border-radius: 10px;
+        }
+
+        .emoji{
+            /*the button to get the emojis*/
+            width:5%;
+            font-size: 30px;
+            position: relative;
+        }
+        .emoji-picker {
+            position: absolute;
+            bottom: 100px;/*position above the message bar*/
+            right:0;/*position the picker to the right*/
+            z-index: 1000;/*make the picker at the frount*/
         }
     }
 }
