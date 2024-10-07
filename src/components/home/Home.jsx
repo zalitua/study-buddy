@@ -26,7 +26,7 @@ const Home = () => {
 
   const handleNavProfile = async () => {
     try {
-      navigate("/profileForm");
+      navigate("/profilePage");
     } catch (error) {
       console.log(error.message);
     }

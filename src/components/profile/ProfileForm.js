@@ -262,7 +262,7 @@ const ProfileForm = () => {
 
         {/* Profile Picture Upload */}
         <div className="d-grid gap-2 mt-3">
-          <h4>Upload Profile Picture</h4>
+          <h5>Upload Profile Picture</h5>
           {profileImage && (
             <img
               src={profileImage}
