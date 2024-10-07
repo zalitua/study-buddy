@@ -45,8 +45,8 @@
         overflow-wrap: break-word; 
         
         button {
-            
-            width: 50%;
+            align-content: center;
+            width: 40%;
             border-radius: 10px;
         }
         .edit-message{
@@ -95,7 +95,7 @@
         .emoji{
             /*the button to get the emojis*/
             width:5%;
-            font-size: 20px;
+            font-size: 30px;
             position: relative;
         }
         .emoji-picker {
