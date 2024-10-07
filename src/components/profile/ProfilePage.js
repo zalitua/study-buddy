@@ -1,6 +1,7 @@
 import React from "react";
 import { useProfile } from "../../context/ProfileContext";
 import { Link } from "react-router-dom";
+import defaultProfileImage from "../../assets/default-profile.png";
 import "./ProfilePage.css";
 
 const ProfilePage = () => {
@@ -17,39 +18,42 @@ const ProfilePage = () => {
   return (
     <div className="Profile">
       <div className="upper-container">
-        <h4> {profileData.username} </h4>
+        {" "}
+        {/* display username */}
+        <h4> {profileData.username || "No username"} </h4>
         <div className="image-container">
+          {" "}
+          {/* load profile image */}
           <img
-            src={profileData.profileImageUrl || "default-avatar.png"}
+            src={profileData.profileImageUrl || defaultProfileImage}
             alt="profile"
             height="100px"
             width="100"
           />
         </div>
-        {/* <div className="image-container">
-          <img
-            src={profileData.avatarURL || "default-avatar.png"}
-            alt="avatar"
-            height="100px"
-            width="100"
-          />
-        </div> */}
       </div>
       <div className="lower-container">
-        <br />
+        <br /> {/* display name */}
         <h2>
-          {profileData.firstName} {profileData.lastName}
-        </h2>
-        <h5>{profileData.pronouns} </h5>
-        <h5>
-          {profileData.gender} {profileData.age || " "}{" "}
-        </h5>
-        <h5>
-          <a href={`mailto:${profileData.email}`}>
-            {profileData.email || "No email"}
-          </a>
-        </h5>
-        <p> {profileData.bio || "No bio available"} </p>
+          {profileData.firstName || "No name"} {profileData.lastName}
+        </h2>{" "}
+        {/* display pronouns */}
+        <h5>{profileData.pronouns || "pronouns not specified"} </h5>
+        {/* display gender */}
+        <h5>{profileData.gender || "gender not specified"}</h5>{" "}
+        {/* display DOB */}
+        <h5> DOB: {profileData.date || "no DOB"} </h5>
+        {/* conditionally display email as a link */}
+        {profileData.email ? (
+          <h5>
+            <a href={`mailto:${profileData.email}`}>{profileData.email}</a>
+          </h5>
+        ) : (
+          <h5>No email</h5>
+        )}{" "}
+        {/* display bio */}
+        <p> {profileData.bio || "No bio available"} </p>{" "}
+        {/* link to edit profile form */}
         <div className="edit-profile-link">
           <Link to="/ProfileForm">Edit Profile</Link>
         </div>
