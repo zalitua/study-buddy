@@ -322,7 +322,6 @@ const Group = () => {
     //used for testing to see whats being passed
     //console.log("chatID: "+ chatId);
     //console.log("groupID: "+ groupId);
-
     try {
 
       if (!chatId) {

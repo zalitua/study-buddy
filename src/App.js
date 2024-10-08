@@ -18,6 +18,8 @@ import Tasks from "./components/tasks/Tasks";
 import Group from "./components/group/Group";
 import Sidebar from "./components/sidebar/Sidebar"; // Import the Sidebar
 import { ProfileProvider } from "./context/ProfileContext";
+import ForumHome from "./components/forum/ForumHome";
+import ForumPage from "./components/forum/forumPages/ForumPages";
 
 function App() {
   return (
@@ -45,6 +47,8 @@ function App() {
                 <Route path="/profilePage" element={<ProfilePage />} />
                 <Route path="/calendar" element={<Calendar />} />
                 <Route path="/tasks" element={<Tasks />} />
+                <Route path="/forumHome" element={<ForumHome />}/>
+                <Route path="/forumHome/:forumId" element={<ForumPage />}/>{/*nav to a specific forum*/}
               </Routes>
             </ProfileProvider>
           </UserAuthContextProvider>
