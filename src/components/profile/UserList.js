@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { db } from "../lib/firebase"; // Firebase setup
+import { db } from "../../lib/firebase"; // Firebase setup
 import { collection, getDocs, query, limit } from "firebase/firestore";
-import UserSelectProfile from "./ProfileFeature"; // Import your popover profile component
+import ProfileFeature from "./ProfileFeature"; // Import your popover profile component
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -10,7 +10,7 @@ const UserList = () => {
   const fetchUsers = async () => {
     setLoading(true);
     try {
-      const q = query(collection(db, "users"), limit(10));
+      const q = query(collection(db, "users"), limit(4));
       const querySnapshot = await getDocs(q);
       const userList = querySnapshot.docs.map((doc) => ({
         id: doc.id,
@@ -37,7 +37,7 @@ const UserList = () => {
       <ul>
         {users.map((user) => (
           <li key={user.id}>
-            <UserSelectProfile user={user} />
+            <ProfileFeature user={user} />
           </li>
         ))}
       </ul>
