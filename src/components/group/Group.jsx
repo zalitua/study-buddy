@@ -404,7 +404,7 @@ const Group = () => {
             ))}
           </ul>
         </div>
-
+ 
 
       </div>    
       {/*create group modal*/}
