@@ -153,9 +153,6 @@ const Group = () => {
         setUserGroups(groups); //update with the real time data
       });
 
-
-      
-
       //return the unsubscribe function to stop listening 
       return unsubscribe;
 
@@ -163,6 +160,7 @@ const Group = () => {
       console.log("Error fetching user groups: ", error);
     }
   };
+  
   //useEffect for the live group updating now whenever your added you update
   useEffect(() => {
     //fetch user groups only if the user is loged in
