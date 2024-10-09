@@ -412,7 +412,7 @@ const Chat = () =>{
                                 <EmojiPicker onEmojiClick={handleEmoji} />
                             </div>
                         )}
-                        <button onClick={handleSend}>Send</button>
+                        <button onClick={handleSend} >Send</button>
                     </div>
                 </div>:
                 //the user not in the group

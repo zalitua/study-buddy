@@ -40,7 +40,7 @@ const ForumHome = () =>{
   };
   
 
-
+  
 
   //track any new forums
   useEffect(() => {
@@ -62,7 +62,7 @@ const ForumHome = () =>{
   //handle going to each forum page
   const handleForumPages = async (forumId) => {
       try {
-        navigate(`/forumHome/:${forumId}`);
+        navigate(`/forumHome/${forumId}`);
       } catch (error) {
         console.log(error.message);
       }
