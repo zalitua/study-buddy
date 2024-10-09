@@ -39,12 +39,12 @@ const ProfilePage = () => {
     <div className="Profile">
       <div className="upper-container">
         <h4>{displayProfile.username || "No username"}</h4>
-        <div className="image-container">
+        <div className="image-container-1">
           <img
             src={displayProfile.profileImageUrl || defaultProfileImage}
             alt="profile"
             height="100px"
-            width="100"
+            width="100px"
           />
         </div>
       </div>

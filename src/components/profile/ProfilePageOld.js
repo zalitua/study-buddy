@@ -21,7 +21,7 @@ const ProfilePageOld = () => {
         {" "}
         {/* display username */}
         <h4> {profileData.username || "No username"} </h4>
-        <div className="image-container">
+        <div className="image-container-1">
           {" "}
           {/* load profile image */}
           <img
