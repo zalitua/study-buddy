@@ -44,6 +44,7 @@ function App() {
                 <Route path="/leaderboard" element={<Leaderboard />} />
                 <Route path="/profileForm" element={<ProfileForm />} />
                 <Route path="/profilePage" element={<ProfilePage />} />
+                <Route path="/profilePage/:userId" element={<ProfilePage />} />
                 <Route path="/userList" element={<UserList />} />
                 <Route path="/calendar" element={<Calendar />} />
                 <Route path="/tasks" element={<Tasks />} />
