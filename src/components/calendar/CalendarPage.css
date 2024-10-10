@@ -1,42 +1,73 @@
+/* Apply background color and font */
+body {
+  background-color: #FACEF0; /* Light background color */
+  font-family: 'Coiny', cursive; /* Use the Coiny font */
+}
+
+/* Style for the calendar page container */
 .calendar-page {
   max-width: 600px;
   margin: auto;
   text-align: center;
+  background-color: #FACEF0; /* Light background for the page */
+  color: #333; /* Default text color */
 }
 
+/* Style for the calendar container */
 .calendar-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 20px;
+  background-color: #FACEF0; /* Background color for the calendar container */
 }
 
+/* Style for the selected date display */
 .selected-date {
   margin-top: 10px;
   font-size: 18px;
+  color: #F59BE7; /* Darker pink color for the selected date */
 }
 
+/* Style for the add availability form */
 .add-availability-form {
   margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #FACEF0;
 }
 
+/* Input fields for the form */
 .add-availability-form input {
   margin: 10px 0;
   padding: 8px;
   font-size: 16px;
   width: 150px;
+  border: 2px solid #F59BE7; /* Pink border around inputs */
+  border-radius: 5px;
 }
 
+/* Style for the availabilities list */
 .availabilities {
   margin-top: 20px;
   text-align: left;
+  color: #333;
 }
 
+/* Style for the add availability button */
 button {
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
+  background-color: #F59BE7; /* Pink background for the button */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+/* Button hover effect */
+button:hover {
+  background-color: #e387c1; /* Slightly darker pink when hovering */
 }

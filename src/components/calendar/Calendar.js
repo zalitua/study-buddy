@@ -1,22 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css"; // Make sure this import is correct for the calendar styling
+import "react-calendar/dist/Calendar.css"; // Ensure correct calendar styling is imported
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
-import { useUserAuth } from "../../context/userAuthContext"; // Ensure this path is correct
-import { db } from "../../lib/firebase"; // Ensure your firebase setup is correct
+import { useUserAuth } from "../../context/userAuthContext"; // Make sure this path is correct
+import { db } from "../../lib/firebase"; // Ensure your Firebase setup is correct
 import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
-import './CalendarPage.css'; // Make sure the CSS for the Calendar page is correctly imported
+import './CalendarPage.css'; // Import your custom CSS
 
 const CalendarPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date()); // Store selected date
   const [availabilities, setAvailabilities] = useState([]); // Store availabilities
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [startTime, setStartTime] = useState(""); // Store start time
+  const [endTime, setEndTime] = useState(""); // Store end time
+  const [loading, setLoading] = useState(false); // Loading state for availability fetch
   const { user } = useUserAuth(); // Get current user from context
   const navigate = useNavigate(); // To navigate between pages
 
+  // Fetch availabilities when the selected date or user changes
   useEffect(() => {
     // Redirect to login if the user is not authenticated
     if (!user) {
@@ -25,7 +26,7 @@ const CalendarPage = () => {
       return;
     }
 
-    // Fetch availabilities for the selected date
+    // Function to fetch availabilities for the selected date
     const fetchAvailabilities = async () => {
       setLoading(true);
       try {
@@ -48,7 +49,7 @@ const CalendarPage = () => {
 
   // Handle date change in the calendar
   const handleDateChange = (date) => {
-    setSelectedDate(date); // Set the selected date in state
+    setSelectedDate(date); // Update the selected date
   };
 
   // Handle adding new availability
@@ -69,8 +70,8 @@ const CalendarPage = () => {
       });
 
       toast.success("Availability added successfully!"); // Show success toast
-      setStartTime(""); // Clear the start time
-      setEndTime(""); // Clear the end time
+      setStartTime(""); // Clear the start time input
+      setEndTime(""); // Clear the end time input
     } catch (err) {
       toast.error("Failed to add availability: " + err.message); // Show error toast
     }

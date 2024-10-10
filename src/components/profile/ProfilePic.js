@@ -2,7 +2,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../lib/firebase";
 import { db } from "../../lib/firebase";
 import { setDoc, doc } from "firebase/firestore";
-import { useUserAuth } from "../../context/UserAuthContext";
+import { useUserAuth } from '../../context/userAuthContext';
 import { toast } from "react-toastify";
 import { v4 } from "uuid";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Routes, Route } from "react-router-dom";
-import { UserAuthContextProvider } from "./context/UserAuthContext";
+import { UserAuthContextProvider } from './context/userAuthContext'; // Correct import
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
@@ -31,7 +31,7 @@ function App() {
 
         {/* Main Content */}
         <Col xs={10} md={12} className="this">
-          <UserAuthContextProvider>
+          <UserAuthContextProvider> {/* Correctly using UserAuthContextProvider */}
             <ProfileProvider>
               <Routes>
                 <Route path="/" element={<Home />} />
