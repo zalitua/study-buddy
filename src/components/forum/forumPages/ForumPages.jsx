@@ -123,22 +123,26 @@ const ForumPage = () => {
   };
 
   return (
-    <>
-      <Button variant="primary" onClick={handleForum}>
-        Back
-      </Button>
-      <h1>{forumName || "Loading forum..."}</h1>
+    <div className="forumPage">
+      <div className="nav">
+        <Button variant="primary" onClick={handleForum}>
+          Back
+        </Button>
+      </div>
 
-      <div className="messages-container">
+      <h1 className="title">{forumName || "Loading forum..."}</h1>
+
+      <div className="messagesContainer">
         {messages.map((message) => (
-          <div key={message.id} className={`message ${message.senderId === user?.uid ? 'sent' : 'received'}`}>
-            <p><strong>{message.senderName}:</strong> {message.text}</p>
-            <span>{new Date(message.createdAt?.seconds * 1000).toLocaleTimeString()}</span>
+          <div key={message.id} className="message">
+            <p className="username">{message.senderName}:</p>
+            <p> {message.text}</p>
+            <span>{message.createdAt?.toDate ? message.createdAt.toDate().toLocaleString() : 'Unknown time'}</span>
           </div>
         ))}
       </div>
 
-      <div className="input-container">
+      <div className="inputContainer">
         <input
           type="text"
           value={msg}
@@ -149,7 +153,7 @@ const ForumPage = () => {
           Send
         </Button>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -5,8 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { UserAuthContextProvider } from "./context/UserAuthContext";
 import { ProfileProvider } from "./context/ProfileContext";
-import ForumHome from "./components/forum/ForumHome";
-import ForumPage from "./components/forum/forumPages/ForumPages";
+
 
 import Sidebar from "./components/sidebar/Sidebar";
 import AppRoutes from "./AppRoutes";

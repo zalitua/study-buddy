@@ -1,0 +1,91 @@
+.forumPage{
+
+    height: 100vh; 
+    display: flex;
+    flex-direction: column;
+
+    min-width:900px ;
+
+    max-width: 70vw;
+    flex: 3;
+    margin-left: 100px;/*shift content away from side bar*/
+
+    .nav { 
+        
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+        height: 50px;
+    }
+
+    .title{
+        text-decoration: underline;
+        font-size: 60px;
+    }
+
+    .messagesContainer{
+        padding: 20px;
+        flex: 1;
+        overflow-y: auto; /*esure scrolling only happens inside messages */
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        min-height:calc(100vh - 200px);
+
+        max-height: calc(100vh - 200px); /* adjust height based on screen size */
+    
+
+        .message{
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 5px;
+            border-radius: 5px;
+
+            /*handle long messages*/
+            max-width: 80%; 
+            word-wrap: break-word;
+            word-break: break-word; 
+            overflow-wrap: break-word; 
+
+            .username{
+                text-decoration: underline;
+                margin-bottom: 0;
+            }
+            p{
+                margin-bottom: 1px;
+            }
+            
+        }
+    }
+
+    .inputContainer{
+        display: flex;
+        height: 10vh;
+        background: rgb(197, 193, 193);
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+
+        position: sticky;
+        bottom: 0;
+
+        input {
+            flex: 1;
+            height: 100%;
+            background-color: rgba(197, 193, 193, 0.932);
+            border: none;
+            outline: none;
+            color: rgb(0, 0, 0);
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            height: 100%;
+            width: 15%;
+            border-radius: 10px;
+        }
+    }
+}

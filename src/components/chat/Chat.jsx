@@ -167,8 +167,6 @@ const Chat = () =>{
                     createdAt: serverTimestamp(), //timestamp of the latest message
                 }
             });
-
-
             //toggleEmojiPicker(false);//close the emoji picker
             setMsg(''); //clear the message input after sending
         } catch (error) {

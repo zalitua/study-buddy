@@ -14,6 +14,10 @@ import Calendar from "./components/calendar/Calendar";
 import Home from "./components/home/Home";
 import Tasks from "./components/tasks/Tasks";
 import Group from "./components/group/Group";
+
+import ForumHome from "./components/forum/ForumHome";
+import ForumPage from "./components/forum/forumPages/ForumPages";
+
 import ProtectedRoute from "./components/protectedroutes/ProtectedRoute";
 
 // define routes for app
@@ -98,6 +102,21 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       />
+      <Route 
+        path="/forumHome" 
+        element={
+          <ProtectedRoute>
+            <ForumHome />
+          </ProtectedRoute>
+        }/>
+      <Route 
+        path="/forumHome/:forumId" 
+        element={
+          <ProtectedRoute>
+            <ForumPage />
+          </ProtectedRoute>
+        }/>{/*nav to a specific forum*/}
+              
     </Routes>
   );
 }

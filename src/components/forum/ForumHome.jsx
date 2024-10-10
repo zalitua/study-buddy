@@ -70,33 +70,39 @@ const ForumHome = () =>{
 
 
   return (
-      <>
-          <Button variant="primary" onClick={handleNavDash}>
-              Back to home
-          </Button>
+      <div className="forumHome" >
+         <div className="nav">
+            <Button variant="primary" onClick={handleNavDash}>
+                Back to home
+            </Button>
+          </div>
 
 
-          <h1>Forums</h1>
+          <h1 className="title">Forums</h1>
 
-          {/*get all of the forums that exist*/}
-          {forums.length > 0 ? (
-            forums.map((forum) => (
-              <div key={forum.id} className="forum-item">
-                <h2>{forum.name}</h2>
-                <Button
-                  variant="primary"
-                  onClick={() => handleForumPages(forum.id)}  /*when clicked navigate to the forum using its ID*/
-                >
-                  Go to {forum.name}
-                </Button>
-              </div>
-            ))
-          ) : (
-            <p>No forums available.</p>
-          )}
+          <div className="forumsList">
+            {/*get all of the forums that exist*/}
+            {forums.length > 0 ? (
+              forums.map((forum) => (
+                <div key={forum.id} className="forum-item">
+                  <h2>{forum.name}</h2>
+                  <Button
+                    variant="primary"
+                    onClick={() => handleForumPages(forum.id)}  /*when clicked navigate to the forum using its ID*/
+                    className="navForums"
+                  >
+                    Go to {forum.name}
+                  </Button>
+                </div>
+              ))
+            
+            ) : (
+              <p>No forums available.</p>
+            )}
+          </div>
 
 
-      </>
+      </div>
   );
 
 };
