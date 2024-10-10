@@ -17,24 +17,24 @@ const ProfileFeature = ({ user }) => {
       onMouseLeave={handleMouseLeave} // hide popover when mouse leaves
     >
       <Popover.Header as="h3" className="center-content">
-        {user.username}
+        {user.username || "No username"}
       </Popover.Header>
       <Popover.Body className="center-content">
         <div className="image-container">
           <img
             src={user.profileImageUrl || defaultProfileImage}
-            alt="profile"
+            alt="profile image"
             height="70px"
             width="70px"
           />
         </div>
-        {user.firstName} {user.lastName}
+        {user.firstName || "No name"} {user.lastName}
         <br />
-        {user.email}
+        {user.email || "No email"}
         <br />
-        {user.gender}
+        {user.gender || "No gender provided"}
         <br />
-        {user.pronouns}
+        {user.pronouns || "No pronouns provided"}
         <br />
         <Link to={`/profilePage/${user.id}`}>View Profile</Link>
       </Popover.Body>
