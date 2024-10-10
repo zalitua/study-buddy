@@ -17,6 +17,7 @@ const Sidebar = () => {
         <Nav.Link as={NavLink} to="/profile">Profile</Nav.Link>
         <Nav.Link as={NavLink} to="/calendar">Calendar</Nav.Link>
         <Nav.Link as={NavLink} to="/tasks">Tasks</Nav.Link>
+        <Nav.Link as={NavLink} to="/forumHome">Forums</Nav.Link>
       </Nav>
     </div>
   );

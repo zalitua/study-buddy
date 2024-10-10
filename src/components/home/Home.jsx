@@ -91,6 +91,15 @@ const Home = () => {
     }
   };
 
+  const handleForum = async () => {
+    try {
+      navigate("/forumHome");
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+
   return (
     <>
       <div className="p-4 box mt-4 text-center">
@@ -122,6 +131,9 @@ const Home = () => {
         {/* New Button for Tasks */}
         <Button variant="primary" onClick={handleNavTasks}>
           Tasks
+        </Button>
+        <Button variant="primary" onClick={handleForum}>
+          Forums
         </Button>
         <Button variant="primary" onClick={handleLogout}>
           Log out

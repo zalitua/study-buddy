@@ -146,9 +146,7 @@ const Chat = () =>{
         if (!msg.trim()) return; //do not send empty messages
 
         try {
-            //toggleEmojiPicker(false);//close the emoji picker
-
-
+           
             const messagesRef = collection(db, "chats", chatId, "messages"); //collection inside the collection
 
             //add the new message to Firestore with sender ID message text and current time
@@ -169,11 +167,8 @@ const Chat = () =>{
                     createdAt: serverTimestamp(), //timestamp of the latest message
                 }
             });
-
-
             //toggleEmojiPicker(false);//close the emoji picker
             setMsg(''); //clear the message input after sending
-            
         } catch (error) {
             console.log("Error sending message:", error);
         }
@@ -415,7 +410,7 @@ const Chat = () =>{
                                 <EmojiPicker onEmojiClick={handleEmoji} />
                             </div>
                         )}
-                        <button onClick={handleSend}>Send</button>
+                        <button onClick={handleSend} >Send</button>
                     </div>
                 </div>:
                 //the user not in the group

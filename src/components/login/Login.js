@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
-import { Form, Alert } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 //import GoogleButton from "react-google-button";
-import { useUserAuth } from '../../context/userAuthContext';
+import { useUserAuth } from "../../context/UserAuthContext";
 import { toast } from "react-toastify";
 
 // Email validation regex
@@ -57,29 +57,11 @@ const Login = () => {
     }
   };
 
-  //Deals with submitting the Google login information
-  /* const handleGoogleSignIn = async (e) => {
-    e.preventDefault();
-    try {
-      //Authenticate with Google credentials
-      await googleSignIn();
-      navigate("/dashboard");
-    } catch (error) {
-      console.log(error.message);
-    }
-  }; */
-
   //Displays form for login options using react-bootstrap
   return (
     <>
       <div className="p-4 box">
         <h2 className="mb-3">StudyBuddy Login</h2>
-        {/* {error && (
-          <Alert variant="primary">
-            Please enter your email and password. Your password must be at least
-            8 characters long.
-          </Alert>
-        )} */}
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Control
@@ -104,14 +86,6 @@ const Login = () => {
           </div>
         </Form>
         <hr />
-        {/* comment */}
-        {/* <div>
-          <GoogleButton
-            className="g-btn"
-            type="dark"
-            onClick={handleGoogleSignIn}
-          />
-        </div> */}
       </div>
       <div className="p-4 box mt-3 text-center">
         Don't have an account? <Link to="/signup">Sign up</Link>

@@ -4,34 +4,30 @@ import { Routes, Route } from "react-router-dom";
 import { UserAuthContextProvider } from './context/userAuthContext'; // Correct import
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "./App.css";
-import Dashboard from "./components/dashboard/Dashboard";
-import Login from "./components/login/Login";
-import Signup from "./components/signup/Signup";
-import Chat from "./components/chat/Chat";
-import Leaderboard from "./components/leaderboard/Leaderboard";
-import ProfileForm from "./components/profile/ProfileForm";
-import ProfilePage from "./components/profile/ProfilePage";
-import Calendar from "./components/calendar/Calendar";
-import Home from "./components/home/Home";
-import Tasks from "./components/tasks/Tasks";
-import Group from "./components/group/Group";
-import Sidebar from "./components/sidebar/Sidebar"; // Import the Sidebar
+
+import { UserAuthContextProvider } from "./context/UserAuthContext";
 import { ProfileProvider } from "./context/ProfileContext";
+
+
+import Sidebar from "./components/sidebar/Sidebar";
+import AppRoutes from "./AppRoutes";
+import "./App.css";
 
 function App() {
   return (
-    <Container fluid>
-      <ToastContainer />
-      <Row>
-        {/* Sidebar */}
-        <Col xs={2} md={1} className="p-0">
-          <Sidebar />
-        </Col>
+    <UserAuthContextProvider>
+      <ProfileProvider>
+        <ToastContainer />
+        <Container fluid>
+          <Row>
+            {/* Sidebar */}
+            <Col xs={2} md={1} className="p-0">
+              <Sidebar />
+            </Col>
 
         {/* Main Content */}
         <Col xs={10} md={12} className="this">
-          <UserAuthContextProvider> {/* Correctly using UserAuthContextProvider */}
+          <UserAuthContextProvider>
             <ProfileProvider>
               <Routes>
                 <Route path="/" element={<Home />} />

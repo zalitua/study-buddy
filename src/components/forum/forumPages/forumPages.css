@@ -1,4 +1,5 @@
-.chat {
+.forumPage{
+
     height: 100vh; 
     display: flex;
     flex-direction: column;
@@ -18,7 +19,12 @@
         height: 50px;
     }
 
-    .messages {
+    .title{
+        text-decoration: underline;
+        font-size: 60px;
+    }
+
+    .messagesContainer{
         padding: 20px;
         flex: 1;
         overflow-y: auto; /*esure scrolling only happens inside messages */
@@ -28,42 +34,32 @@
         min-height:calc(100vh - 200px);
 
         max-height: calc(100vh - 200px); /* adjust height based on screen size */
-    }
+    
 
-    .message {
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 10px;
-        padding: 10px;
-        border-radius: 5px;
-        background-color: #f1f1f1;
+        .message{
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 5px;
+            border-radius: 5px;
 
-        /*handle long messages*/
-        max-width: 80%; 
-        word-wrap: break-word;
-        word-break: break-word; 
-        overflow-wrap: break-word; 
-        
-        button {
-            align-content: center;
-            width: 40%;
-            border-radius: 10px;
-        }
-        .edit-message{
-            input{
-                width:100%;
-                overflow-wrap: break-word;
+            /*handle long messages*/
+            max-width: 80%; 
+            word-wrap: break-word;
+            word-break: break-word; 
+            overflow-wrap: break-word; 
+
+            .username{
+                text-decoration: underline;
+                margin-bottom: 0;
             }
+            p{
+                margin-bottom: 1px;
+            }
+            
         }
     }
 
-    .own {
-        align-self: flex-end; /*align current user's messages to the right*/
-        background-color: #b3d1ff; /*different background color for own messages */
-        text-align: left;
-    }
-
-    .sender {
+    .inputContainer{
         display: flex;
         height: 10vh;
         background: rgb(197, 193, 193);
@@ -90,20 +86,6 @@
             height: 100%;
             width: 15%;
             border-radius: 10px;
-        }
-
-        .emoji{
-            /*the button to get the emojis*/
-            width:5%;
-            font-size: 25px;
-            text-align: center;
-            position: relative;
-        }
-        .emoji-picker {
-            position: absolute;
-            bottom: 100px;/*position above the message bar*/
-            right:0;/*position the picker to the right*/
-            z-index: 1000;/*make the picker at the frount*/
         }
     }
 }

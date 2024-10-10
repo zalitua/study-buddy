@@ -153,9 +153,6 @@ const Group = () => {
         setUserGroups(groups); //update with the real time data
       });
 
-
-      
-
       //return the unsubscribe function to stop listening 
       return unsubscribe;
 
@@ -163,6 +160,7 @@ const Group = () => {
       console.log("Error fetching user groups: ", error);
     }
   };
+  
   //useEffect for the live group updating now whenever your added you update
   useEffect(() => {
     //fetch user groups only if the user is loged in
@@ -322,7 +320,6 @@ const Group = () => {
     //used for testing to see whats being passed
     //console.log("chatID: "+ chatId);
     //console.log("groupID: "+ groupId);
-
     try {
 
       if (!chatId) {
@@ -390,14 +387,21 @@ const Group = () => {
               <li key={group.id}>
                 {group.groupName}
                 <div className="buttonContainer">
-                  <Button onClick={() => openEditGroupModal(group)}>Edit</Button>
+
+                  {/*only allow the creator of the group to edit the group*/}
+                  {group.createdBy ===  auth.currentUser.uid ? (
+                    <Button onClick={() => openEditGroupModal(group)}>Edit</Button>
+                  ) : 
+                    <Button disabled="true" variant="disabled">Edit</Button>
+                  }
+
                   <Button onClick={() => handleNavChat(group.id, group.chatId)}>Chat</Button>
                 </div>
               </li>
             ))}
           </ul>
         </div>
-
+ 
 
       </div>    
       {/*create group modal*/}
