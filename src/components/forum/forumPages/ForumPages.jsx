@@ -34,7 +34,6 @@ const ForumPage = () => {
     }
   };
 
-
   //get the name of the forum
   const getForumName = async () => {
     const forumRef = doc(db, "forums", forumId);
@@ -49,8 +48,6 @@ const ForumPage = () => {
   };
 
 
-
-
   //send a message in the specific forum
   const sendMessage = async () => {
     if (!msg.trim()) return; //no empty messages
@@ -61,7 +58,7 @@ const ForumPage = () => {
       await addDoc(messagesRef, {
         text: msg,
         senderId: user.uid, //users id
-        senderName: username || "No username", //current user's username
+        senderName: username || "No username", //current user username
         createdAt: serverTimestamp(), //when the message was sent
       });
 

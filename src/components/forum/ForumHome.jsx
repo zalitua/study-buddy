@@ -10,23 +10,17 @@ import { collection, onSnapshot, query } from "firebase/firestore";
 const ForumHome = () =>{
 
 
-
   const [forums, setForums] = useState([]);
-
 
   //get all the forums
   const fetchForums = () => {
     try {
-      const user = auth.currentUser;
-      if (!user) {
-        alert("User not logged in!!!");
-        return;
-      }
+      
 
       const forumsRef = collection(db, "forums");
       const q = query(forumsRef);
 
-      // Listen for changes in the 'forums' collection
+      //listen for changes forums
       onSnapshot(q, (snapshot) => {
         const forumList = snapshot.docs.map((doc) => ({
           id: doc.id,
@@ -38,16 +32,11 @@ const ForumHome = () =>{
       console.log("Error fetching forums: ", error);
     }
   };
-  
-
-  
 
   //track any new forums
   useEffect(() => {
     fetchForums();
   }, []);
-
-
 
 
   const navigate = useNavigate();
@@ -76,7 +65,6 @@ const ForumHome = () =>{
                 Back to home
             </Button>
           </div>
-
 
           <h1 className="title">Forums</h1>
 
