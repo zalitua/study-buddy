@@ -12,6 +12,7 @@ import Chat from "./components/chat/Chat";
 import Leaderboard from "./components/leaderboard/Leaderboard";
 import ProfileForm from "./components/profile/ProfileForm";
 import ProfilePage from "./components/profile/ProfilePage";
+import UserList from "./components/profile/UserList";
 import Calendar from "./components/calendar/Calendar";
 import Home from "./components/home/Home";
 import Tasks from "./components/tasks/Tasks";
@@ -45,6 +46,8 @@ function App() {
                 <Route path="/leaderboard" element={<Leaderboard />} />
                 <Route path="/profileForm" element={<ProfileForm />} />
                 <Route path="/profilePage" element={<ProfilePage />} />
+                <Route path="/profilePage/:userId" element={<ProfilePage />} />
+                <Route path="/userList" element={<UserList />} />
                 <Route path="/calendar" element={<Calendar />} />
                 <Route path="/tasks" element={<Tasks />} />
                 <Route path="/forumHome" element={<ForumHome />}/>
