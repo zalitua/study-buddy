@@ -2,8 +2,10 @@ import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 import { UserAuthContextProvider } from "./context/UserAuthContext";
 import { ProfileProvider } from "./context/ProfileContext";
+
 import Sidebar from "./components/sidebar/Sidebar";
 import AppRoutes from "./AppRoutes";
 import "./App.css";
