@@ -10,7 +10,7 @@ const UserList = () => {
   const fetchUsers = async () => {
     setLoading(true);
     try {
-      const q = query(collection(db, "users"), limit(4));
+      const q = query(collection(db, "users"), limit(10));
       const querySnapshot = await getDocs(q);
       const userList = querySnapshot.docs.map((doc) => ({
         id: doc.id,
