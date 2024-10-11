@@ -10,64 +10,88 @@ import {
 import { auth, db } from "../lib/firebase";
 import { doc, setDoc } from "firebase/firestore";
 
-//creates a context object to share authentication data
-const userAuthContext = createContext();
+// Create a context object to share authentication data
+const UserAuthContext = createContext();
 
-//shares authentication data
+// Share authentication data
 export function UserAuthContextProvider({ children }) {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
 
-  //adds a new user document to the users collection
-  function addUser(email) {
-    return setDoc(doc(db, "users", user.uid), {
-      email,
-      id: user.uid,
-      //block[],  ...need to look this up
-    });
+  // Adds a new user document to the users collection
+  async function addUser(email) {
+    try {
+      await setDoc(doc(db, "users", user.uid), {
+        email,
+        id: user.uid,
+        // Add any additional fields here, like 'block', if necessary
+      });
+    } catch (error) {
+      console.error("Error adding user to Firestore:", error);
+    }
   }
 
-  //logs the user in if authenticated
-  function logIn(email, password) {
-    return signInWithEmailAndPassword(auth, email, password);
+  // Logs the user in with email and password
+  async function logIn(email, password) {
+    try {
+      return await signInWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      console.error("Error logging in:", error);
+      throw error; // Rethrow error to handle it in the component where logIn is called
+    }
   }
-  //creates a new user authentication entry
-  function signUp(email, password) {
-    return createUserWithEmailAndPassword(auth, email, password);
+
+  // Creates a new user authentication entry with email and password
+  async function signUp(email, password) {
+    try {
+      return await createUserWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      console.error("Error signing up:", error);
+      throw error;
+    }
   }
-  //logs a user out
-  function logOut() {
-    return signOut(auth);
+
+  // Logs the user out
+  async function logOut() {
+    try {
+      return await signOut(auth);
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
   }
-  //signs a user in using Google credentials
-  function googleSignIn() {
+
+  // Signs a user in using Google credentials
+  async function googleSignIn() {
     const googleAuthProvider = new GoogleAuthProvider();
-    return signInWithPopup(auth, googleAuthProvider);
+    try {
+      return await signInWithPopup(auth, googleAuthProvider);
+    } catch (error) {
+      console.error("Error signing in with Google:", error);
+      throw error;
+    }
   }
 
-  //creates useEffect hook to monitore the user's authentication state
+  // Monitor the user's authentication state
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
-      console.log("Auth", currentuser);
-      setUser(currentuser);
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      console.log("Auth state change detected", currentUser);
+      setUser(currentUser);
     });
 
-    return () => {
-      unsubscribe();
-    };
+    return () => unsubscribe();
   }, []);
 
-  //wraps components that need access to the authentication-related data
+  // Wrap components that need access to the authentication-related data
   return (
-    <userAuthContext.Provider
-      //specifies states and functions to share with other components
+    <UserAuthContext.Provider
+      // Specifies states and functions to share with other components
       value={{ user, logIn, signUp, addUser, logOut, googleSignIn }}
     >
       {children}
-    </userAuthContext.Provider>
+    </UserAuthContext.Provider>
   );
 }
 
-//creates useContext hook to access values of userAuthContext.Provider
+// Creates a hook to access values from UserAuthContext.Provider
 export function useUserAuth() {
-  return useContext(userAuthContext);
+  return useContext(UserAuthContext);
 }
