@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 //import { toast } from "react-toastify";
 //import "react-toastify/dist/ReactToastify.css";
-import { useUserAuth } from "../../context/UserAuthContext";
+import { useUserAuth } from "../../context/userAuthContext";
 
 const ProtectedRoute = ({ children }) => {
   const { user } = useUserAuth();

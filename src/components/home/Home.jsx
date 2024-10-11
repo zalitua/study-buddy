@@ -1,7 +1,6 @@
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router";
-import { useUserAuth } from '../../context/UserAuthContext';
-
+import { useUserAuth } from "../../context/userAuthContext";
 
 //Main UI. Displays relevant information for the user and allows site navigation
 const Home = () => {
@@ -98,7 +97,6 @@ const Home = () => {
       console.log(error.message);
     }
   };
-
 
   return (
     <>
