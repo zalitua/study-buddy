@@ -1,6 +1,6 @@
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router";
-import { useUserAuth } from '../../context/userAuthContext';
+import { useUserAuth } from '../../context/UserAuthContext';
 
 
 //Main UI. Displays relevant information for the user and allows site navigation

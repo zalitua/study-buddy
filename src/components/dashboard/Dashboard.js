@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { db, auth } from "../../lib/firebase"; // Adjust Firebase path as needed
 import { collection, query, orderBy, getDocs, limit, where, onSnapshot } from "firebase/firestore"; 
-import { useUserAuth } from "../../context/userAuthContext"; // Assuming you have user context
+import { useUserAuth } from "../../context/UserAuthContext"; // Assuming you have user context
 import "./Dashboard.css";
 
 const Dashboard = () => {

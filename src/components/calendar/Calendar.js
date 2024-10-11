@@ -3,7 +3,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css"; // Ensure correct calendar styling is imported
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
-import { useUserAuth } from "../../context/userAuthContext"; // Make sure this path is correct
+import { useUserAuth } from "../../context/UserAuthContext"; // Make sure this path is correct
 import { db } from "../../lib/firebase"; // Ensure your Firebase setup is correct
 import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
 import './CalendarPage.css'; // Import your custom CSS
