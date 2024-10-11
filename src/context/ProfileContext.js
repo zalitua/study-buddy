@@ -7,7 +7,7 @@ import {
 } from "react";
 import { db } from "../lib/firebase";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { useUserAuth } from './UserAuthContext';
+import { useUserAuth } from "./userAuthContext";
 
 const ProfileContext = createContext();
 

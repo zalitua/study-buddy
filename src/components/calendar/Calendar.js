@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css"; // Ensure correct calendar styling is imported
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
-import { useUserAuth } from "../../context/UserAuthContext"; // Make sure this path is correct
+import { useUserAuth } from "../../context/userAuthContext"; // Make sure this path is correct
 import { db } from "../../lib/firebase"; // Ensure your Firebase setup is correct
 import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
-import './CalendarPage.css'; // Import your custom CSS
+import "./CalendarPage.css"; // Import your custom CSS
 
 const CalendarPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date()); // Store selected date
@@ -91,7 +91,8 @@ const CalendarPage = () => {
       <ul>
         {availabilities.map((availability, index) => (
           <li key={index}>
-            <strong>{availability.userName}</strong>: {availability.startTime} - {availability.endTime}
+            <strong>{availability.userName}</strong>: {availability.startTime} -{" "}
+            {availability.endTime}
           </li>
         ))}
       </ul>
@@ -102,7 +103,8 @@ const CalendarPage = () => {
     <div className="calendar-page">
       <h2>Group Availabilities</h2>
       <div className="calendar-container">
-        <Calendar onChange={handleDateChange} value={selectedDate} /> {/* Calendar component */}
+        <Calendar onChange={handleDateChange} value={selectedDate} />{" "}
+        {/* Calendar component */}
         <div className="selected-date">
           <h3>Selected Date: {selectedDate.toDateString()}</h3>
         </div>
