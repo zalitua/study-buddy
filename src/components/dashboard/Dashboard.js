@@ -12,6 +12,10 @@ const Dashboard = () => {
   const [userGroups, setUserGroups] = useState([]);
   const [loading, setLoading] = useState(true);
 
+
+  //fix the issue
+
+  
   // Fetch upcoming events, latest messages, leaderboard data, and user groups
   useEffect(() => {
     if (!user) {
