@@ -3,33 +3,9 @@ import { Form, Button, Spinner } from "react-bootstrap";
 import { useProfile } from "../../context/ProfileContext";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import Avatar from "react-nice-avatar";
+//import Avatar from "react-nice-avatar";
 import CustomAvatar from "../avatar/CustomAvatar";
 import ProfilePic from "./ProfilePic";
-/* import avatar1 from "../../assets/avatar1.png";
-import avatar2 from "../../assets/avatar2.png";
-import avatar3 from "../../assets/avatar3.png";
-import avatar4 from "../../assets/avatar4.png";
-import avatar5 from "../../assets/avatar5.png";
-import avatar6 from "../../assets/avatar6.png";
-import avatar7 from "../../assets/avatar7.png";
-import avatar8 from "../../assets/avatar8.png";
-import avatar9 from "../../assets/avatar9.png";
-import avatar10 from "../../assets/avatar10.png";
-
-// Array of avatar image imports
-const avatarOptions = [
-  avatar1,
-  avatar2,
-  avatar3,
-  avatar4,
-  avatar5,
-  avatar6,
-  avatar7,
-  avatar8,
-  avatar9,
-  avatar10,
-]; */
 
 const ProfileForm = () => {
   const { profileData, updateProfileData } = useProfile(); // Access profile and update functions from context
@@ -94,8 +70,6 @@ const ProfileForm = () => {
       pronouns: pronouns === "other" ? otherPN : pronouns,
       avatarConfig,
     };
-
-    console.log(updatedData);
 
     try {
       await updateProfileData(updatedData); // Use context to update profile
@@ -239,41 +213,11 @@ const ProfileForm = () => {
           </Form.Group>
         )}
 
-        {/* Avatar Selection */}
-
-        {/* <Form.Group className="mb-3">
-          <Form.Label>Select Avatar</Form.Label>
-          <div className="d-flex flex-wrap">
-            {avatarOptions.map((avatar, index) => (
-              <div key={index} className="m-2 text-center">
-                <input
-                  type="radio"
-                  name="avatar"
-                  value={avatar}
-                  checked={selectedAvatar === avatar}
-                  onChange={() => setSelectedAvatar(avatar)}
-                  style={{ display: "none" }}
-                  id={`avatar-${index}`}
-                />
-                <label htmlFor={`avatar-${index}`}>
-                  <img
-                    src={avatar}
-                    alt={`Avatar ${index + 1}`}
-                    width="50"
-                    style={{
-                      border:
-                        selectedAvatar === avatar ? "2px solid blue" : "none",
-                      cursor: "pointer",
-                    }}
-                  />
-                </label>
-              </div>
-            ))}
-          </div>
-        </Form.Group> */}
-
         {/* Custom Avatar */}
-        <CustomAvatar onSaveAvatar={handleSaveAvatar} />
+        <CustomAvatar
+          onSaveAvatar={handleSaveAvatar}
+          avatarConfig={avatarConfig}
+        />
 
         {/* Profile Picture Upload */}
         <div className="d-grid gap-2 mt-3">

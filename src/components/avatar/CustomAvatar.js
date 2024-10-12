@@ -2,24 +2,39 @@ import React, { useState } from "react";
 import Avatar, { genConfig } from "react-nice-avatar";
 import { Modal, Button } from "react-bootstrap";
 
-const CustomAvatar = ({ onSaveAvatar }) => {
-  const [showModal, setShowModal] = useState(false); // To control modal visibility
+const CustomAvatar = ({ onSaveAvatar, avatarConfig }) => {
+  const [showModal, setShowModal] = useState(false);
   const [sex] = useState("man");
-  const [hairStyle, setHairStyle] = useState("normal");
-  const [eyeStyle, setEyeStyle] = useState("circle");
-  const [mouthStyle, setMouthStyle] = useState("smile");
-  const [glassesStyle, setGlassesStyle] = useState("none");
-  const [bgColor, setBgColor] = useState("#272CC4");
-  const [faceColor, setFaceColor] = useState("#F9C9B6");
-  const [earSize] = useState("small");
-  const [hairColor, setHairColor] = useState("#000000");
+  const [hairStyle, setHairStyle] = useState(
+    avatarConfig?.hairStyle || "normal"
+  );
+  const [eyeStyle, setEyeStyle] = useState(avatarConfig?.eyeStyle || "circle");
+  const [mouthStyle, setMouthStyle] = useState(
+    avatarConfig?.mouthStyle || "smile"
+  );
+  const [glassesStyle, setGlassesStyle] = useState(
+    avatarConfig?.glassesStyle || "none"
+  );
+  const [bgColor, setBgColor] = useState(avatarConfig?.bgColor || "#272CC4");
+  const [faceColor, setFaceColor] = useState(
+    avatarConfig?.faceColor || "#F9C9B6"
+  );
+  const [earSize] = useState(avatarConfig?.earSize || "small");
+  const [hairColor, setHairColor] = useState(
+    avatarConfig?.hairColor || "#000000"
+  );
   const [hairColorRandom] = useState(false);
   const [hatStyle] = useState("none");
-  const [noseStyle, setNoseStyle] = useState("short");
-  const [shirtStyle, setShirtStyle] = useState("hoody");
-  const [shirtColor, setShirtColor] = useState("#FFFFFF");
+  const [noseStyle, setNoseStyle] = useState(
+    avatarConfig?.noseStyle || "short"
+  );
+  const [shirtStyle, setShirtStyle] = useState(
+    avatarConfig?.shirtStyle || "hoody"
+  );
+  const [shirtColor, setShirtColor] = useState(
+    avatarConfig?.shirtColor || "#FFFFFF"
+  );
 
-  const sexes = ["man", "woman"];
   const hairStyles = ["normal", "thick", "mohawk", "womanLong", "womanShort"];
   const eyeStyles = ["circle", "oval", "smile"];
   const noseStyles = ["short", "long", "round"];
@@ -58,7 +73,7 @@ const CustomAvatar = ({ onSaveAvatar }) => {
   return (
     <div>
       {/* Avatar Display */}
-      <Avatar style={{ width: "8rem", height: "8rem" }} {...config} />
+      <Avatar style={{ width: "6rem", height: "6rem" }} {...config} />
 
       {/* create avatar button */}
       <Button varient="primary" onClick={handleOpenModal}>
@@ -70,6 +85,8 @@ const CustomAvatar = ({ onSaveAvatar }) => {
           <Modal.Title>Create a Custom Avatar</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          {/* Avatar Display */}
+          <Avatar style={{ width: "8rem", height: "8rem" }} {...config} />
           {/* Option Selectors */}
           <div>
             <label>Background Color:</label>
