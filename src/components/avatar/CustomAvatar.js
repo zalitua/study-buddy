@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import Avatar, { genConfig } from "react-nice-avatar";
 
 const CustomAvatar = () => {
-  const [sex, setSex] = useState("man");
+  const [sex] = useState("man");
   const [hairStyle, setHairStyle] = useState("normal");
   const [eyeStyle, setEyeStyle] = useState("circle");
   const [mouthStyle, setMouthStyle] = useState("smile");
   const [glassesStyle, setGlassesStyle] = useState("none");
   const [bgColor, setBgColor] = useState("#272CC4");
   const [faceColor, setFaceColor] = useState("#F9C9B6");
-  const [earSize, setEarSize] = useState("small");
+  const [earSize] = useState("small");
   const [hairColor, setHairColor] = useState("#000000");
-  const [hatColor, setHatColor] = useState("#FFD700");
+  const [hairColorRandom] = useState(false);
   const [hatStyle, setHatStyle] = useState("none");
   const [noseStyle, setNoseStyle] = useState("short");
   const [shirtStyle, setShirtStyle] = useState("hoody");
@@ -20,8 +20,10 @@ const CustomAvatar = () => {
   const sexes = ["man", "woman"];
   const hairStyles = ["normal", "thick", "mohawk", "womanLong", "womanShort"];
   const eyeStyles = ["circle", "oval", "smile"];
+  const noseStyles = ["short", "long", "round"];
   const mouthStyles = ["laugh", "smile", "peace"];
   const glassesStyles = ["none", "round", "square"];
+  const shirtStyles = ["hoody", "short", "polo"];
 
   // Generate avatar config based on selected options
   const config = genConfig({
@@ -34,7 +36,7 @@ const CustomAvatar = () => {
     faceColor,
     earSize,
     hairColor,
-    hatColor,
+    hairColorRandom,
     hatStyle,
     noseStyle,
     shirtStyle,
@@ -48,22 +50,29 @@ const CustomAvatar = () => {
 
       {/* Option Selectors */}
       <div>
-        <label>Gender:</label>
-        <select value={sex} onChange={(e) => setSex(e.target.value)}>
-          {sexes.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div>
         <label>Background Color:</label>
         <input
           type="color"
           value={bgColor}
           onChange={(e) => setBgColor(e.target.value)}
+        />
+      </div>
+
+      <div>
+        <label>Face Color:</label>
+        <input
+          type="color"
+          value={faceColor}
+          onChange={(e) => setFaceColor(e.target.value)}
+        />
+      </div>
+
+      <div>
+        <label>Hair Color:</label>
+        <input
+          type="color"
+          value={hairColor}
+          onChange={(e) => setHairColor(e.target.value)}
         />
       </div>
 
@@ -85,6 +94,20 @@ const CustomAvatar = () => {
         <label>Eye Style:</label>
         <select value={eyeStyle} onChange={(e) => setEyeStyle(e.target.value)}>
           {eyeStyles.map((style) => (
+            <option key={style} value={style}>
+              {style}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div>
+        <label>Nose Style:</label>
+        <select
+          value={noseStyle}
+          onChange={(e) => setNoseStyle(e.target.value)}
+        >
+          {noseStyles.map((style) => (
             <option key={style} value={style}>
               {style}
             </option>
@@ -118,6 +141,29 @@ const CustomAvatar = () => {
             </option>
           ))}
         </select>
+      </div>
+
+      <div>
+        <label>Shirt Style:</label>
+        <select
+          value={shirtStyle}
+          onChange={(e) => setShirtStyle(e.target.value)}
+        >
+          {shirtStyles.map((style) => (
+            <option key={style} value={style}>
+              {style}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div>
+        <label>Shirt Color:</label>
+        <input
+          type="color"
+          value={shirtColor}
+          onChange={(e) => setShirtColor(e.target.value)}
+        />
       </div>
     </div>
   );
