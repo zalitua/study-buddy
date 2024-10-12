@@ -77,7 +77,9 @@ const CustomAvatar = ({ onSaveAvatar, avatarConfig }) => {
 
       {/* create avatar button */}
       <Button varient="primary" onClick={handleOpenModal}>
-        Create Avatar
+        {avatarConfig && Object.keys(avatarConfig).length > 0
+          ? "Update Avatar"
+          : "Create Avatar"}
       </Button>
 
       <Modal show={showModal} onHide={handleCloseModal}>

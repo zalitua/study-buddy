@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Form, Button, Spinner } from "react-bootstrap";
 import { useProfile } from "../../context/ProfileContext";
 import { toast } from "react-toastify";
@@ -18,19 +18,15 @@ const ProfileForm = () => {
   const [pronouns, setPronouns] = useState(profileData?.pronouns || "");
   const [other, setOther] = useState("");
   const [otherPN, setOtherPN] = useState("");
-  /* const [selectedAvatar, setSelectedAvatar] = useState(
-    profileData?.avatarUrl || avatarOptions[0]
-  ); */
   const [profileImage, setProfileImage] = useState(
     profileData?.profileImageUrl
+  );
+  const [avatarConfig, setAvatarConfig] = useState(
+    profileData.avatarConfig || {}
   );
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const isEdit = firstName && lastName && username;
-  // State to store the avatar configuration
-  const [avatarConfig, setAvatarConfig] = useState(
-    profileData.avatarConfig || {}
-  );
 
   const handleImageUpload = (url) => {
     setProfileImage(url);
