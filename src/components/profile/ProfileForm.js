@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Form, Button, Spinner } from "react-bootstrap";
 import { useProfile } from "../../context/ProfileContext";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Avatar from "react-nice-avatar";
+import CustomAvatar from "../avatar/CustomAvatar";
 import ProfilePic from "./ProfilePic";
-import avatar1 from "../../assets/avatar1.png";
+/* import avatar1 from "../../assets/avatar1.png";
 import avatar2 from "../../assets/avatar2.png";
 import avatar3 from "../../assets/avatar3.png";
 import avatar4 from "../../assets/avatar4.png";
@@ -27,7 +29,7 @@ const avatarOptions = [
   avatar8,
   avatar9,
   avatar10,
-];
+]; */
 
 const ProfileForm = () => {
   const { profileData, updateProfileData } = useProfile(); // Access profile and update functions from context
@@ -40,15 +42,19 @@ const ProfileForm = () => {
   const [pronouns, setPronouns] = useState(profileData?.pronouns || "");
   const [other, setOther] = useState("");
   const [otherPN, setOtherPN] = useState("");
-  const [selectedAvatar, setSelectedAvatar] = useState(
+  /* const [selectedAvatar, setSelectedAvatar] = useState(
     profileData?.avatarUrl || avatarOptions[0]
-  );
+  ); */
   const [profileImage, setProfileImage] = useState(
     profileData?.profileImageUrl
   );
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const isEdit = firstName && lastName && username;
+  // State to store the avatar configuration
+  const [avatarConfig, setAvatarConfig] = useState(
+    profileData.avatarConfig || {}
+  );
 
   const handleImageUpload = (url) => {
     setProfileImage(url);
@@ -63,6 +69,11 @@ const ProfileForm = () => {
       return false;
     }
     return true;
+  };
+
+  // Function to handle avatar saving from CustomAvatar component
+  const handleSaveAvatar = (newAvatarConfig) => {
+    setAvatarConfig(newAvatarConfig); // Update avatar configuration
   };
 
   // Handle form submission to update profile data
@@ -81,7 +92,7 @@ const ProfileForm = () => {
       date,
       gender: gender === "other" ? other : gender,
       pronouns: pronouns === "other" ? otherPN : pronouns,
-      avatarUrl: selectedAvatar,
+      avatarConfig,
     };
 
     console.log(updatedData);
@@ -229,7 +240,8 @@ const ProfileForm = () => {
         )}
 
         {/* Avatar Selection */}
-        <Form.Group className="mb-3">
+
+        {/* <Form.Group className="mb-3">
           <Form.Label>Select Avatar</Form.Label>
           <div className="d-flex flex-wrap">
             {avatarOptions.map((avatar, index) => (
@@ -258,7 +270,10 @@ const ProfileForm = () => {
               </div>
             ))}
           </div>
-        </Form.Group>
+        </Form.Group> */}
+
+        {/* Custom Avatar */}
+        <CustomAvatar onSaveAvatar={handleSaveAvatar} />
 
         {/* Profile Picture Upload */}
         <div className="d-grid gap-2 mt-3">
