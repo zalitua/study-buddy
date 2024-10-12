@@ -7,6 +7,15 @@ const CustomAvatar = () => {
   const [eyeStyle, setEyeStyle] = useState("circle");
   const [mouthStyle, setMouthStyle] = useState("smile");
   const [glassesStyle, setGlassesStyle] = useState("none");
+  const [bgColor, setBgColor] = useState("#272CC4");
+  const [faceColor, setFaceColor] = useState("#F9C9B6");
+  const [earSize, setEarSize] = useState("small");
+  const [hairColor, setHairColor] = useState("#000000");
+  const [hatColor, setHatColor] = useState("#FFD700");
+  const [hatStyle, setHatStyle] = useState("none");
+  const [noseStyle, setNoseStyle] = useState("short");
+  const [shirtStyle, setShirtStyle] = useState("hoody");
+  const [shirtColor, setShirtColor] = useState("#FFFFFF");
 
   const sexes = ["man", "woman"];
   const hairStyles = ["normal", "thick", "mohawk", "womanLong", "womanShort"];
@@ -21,6 +30,15 @@ const CustomAvatar = () => {
     eyeStyle,
     mouthStyle,
     glassesStyle,
+    bgColor,
+    faceColor,
+    earSize,
+    hairColor,
+    hatColor,
+    hatStyle,
+    noseStyle,
+    shirtStyle,
+    shirtColor,
   });
 
   return (
@@ -38,6 +56,15 @@ const CustomAvatar = () => {
             </option>
           ))}
         </select>
+      </div>
+
+      <div>
+        <label>Background Color:</label>
+        <input
+          type="color"
+          value={bgColor}
+          onChange={(e) => setBgColor(e.target.value)}
+        />
       </div>
 
       <div>
