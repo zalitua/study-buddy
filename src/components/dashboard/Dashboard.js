@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Table, Spinner, Alert } from "react-bootstrap";
 import { db, auth } from "../../lib/firebase"; // Adjust Firebase path as needed
-import { collection, query, orderBy, getDocs, limit, where, onSnapshot } from "firebase/firestore"; 
+import {
+  collection,
+  query,
+  orderBy,
+  getDocs,
+  limit,
+  where,
+  onSnapshot,
+} from "firebase/firestore";
 import { useUserAuth } from "../../context/userAuthContext"; // Assuming you have user context
 import "./Dashboard.css";
 
@@ -15,7 +23,19 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // Fetch upcoming tasks, availabilities, and other data
+
+  //fix the issue
+
+  
+  // Fetch upcoming events, latest messages, leaderboard data, and user groups
+  
+  // Fetch upcoming events, latest messages, leaderboard data, and user groups
+  
+  // Fetch upcoming events, latest messages, leaderboard data, and user groups
+  
+  // Fetch upcoming events, latest messages, leaderboard data, and user groups
+  
+  // Fetch upcoming events, latest messages, leaderboard data, and user groups
   useEffect(() => {
     if (!user) {
       setLoading(false);
@@ -232,14 +252,23 @@ const Dashboard = () => {
           latestMessages.map((messageInfo, index) => (
             <div key={index}>
               <h3>{messageInfo.groupName}</h3>
-              <p><strong>From:</strong> {messageInfo.latestMessage.senderName}</p>
-              <p><strong>Message:</strong> {messageInfo.latestMessage.text}</p>
               <p>
-                <strong>Sent At:</strong> 
-                {messageInfo.latestMessage.createdAt 
-                  ? (typeof messageInfo.latestMessage.createdAt.toDate === 'function' 
-                      ? new Date(messageInfo.latestMessage.createdAt.toDate()).toLocaleString() 
-                      : new Date(messageInfo.latestMessage.createdAt).toLocaleString())
+                <strong>From:</strong> {messageInfo.latestMessage.senderName}
+              </p>
+              <p>
+                <strong>Message:</strong> {messageInfo.latestMessage.text}
+              </p>
+              <p>
+                <strong>Sent At:</strong>
+                {messageInfo.latestMessage.createdAt
+                  ? typeof messageInfo.latestMessage.createdAt.toDate ===
+                    "function"
+                    ? new Date(
+                        messageInfo.latestMessage.createdAt.toDate()
+                      ).toLocaleString()
+                    : new Date(
+                        messageInfo.latestMessage.createdAt
+                      ).toLocaleString()
                   : "Date not available"}
               </p>
             </div>

@@ -12,10 +12,9 @@ react-toastify: npm install --save react-toastify //currently not being used. bo
 react-bootstrap: npm install react-bootstrap bootstrap
 react-google-button: npm install --save react-google-button
 uuid: npm install uuid
+react-nice-avatar: npm install react-nice-avatar
 
 react-calendar: npm install react-calendar
 
-
 Chat:
 React emoji: npm i emoji-picker-react
-

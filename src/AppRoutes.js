@@ -14,6 +14,7 @@ import Calendar from "./components/calendar/Calendar";
 import Home from "./components/home/Home";
 import Tasks from "./components/tasks/Tasks";
 import Group from "./components/group/Group";
+import CustomAvatar from "./components/avatar/CustomAvatar";
 
 import ForumHome from "./components/forum/ForumHome";
 import ForumPage from "./components/forum/forumPages/ForumPages";
@@ -94,6 +95,7 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       />
+      <Route path="/customAvatar" element={<CustomAvatar />} />
       <Route
         path="/tasks"
         element={
@@ -102,21 +104,23 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       />
-      <Route 
-        path="/forumHome" 
+      <Route
+        path="/forumHome"
         element={
           <ProtectedRoute>
             <ForumHome />
           </ProtectedRoute>
-        }/>
-      <Route 
-        path="/forumHome/:forumId" 
+        }
+      />
+      <Route
+        path="/forumHome/:forumId"
         element={
           <ProtectedRoute>
             <ForumPage />
           </ProtectedRoute>
-        }/>{/*nav to a specific forum*/}
-              
+        }
+      />
+      {/*nav to a specific forum*/}
     </Routes>
   );
 }
