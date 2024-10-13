@@ -1,0 +1,38 @@
+.groupPage {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  
+
+    .groupName{
+        font-size: 50px;
+        text-decoration: underline;
+    }
+    
+    .groupButtons {
+        margin-bottom: 20px;
+    }
+    
+    button {
+        margin-right: 10px;
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    
+    button:hover {
+        background-color: #0056b3;
+    }
+    
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    
+    li {
+        padding: 5px 0;
+    }
+}
+  

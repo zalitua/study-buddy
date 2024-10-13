@@ -334,6 +334,16 @@ const Group = () => {
     }
   };
 
+  const handleNavGroup = (groupId) => {
+    try {
+      
+      navigate(`/group/groupPage/${groupId}/`);//navigate to each unique chat
+    
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
 
 
   return (
@@ -396,6 +406,7 @@ const Group = () => {
                   }
 
                   <Button onClick={() => handleNavChat(group.id, group.chatId)}>Chat</Button>
+                  <Button onClick={() => handleNavGroup(group.id)}>Group</Button>
                 </div>
               </li>
             ))}
@@ -502,3 +513,4 @@ const Group = () => {
 
 
 export default Group
+

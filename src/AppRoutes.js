@@ -20,6 +20,7 @@ import ForumHome from "./components/forum/ForumHome";
 import ForumPage from "./components/forum/forumPages/ForumPages";
 
 import ProtectedRoute from "./components/protectedroutes/ProtectedRoute";
+import GroupPage from "./components/group/groupPage/GroupPage";
 
 // define routes for app
 function AppRoutes() {
@@ -121,6 +122,15 @@ function AppRoutes() {
         }
       />
       {/*nav to a specific forum*/}
+      <Route
+        path="/group/groupPage/:groupId"
+        element={
+          <ProtectedRoute>
+            <GroupPage />
+          </ProtectedRoute>
+        }
+      />
+
     </Routes>
   );
 }

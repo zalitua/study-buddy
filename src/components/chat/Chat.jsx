@@ -1,9 +1,6 @@
 //file which stores the majority of the chat functions
 import { Button, Modal } from "react-bootstrap";
 
-
-
-
 import './chat.css'
 import { auth } from "../../lib/firebase";
 import { db } from "../../lib/firebase";
