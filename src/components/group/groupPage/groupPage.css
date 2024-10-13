@@ -22,6 +22,10 @@
         cursor: pointer;
     }
     
+    .members{
+        flex: auto;
+    }
+
     button:hover {
         background-color: #0056b3;
     }

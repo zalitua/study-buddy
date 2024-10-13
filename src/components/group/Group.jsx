@@ -402,7 +402,7 @@ const Group = () => {
                   {group.createdBy ===  auth.currentUser.uid ? (
                     <Button onClick={() => openEditGroupModal(group)}>Edit</Button>
                   ) : 
-                    <Button disabled="true" variant="disabled">Edit</Button>
+                    <Button disabled={true} variant="disabled">Edit</Button>
                   }
 
                   <Button onClick={() => handleNavChat(group.id, group.chatId)}>Chat</Button>
