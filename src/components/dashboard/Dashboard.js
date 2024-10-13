@@ -23,10 +23,8 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-
   //fix the issue
 
-  
   // Fetch upcoming events, latest messages, leaderboard data, and user groups
   
   // Fetch upcoming events, latest messages, leaderboard data, and user groups
