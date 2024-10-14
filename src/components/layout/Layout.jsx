@@ -15,7 +15,7 @@ const Layout = () => {
         </div>
 
         {/* Main content (Outlet) */}
-        <div className="outlet-container p-3 bg-light rounded shadow">
+        <div className="outlet-container p-3 rounded shadow">
           <Outlet />
         </div>
       </div>
