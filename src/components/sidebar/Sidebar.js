@@ -6,7 +6,7 @@ const Sidebar = () => {
   return (
     <div
       className="sidebar"
-      style={{ width: "250px", height: "100vh", backgroundColor: "#f8f9fa" }}
+      style={{ width: "250px", height: "auto", backgroundColor: "#f8f9fa" }}
     >
       <Nav className="flex-column p-3">
         <h4>StudyBuddy</h4>
