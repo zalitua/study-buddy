@@ -466,15 +466,19 @@ const Group = () => {
               />
             </Form.Group>
           </Form>
+
+
           <p>Current Members:</p>
-          <ul>
-            {editSelectedUsers.map((user) => (
-              <li key={user.id}>
-                {user.username || user.email}
-                <button onClick={() => handleRemoveUser(user)}>Remove</button>
-              </li>
-            ))}
-          </ul>
+          <div className="edit-current-members">
+            <ul>
+              {editSelectedUsers.map((user) => (
+                <li key={user.id}>
+                  {user.username || user.email}
+                  <button onClick={() => handleRemoveUser(user)}>Remove</button>
+                </li>
+              ))}
+            </ul>
+          </div>
           <p>Add Users:</p>
           <input
             type="text"
