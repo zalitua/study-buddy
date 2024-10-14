@@ -91,19 +91,10 @@ const GroupPage = () => {
     }
 
 
-
-
     //group use effect
     //run each time the group id changes
     useEffect(() => {
-        fetchGroup();
-        
-
-        console.log(members);
-        console.log("users");
-        console.log(users);
-
-        
+        fetchGroup();       
     }, []);
 
     //users use effect
