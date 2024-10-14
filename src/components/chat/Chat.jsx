@@ -1,9 +1,6 @@
 //file which stores the majority of the chat functions
 import { Button, Modal } from "react-bootstrap";
 
-
-
-
 import './chat.css'
 import { auth } from "../../lib/firebase";
 import { db } from "../../lib/firebase";
@@ -318,7 +315,7 @@ const Chat = () =>{
             console.log(error.message);
         }
     };
-    const handleNavGroup = async () => {
+    const handleNavGroups = async () => {
         //handle user going to the group
         try {
             navigate("/group");
@@ -327,6 +324,16 @@ const Chat = () =>{
         }
     };
 
+
+    const handleNavGroupPage = (groupId) => {
+        try {
+          
+          navigate(`/group/groupPage/${groupId}/`);//navigate to each unique chat
+        
+        } catch (error) {
+          console.log(error.message);
+        }
+      }
 
 
     return(
@@ -337,9 +344,12 @@ const Chat = () =>{
                     Dashboard
                 </Button>
                 */}
-                <Button variant="primary" onClick={handleNavGroup}>
+                <Button variant="primary" onClick={handleNavGroups}>
                     Back to Groups
                 </Button>
+                
+                <Button onClick={() => handleNavGroupPage(groupId)}>Group Page</Button>
+
                 
             </div>
 

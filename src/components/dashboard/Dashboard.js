@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Table, Spinner, Alert } from "react-bootstrap";
 import { db, auth } from "../../lib/firebase"; // Adjust Firebase path as needed
 import {
   collection,
@@ -14,14 +15,24 @@ import "./Dashboard.css";
 
 const Dashboard = () => {
   const { user } = useUserAuth(); // Accessing the logged-in user's info
-  const [upcomingEvents, setUpcomingEvents] = useState([]);
+  const [upcomingTasks, setUpcomingTasks] = useState([]);
+  const [upcomingAvailabilities, setUpcomingAvailabilities] = useState([]); // Store group availabilities
   const [latestMessages, setLatestMessages] = useState([]); // To store latest messages from all groups
   const [topThreeUsers, setTopThreeUsers] = useState([]);
   const [userGroups, setUserGroups] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   //fix the issue
 
+  // Fetch upcoming events, latest messages, leaderboard data, and user groups
+  
+  // Fetch upcoming events, latest messages, leaderboard data, and user groups
+  
+  // Fetch upcoming events, latest messages, leaderboard data, and user groups
+  
+  // Fetch upcoming events, latest messages, leaderboard data, and user groups
+  
   // Fetch upcoming events, latest messages, leaderboard data, and user groups
   useEffect(() => {
     if (!user) {
@@ -32,46 +43,71 @@ const Dashboard = () => {
     const fetchAllData = async () => {
       try {
         setLoading(true);
+        const today = new Date();
+        const fiveDaysFromNow = new Date();
+        fiveDaysFromNow.setDate(today.getDate() + 5); // Add 5 days to current date
 
-        // Fetch upcoming events
-        const fetchUpcomingEvents = async () => {
-          const today = new Date();
-          const thirtyDaysFromNow = new Date(today);
-          thirtyDaysFromNow.setDate(today.getDate() + 30);
-
-          const eventsQuery = query(
-            collection(db, "events"),
-            orderBy("date", "asc") // Order events by date
+        // Fetch tasks within the next 5 days
+        const fetchUpcomingTasks = async () => {
+          const tasksQuery = query(
+            collection(db, "tasks"), // Assuming your tasks are stored in the 'tasks' collection
+            orderBy("dueDate", "asc")
           );
-          const querySnapshot = await getDocs(eventsQuery);
-          const eventData = querySnapshot.docs.map((doc) => ({
+          const querySnapshot = await getDocs(tasksQuery);
+          const taskData = querySnapshot.docs.map((doc) => ({
             id: doc.id,
             ...doc.data(),
           }));
 
-          const filteredEvents = eventData.filter((event) => {
-            const eventDate = new Date(event.date);
-            return eventDate >= today && eventDate <= thirtyDaysFromNow;
+          // Filter tasks within the next 5 days
+          const filteredTasks = taskData.filter((task) => {
+            const taskDate = new Date(task.dueDate);
+            return taskDate >= today && taskDate <= fiveDaysFromNow;
           });
 
-          setUpcomingEvents(filteredEvents);
+          setUpcomingTasks(filteredTasks);
         };
 
-        // Fetch top 3 users
+        // Fetch group availabilities within the next 5 days
+        const fetchUpcomingAvailabilities = async () => {
+          const availabilitiesQuery = query(
+            collection(db, "availabilities"), // Assuming your calendar events are in 'availabilities' collection
+            orderBy("date", "asc")
+          );
+          const querySnapshot = await getDocs(availabilitiesQuery);
+          const availabilityData = querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+
+          // Filter availabilities within the next 5 days
+          const filteredAvailabilities = availabilityData.filter((availability) => {
+            const availabilityDate = new Date(availability.date);
+            return availabilityDate >= today && availabilityDate <= fiveDaysFromNow;
+          });
+
+          setUpcomingAvailabilities(filteredAvailabilities);
+        };
+
+        // Fetch top 3 users from leaderboard
         const fetchTopThreeUsers = async () => {
           const leaderboardQuery = query(
-            collection(db, "leaderboard"),
-            orderBy("score", "desc"),
+            collection(db, "users"), // Access the 'users' collection
+            orderBy("points", "desc"), // Order by top-level 'points'
             limit(3) // Get the top 3 users
           );
           const querySnapshot = await getDocs(leaderboardQuery);
-          const leaderboardData = querySnapshot.docs.map((doc, index) => ({
-            id: doc.id,
-            rank: index + 1,
-            ...doc.data(),
-          }));
 
-          setTopThreeUsers(leaderboardData);
+          if (!querySnapshot.empty) {
+            const leaderboardData = querySnapshot.docs.map((doc, index) => ({
+              id: doc.id,
+              rank: index + 1, // Rank based on order in the query
+              username: doc.data().username, // Access 'username' from the document
+              points: doc.data().points, // Access 'points' from the document
+            }));
+
+            setTopThreeUsers(leaderboardData);
+          }
         };
 
         // Fetch latest messages from groups
@@ -101,7 +137,7 @@ const Dashboard = () => {
             }
           });
 
-          setLatestMessages(latestMessagesData); // Display the latest message from all groups
+          setLatestMessages(latestMessagesData);
         };
 
         // Fetch user groups
@@ -128,7 +164,6 @@ const Dashboard = () => {
               setUserGroups(groups);
             });
 
-            // Return the unsubscribe function to stop listening when the component unmounts
             return unsubscribe;
           } catch (error) {
             console.error("Error fetching user groups:", error);
@@ -137,7 +172,8 @@ const Dashboard = () => {
 
         // Execute the fetch functions
         await Promise.all([
-          fetchUpcomingEvents(),
+          fetchUpcomingTasks(),
+          fetchUpcomingAvailabilities(),
           fetchTopThreeUsers(),
           fetchLatestMessagesFromGroups(),
         ]);
@@ -145,7 +181,6 @@ const Dashboard = () => {
         const unsubscribeFromGroups = fetchUserGroups();
         setLoading(false);
 
-        // Cleanup: Unsubscribe from the group listener
         return () => {
           if (unsubscribeFromGroups) {
             unsubscribeFromGroups();
@@ -168,30 +203,45 @@ const Dashboard = () => {
     <div className="dashboard-container">
       <h1>Dashboard Overview</h1>
 
-      {/* Upcoming Events Section */}
-      <section className="dashboard-section">
-        <h2>Upcoming Events</h2>
-        {upcomingEvents.length > 0 ? (
-          <ul>
-            {upcomingEvents.map((event) => (
-              <li key={event.id}>
-                <strong>Event Title:</strong> {event.title}
-                <br />
-                <strong>Event Date:</strong>{" "}
-                {event.date
-                  ? new Date(event.date).toDateString()
-                  : "Date not available"}
-                <br />
-                <strong>Event Time:</strong> {event.time}
-                <br />
-                <strong>Event Location:</strong> {event.location}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No upcoming events.</p>
-        )}
-      </section>
+      {/* Two-column layout */}
+      <div className="dashboard-grid">
+        {/* Upcoming Tasks Section */}
+        <section className="dashboard-section">
+          <h2>Upcoming Tasks in the Next 5 Days</h2>
+          {upcomingTasks.length > 0 ? (
+            <ul>
+              {upcomingTasks.map((task) => (
+                <li key={task.id}>
+                  <strong>Task Title:</strong> {task.title}<br />
+                  <strong>Due Date:</strong> {task.dueDate ? new Date(task.dueDate).toDateString() : "Date not available"}<br />
+                  <strong>Task Details:</strong> {task.details}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No tasks in the next 5 days.</p>
+          )}
+        </section>
+
+        {/* Upcoming Group Availabilities Section */}
+        <section className="dashboard-section">
+          <h2>Group Availabilities in the Next 5 Days</h2>
+          {upcomingAvailabilities.length > 0 ? (
+            <ul>
+              {upcomingAvailabilities.map((availability) => (
+                <li key={availability.id}>
+                  <strong>Group Member:</strong> {availability.userName}<br />
+                  <strong>Date:</strong> {new Date(availability.date).toDateString()}<br />
+                  <strong>Start Time:</strong> {availability.startTime}<br />
+                  <strong>End Time:</strong> {availability.endTime}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No availabilities in the next 5 days.</p>
+          )}
+        </section>
+      </div>
 
       {/* Latest Chat Messages from All Groups Section */}
       <section className="dashboard-section">
@@ -233,38 +283,18 @@ const Dashboard = () => {
           <ul>
             {topThreeUsers.map((user) => (
               <li key={user.id}>
-                <strong>Rank:</strong> {user.rank}
-                <br />
-                <strong>Username:</strong> {user.username}
-                <br />
+                <strong>Rank:</strong> {user.rank}<br />
+                <strong>Username:</strong> {user.username}<br />
                 <strong>Points:</strong> {user.points}
               </li>
             ))}
-          </ul>
-        ) : (
-          <p>No leaderboard data available.</p>
-        )}
-      </section>
+            </ul>
+          ) : (
+            <p>No leaderboard data available.</p>
+          )}
+        </section>
+      </div>
+    );
+  };
 
-      {/* User Groups Section */}
-      <section className="dashboard-section">
-        <h2>Your Groups</h2>
-        {userGroups.length > 0 ? (
-          <ul>
-            {userGroups.map((group) => (
-              <li key={group.id}>
-                <strong>Group Name:</strong> {group.groupName}
-                <br />
-                <strong>Members:</strong> {group.members.length}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No groups available.</p>
-        )}
-      </section>
-    </div>
-  );
-};
-
-export default Dashboard;
+  export default Dashboard;

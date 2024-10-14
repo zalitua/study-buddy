@@ -1,148 +1,93 @@
-/* General styling for the dashboard container */
 .dashboard-container {
-  background-color: #FACEF0; /* Light pink background */
-  font-family: 'Coiny', cursive; /* Use Coiny font */
-  color: #F59BE7; /* Darker pink text color */
-  padding: 20px;
-  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-}
-
-/* Styling for sections */
-.dashboard-section {
-  background-color: white;
-  border-radius: 15px;
+  background-color: #FACEF0; /* Light pink background */
   padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 80%;
-  text-align: center;
+  font-family: 'Coiny', cursive;
+  color: #F59BE7; /* Darker pink text color */
 }
 
 h1 {
   font-size: 2.5rem;
-  color: #F59BE7; /* Dark pink */
-}
-
-/* Styling for welcome message */
-h2 {
-  font-size: 2rem;
-  color: #F59BE7; /* Dark pink */
-  margin-bottom: 1rem;
-}
-
-h3 {
-  font-size: 1.5rem;
-  color: #F59BE7; /* Dark pink */
-}
-
-/* For the progress tracker bar */
-.progress-tracker {
-  background-color: #FACEF0; /* Light pink */
-  border-radius: 15px;
-  padding: 10px;
-  margin: 20px 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.progress-tracker-bar {
-  background-color: #F59BE7; /* Darker pink */
-  border-radius: 50px;
-  height: 15px;
-  width: 80%;
-  margin-left: 10px;
-}
-
-/* Sidebar styles */
-.sidebar {
-  background-color: white;
-  color: #F59BE7; /* Dark pink */
-  padding: 20px;
-  border-radius: 0 20px 20px 0;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 200px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.sidebar h2 {
-  font-size: 2rem;
-  margin-bottom: 2rem;
-}
-
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar ul li {
-  margin-bottom: 1.5rem;
-}
-
-.sidebar ul li a {
-  color: #F59BE7;
-  text-decoration: none;
-  font-size: 1.2rem;
-}
-
-.sidebar ul li a:hover {
-  text-decoration: underline;
-}
-
-.logout {
-  font-size: 1.2rem;
-  margin-top: auto;
-  text-align: center;
-  color: #F59BE7;
-}
-
-/* Button styling */
-button {
-  background-color: #F59BE7; /* Dark pink */
-  color: white;
-  font-family: 'Coiny', cursive;
-  font-size: 1.2rem;
-  border: none;
-  border-radius: 15px;
-  padding: 10px 20px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #FACEF0; /* Light pink hover effect */
-  color: #F59BE7;
-}
-
-/* Task & Events Containers */
-.tasks-container,
-.events-container {
-  background-color: #fff;
-  border-radius: 15px;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
-  width: 45%;
 }
 
-.tasks-container h3,
-.events-container h3 {
-  font-size: 1.5rem;
-  color: #F59BE7;
-}
-
-/* For the main dashboard grid layout */
 .dashboard-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  width: 80%;
+  grid-template-columns: 1fr 1fr; /* Two columns layout */
+  gap: 40px; /* Increased gap between columns */
+  width: 100%;
+  max-width: 1200px; /* Max width to prevent it from being too wide */
+}
+
+.dashboard-section {
+  background-color: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Softer shadow for better look */
+  transition: transform 0.2s ease; /* Add subtle hover effect */
+}
+
+.dashboard-section:hover {
+  transform: translateY(-5px); /* Move section up slightly on hover */
+}
+
+.dashboard-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  color: #F59BE7; /* Dark pink for titles */
+  text-align: center;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+li strong {
+  color: #F59BE7;
+}
+
+/* Additional styling for messages */
+.message-section {
+  background-color: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  margin-top: 40px;
+  max-width: 1200px;
+  text-align: center;
+}
+
+.message-section h2 {
+  font-size: 1.8rem;
+  color: #F59BE7;
+  margin-bottom: 15px;
+}
+
+.message-item {
+  margin-bottom: 15px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.message-item p {
+  margin: 5px 0;
+}
+
+.message-item strong {
+  color: #F59BE7;
 }

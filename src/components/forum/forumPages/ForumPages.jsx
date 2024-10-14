@@ -11,7 +11,7 @@ const ForumPage = () => {
   //messgage to send
   const [msg, setMsg] = useState('');
 
-  //messages in the cat
+  //messages in the chat
   const [messages, setMessages] = useState([]); // State for storing fetched messages
 
   //get user specific info
@@ -21,7 +21,7 @@ const ForumPage = () => {
   //get the forums name
   const [forumName, setForumName] = useState('');
 
-  // Fetch the username for the current user
+  //fetch the username for the current user
   const getUsername = async () => {
     if (!auth.currentUser) return;
     const docRef = doc(db, "users", auth.currentUser.uid);
