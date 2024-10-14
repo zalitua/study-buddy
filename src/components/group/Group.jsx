@@ -317,9 +317,6 @@ const Group = () => {
     //handle user going to chat
     //group and chat are passed to make sure the context is kept eaiser
 
-    //used for testing to see whats being passed
-    //console.log("chatID: "+ chatId);
-    //console.log("groupID: "+ groupId);
     try {
 
       if (!chatId) {
@@ -406,7 +403,7 @@ const Group = () => {
                   }
 
                   <Button onClick={() => handleNavChat(group.id, group.chatId)}>Chat</Button>
-                  <Button onClick={() => handleNavGroup(group.id)}>Group</Button>
+                  <Button onClick={() => handleNavGroup(group.id)}>Group Page</Button>
                 </div>
               </li>
             ))}
