@@ -317,9 +317,6 @@ const Group = () => {
     //handle user going to chat
     //group and chat are passed to make sure the context is kept eaiser
 
-    //used for testing to see whats being passed
-    //console.log("chatID: "+ chatId);
-    //console.log("groupID: "+ groupId);
     try {
 
       if (!chatId) {
@@ -333,6 +330,16 @@ const Group = () => {
       console.log(error.message);
     }
   };
+
+  const handleNavGroup = (groupId) => {
+    try {
+      
+      navigate(`/group/groupPage/${groupId}/`);//navigate to each unique chat
+    
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 
 
 
@@ -392,10 +399,11 @@ const Group = () => {
                   {group.createdBy ===  auth.currentUser.uid ? (
                     <Button onClick={() => openEditGroupModal(group)}>Edit</Button>
                   ) : 
-                    <Button disabled="true" variant="disabled">Edit</Button>
+                    <Button disabled={true} variant="disabled">Edit</Button>
                   }
 
                   <Button onClick={() => handleNavChat(group.id, group.chatId)}>Chat</Button>
+                  <Button onClick={() => handleNavGroup(group.id)}>Group Page</Button>
                 </div>
               </li>
             ))}
@@ -502,3 +510,4 @@ const Group = () => {
 
 
 export default Group
+
