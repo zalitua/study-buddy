@@ -11,7 +11,7 @@ import ProfileForm from "./components/profile/ProfileForm";
 import ProfilePage from "./components/profile/ProfilePage";
 import UserList from "./components/profile/UserList";
 import Calendar from "./components/calendar/Calendar";
-import Home from "./components/home/HomeOld";
+import Home from "./components/home/Home";
 import Tasks from "./components/tasks/Tasks";
 import Group from "./components/group/Group";
 import CustomAvatar from "./components/avatar/CustomAvatar";
