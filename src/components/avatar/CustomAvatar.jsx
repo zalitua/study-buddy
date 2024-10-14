@@ -99,6 +99,7 @@ const CustomAvatar = ({ onSaveAvatar, avatarConfig }) => {
             />
           </div>
 
+          {/* choose face color */}
           <div>
             <label>Face Color:</label>
             <input
@@ -108,6 +109,7 @@ const CustomAvatar = ({ onSaveAvatar, avatarConfig }) => {
             />
           </div>
 
+          {/* choose hair color - mohawk and thick only come in black */}
           <div>
             <label>Hair Color:</label>
             <input
@@ -117,6 +119,7 @@ const CustomAvatar = ({ onSaveAvatar, avatarConfig }) => {
             />
           </div>
 
+          {/* choose hair style */}
           <div>
             <label>Hair Style:</label>
             <select
@@ -131,6 +134,7 @@ const CustomAvatar = ({ onSaveAvatar, avatarConfig }) => {
             </select>
           </div>
 
+          {/* choose eye style */}
           <div>
             <label>Eye Style:</label>
             <select
@@ -145,6 +149,7 @@ const CustomAvatar = ({ onSaveAvatar, avatarConfig }) => {
             </select>
           </div>
 
+          {/* choose nose style */}
           <div>
             <label>Nose Style:</label>
             <select
@@ -159,6 +164,7 @@ const CustomAvatar = ({ onSaveAvatar, avatarConfig }) => {
             </select>
           </div>
 
+          {/* choose mouth style */}
           <div>
             <label>Mouth Style:</label>
             <select
@@ -173,6 +179,7 @@ const CustomAvatar = ({ onSaveAvatar, avatarConfig }) => {
             </select>
           </div>
 
+          {/* choose glasses style */}
           <div>
             <label>Glasses Style:</label>
             <select
@@ -187,6 +194,7 @@ const CustomAvatar = ({ onSaveAvatar, avatarConfig }) => {
             </select>
           </div>
 
+          {/* choose shirt style */}
           <div>
             <label>Shirt Style:</label>
             <select
@@ -201,6 +209,7 @@ const CustomAvatar = ({ onSaveAvatar, avatarConfig }) => {
             </select>
           </div>
 
+          {/* choose shirt color */}
           <div>
             <label>Shirt Color:</label>
             <input
@@ -211,9 +220,11 @@ const CustomAvatar = ({ onSaveAvatar, avatarConfig }) => {
           </div>
         </Modal.Body>
         <Modal.Footer>
+          {/* close button */}
           <Button varient="secondary" onClick={handleCloseModal}>
             Close
           </Button>
+          {/* save avatar button */}
           <Button varient="primary" onClick={handleSaveAvatar}>
             Save Avatar
           </Button>
