@@ -1,0 +1,13 @@
+/* Sidebar CSS (optional tweaks) */
+.sidebar-container {
+    width: 250px; /* Keeps the sidebar width */
+    height: auto; /* Remove fixed height if needed */
+  }
+  
+  .outlet-container {
+    min-width: 600px; /* Adjust based on your desired main content width */
+    max-width: 1000px;
+    height: auto; /* Adjust height as necessary */
+    background-color: #facef0;
+  }
+  

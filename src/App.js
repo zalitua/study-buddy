@@ -1,5 +1,4 @@
 import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -17,19 +16,7 @@ function App() {
     <UserAuthContextProvider>
       <ProfileProvider>
         <ToastContainer />
-        <Container fluid>
-          <Row>
-            {/* Sidebar */}
-            <Col xs={2} md={1} className="p-0">
-              <Sidebar />
-            </Col>
-
-            {/* Main Content */}
-            <Col xs={10} md={12} className="this">
-              <AppRoutes />
-            </Col>
-          </Row>
-        </Container>
+        <AppRoutes />
       </ProfileProvider>
     </UserAuthContextProvider>
   );
