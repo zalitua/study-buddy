@@ -1,7 +1,8 @@
 // src/components/tasks/Tasks.js
 import React, { useState, useEffect } from 'react';
-import { db } from '../../lib/firebase'; // Ensure your firebase setup is correct
-import { collection, addDoc, getDocs, updateDoc, doc } from 'firebase/firestore';
+import { db, auth } from '../../lib/firebase'; // Ensure your firebase setup is correct
+import { collection, addDoc, getDocs, updateDoc, doc, increment } from 'firebase/firestore';
+import { Toast, ToastContainer } from 'react-bootstrap'; // Importing Toast for notifications
 import './Tasks.css'; // Ensure you have the correct path for the CSS file
 
 const Tasks = () => {
@@ -9,6 +10,8 @@ const Tasks = () => {
   const [taskInput, setTaskInput] = useState('');
   const [dueDate, setDueDate] = useState('');
   const [completedTasks, setCompletedTasks] = useState(0);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
 
   // Fetch tasks from Firebase on component mount
   useEffect(() => {
@@ -37,10 +40,19 @@ const Tasks = () => {
     }
   };
 
-  // Mark a task as completed in Firestore
+  // Mark a task as completed and update points
   const markTaskAsCompleted = async (taskId, index) => {
     const taskDocRef = doc(db, 'tasks', taskId);
     await updateDoc(taskDocRef, { completed: true });
+
+    // Update user points on task completion
+    const user = auth.currentUser;
+    const userRef = doc(db, 'users', user.uid);
+    await updateDoc(userRef, { points: increment(5) });
+
+    // Show toast notification
+    setToastMessage('Task completed! Points increased by 5.');
+    setShowToast(true);
 
     const updatedTasks = tasks.map((task, i) =>
       i === index ? { ...task, completed: true } : task
@@ -51,8 +63,13 @@ const Tasks = () => {
 
   return (
     <div className="tasks-container">
-      <h1>Tasks</h1>
+        <ToastContainer position="top-end" className="p-3">
+            <Toast onClose={() => setShowToast(false)} show={showToast} delay={5000} autohide>
+                <Toast.Body>{toastMessage}</Toast.Body>
+            </Toast>
+        </ToastContainer>
 
+      <h1>Tasks</h1>
       {/* Input for new tasks */}
       <div className="task-inputs">
         <input
