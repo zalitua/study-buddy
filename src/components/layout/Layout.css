@@ -5,11 +5,21 @@
   }
   
   .outlet-container {
-    min-width: 700px; /* Adjust based on your desired main content width */
-    max-width: 1200px;
+    min-width: 60vw; /* Adjust based on your desired main content width */
+    max-width: 70vw;
     height: auto; /* Adjust height as necessary */
     background-color: #facef0;
     padding-left: 3%;
     padding-right: 3%;
+
+    .btn-primary{
+      background-color: var(--buttons) !important;
+      border-color: var(--buttons) ;
+        
+    }
+    .btn-primary:hover{
+      border-color: var(--buttonsHover) ;
+    }
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /*slight box shadow for every compoents*/
   }
   

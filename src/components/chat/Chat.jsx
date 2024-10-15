@@ -375,8 +375,8 @@ const Chat = () =>{
                                             value={editMsgContent}
                                             onChange={(e) => setEditMsgContent(e.target.value)}
                                         />
-                                        <button onClick={saveEditedMessage}>Save</button>
-                                        <button onClick={cancelEdit}>Cancel</button>
+                                        <Button variant="primary" onClick={saveEditedMessage}>Save</Button>
+                                        <Button variant="primary" onClick={cancelEdit}>Cancel</Button>
                                     </div>
                                 ) : (
                                     <div>

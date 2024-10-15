@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Table, Spinner, Alert } from "react-bootstrap";
 import { db, auth } from "../../lib/firebase"; // Adjust Firebase path as needed
 import {
   collection,
@@ -23,16 +22,6 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  //fix the issue
-
-  // Fetch upcoming events, latest messages, leaderboard data, and user groups
-  
-  // Fetch upcoming events, latest messages, leaderboard data, and user groups
-  
-  // Fetch upcoming events, latest messages, leaderboard data, and user groups
-  
-  // Fetch upcoming events, latest messages, leaderboard data, and user groups
-  
   // Fetch upcoming events, latest messages, leaderboard data, and user groups
   useEffect(() => {
     if (!user) {
@@ -81,10 +70,14 @@ const Dashboard = () => {
           }));
 
           // Filter availabilities within the next 5 days
-          const filteredAvailabilities = availabilityData.filter((availability) => {
-            const availabilityDate = new Date(availability.date);
-            return availabilityDate >= today && availabilityDate <= fiveDaysFromNow;
-          });
+          const filteredAvailabilities = availabilityData.filter(
+            (availability) => {
+              const availabilityDate = new Date(availability.date);
+              return (
+                availabilityDate >= today && availabilityDate <= fiveDaysFromNow
+              );
+            }
+          );
 
           setUpcomingAvailabilities(filteredAvailabilities);
         };
@@ -212,8 +205,13 @@ const Dashboard = () => {
             <ul>
               {upcomingTasks.map((task) => (
                 <li key={task.id}>
-                  <strong>Task Title:</strong> {task.title}<br />
-                  <strong>Due Date:</strong> {task.dueDate ? new Date(task.dueDate).toDateString() : "Date not available"}<br />
+                  <strong>Task Title:</strong> {task.title}
+                  <br />
+                  <strong>Due Date:</strong>{" "}
+                  {task.dueDate
+                    ? new Date(task.dueDate).toDateString()
+                    : "Date not available"}
+                  <br />
                   <strong>Task Details:</strong> {task.details}
                 </li>
               ))}
@@ -230,9 +228,12 @@ const Dashboard = () => {
             <ul>
               {upcomingAvailabilities.map((availability) => (
                 <li key={availability.id}>
-                  <strong>Group Member:</strong> {availability.userName}<br />
-                  <strong>Date:</strong> {new Date(availability.date).toDateString()}<br />
-                  <strong>Start Time:</strong> {availability.startTime}<br />
+                  <strong>Group Member:</strong> {availability.userName}
+                  <br />
+                  <strong>Date:</strong> {new Date(availability.date).toDateString()}
+                  <br />
+                  <strong>Start Time:</strong> {availability.startTime}
+                  <br />
                   <strong>End Time:</strong> {availability.endTime}
                 </li>
               ))}
@@ -244,7 +245,7 @@ const Dashboard = () => {
       </div>
 
       {/* Latest Chat Messages from All Groups Section */}
-      <section className="dashboard-section">
+      <section className="dashboard-section full-width-section">
         <h2>Latest Messages from Your Groups</h2>
         {latestMessages.length > 0 ? (
           latestMessages.map((messageInfo, index) => (
@@ -277,24 +278,26 @@ const Dashboard = () => {
       </section>
 
       {/* Top 3 Users from Leaderboard */}
-      <section className="dashboard-section">
+      <section className="dashboard-section full-width-section">
         <h2>Top 3 Users on the Leaderboard</h2>
         {topThreeUsers.length > 0 ? (
           <ul>
             {topThreeUsers.map((user) => (
               <li key={user.id}>
-                <strong>Rank:</strong> {user.rank}<br />
-                <strong>Username:</strong> {user.username}<br />
+                <strong>Rank:</strong> {user.rank}
+                <br />
+                <strong>Username:</strong> {user.username}
+                <br />
                 <strong>Points:</strong> {user.points}
               </li>
             ))}
-            </ul>
-          ) : (
-            <p>No leaderboard data available.</p>
-          )}
-        </section>
-      </div>
-    );
-  };
+          </ul>
+        ) : (
+          <p>No leaderboard data available.</p>
+        )}
+      </section>
+    </div>
+  );
+};
 
-  export default Dashboard;
+export default Dashboard;

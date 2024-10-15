@@ -63,17 +63,19 @@
         padding: 10px;
         border-radius: 10px;
         background-color: #f1f1f1;
+
+        max-width: 100%; 
+        word-wrap: break-word;
+        word-break: break-word; 
+        overflow-wrap: break-word; 
+            
+        
         h2{
             text-decoration: underline;
         }
 
-        .latestMessage{
-            max-width: 80%; 
-            word-wrap: break-word;
-            word-break: break-word; 
-            overflow-wrap: break-word; 
+        
             
-        }
         
         /*.messageTimestamp{
             Used for if any changes are needed to the specific time stamp
