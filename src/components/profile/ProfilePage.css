@@ -4,14 +4,15 @@
     background-color: #facef0;
     text-align: center;
     font-family: 'coiny', sans-serif;
-    color: #f59be7;
+    color: #e085D4;
     
     border-radius: 10px;
 }
 
 .upper-container{
     height: 100px;
-    background-color: #faced0;
+    background-color: #facef0;
+    color: #f59be7;
 }
 
 .image-container-1 img{

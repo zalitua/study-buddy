@@ -74,7 +74,7 @@ const ProfileForm = () => {
         autoClose: 1000,
       });
       setTimeout(() => {
-        navigate("/"); // Redirect to home page
+        navigate("/dashboard"); // Redirect to home page
       }, 2000);
     } catch (error) {
       toast.error("Failed to update profile!", { position: "top-center" });
@@ -92,7 +92,7 @@ const ProfileForm = () => {
   }
 
   return (
-    <div className="p-4 box  profile-form-container" style={{height:'95vh'}}>
+    <div className="p-4 box  profile-form-container" style={{ height: "95vh" }}>
       <h2 className="mb-3">{isEdit ? "Edit Profile" : "Create Profile"}</h2>
       <h4 className="mb-3">Required Information:</h4>
 
