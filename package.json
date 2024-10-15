@@ -17,7 +17,7 @@
     "react-nice-avatar": "^1.5.0",
     "react-router-dom": "^6.26.2",
     "react-scripts": "^5.0.1",
-    "react-toastify": "^10.0.5",
+    "react-toastify": "^10.0.6",
     "terser": "^5.31.6",
     "tough-cookie": "^4.1.4",
     "uuid": "^10.0.0",
