@@ -1,14 +1,14 @@
 .forumHome{
 
-    height: 100vh; 
+    height: 95vh; 
     display: flex;
     flex-direction: column;
 
-    min-width:900px ;
+    min-width:700px;
 
     max-width: 70vw;
     flex: 3;
-    margin-left: 100px;/*shift content away from side bar*/
+   /*shift content away from side bar*/
 
     .nav { 
         
@@ -37,7 +37,7 @@
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin: 20px 0;
+            margin: 10px 0;
             padding: 20px;
             width: 100%;
             max-width: 600px;

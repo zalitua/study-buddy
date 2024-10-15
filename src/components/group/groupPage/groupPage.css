@@ -1,7 +1,7 @@
 .groupPage {
     
     font-family: Arial, sans-serif;
-    height: 100vh; 
+    height: 95vh; 
     display: flex;
     flex-direction: column;
 
@@ -9,7 +9,7 @@
 
     max-width: 70vw;
     flex: 3;
-    margin-left: 100px;
+    
 
 
     .nav { 

@@ -1,10 +1,11 @@
 .Profile{
-    width: 300px;
+    /*width: 300px;*/
     height: 480px;
     background-color: #facef0;
     text-align: center;
     font-family: 'coiny', sans-serif;
     color: #f59be7;
+    
     border-radius: 10px;
 }
 
