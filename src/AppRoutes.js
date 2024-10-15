@@ -123,7 +123,16 @@ function AppRoutes() {
             </ProtectedRoute>
           }
         />
-        {/*nav to a specific forum*/}
+
+
+        <Route
+          path="/group/groupPage/:groupId"
+          element={
+            <ProtectedRoute>
+              <GroupPage />
+            </ProtectedRoute>
+          }
+      />
       </Route>
     </Routes>
   );

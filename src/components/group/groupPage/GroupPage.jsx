@@ -1,7 +1,6 @@
 //Group page
 //used as the home page for each group
 //has info like the people in the group 
-
 //members main page for the group
 
 import React, { useState, useEffect } from "react";
