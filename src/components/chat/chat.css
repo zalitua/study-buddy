@@ -48,6 +48,8 @@
             align-content: center;
             width: 40%;
             border-radius: 10px;
+            background-color: var(--buttons);
+
         }
         .edit-message{
             input{
@@ -59,14 +61,15 @@
 
     .own {
         align-self: flex-end; /*align current user's messages to the right*/
-        background-color: #b3d1ff; /*different background color for own messages */
+        background-color: var(--ownMessages); /*different background color for own messages */
+        border-radius: 10px;
         text-align: left;
     }
 
     .sender {
         display: flex;
         height: 10vh;
-        background: rgb(197, 193, 193);
+        background: var(--inputs);
         align-items: center;
         justify-content: center;
         border-radius: 10px;
@@ -80,7 +83,7 @@
         input {
             flex: 1;
             height: 100%;
-            background-color: rgba(197, 193, 193, 0.932);
+            background-color: var(--inputs);
             border: none;
             outline: none;
             color: rgb(0, 0, 0);
@@ -93,6 +96,7 @@
             height: 100%;
             width: 15%;
             border-radius: 10px;
+            background-color: var(--buttons);
         }
 
         .emoji{

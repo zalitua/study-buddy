@@ -1,7 +1,7 @@
 .Profile{
     /*width: 300px;*/
     height: 480px;
-    background-color: #facef0;
+    background-color: var(--background);
     text-align: center;
     font-family: 'coiny', sans-serif;
     color: #f59be7;
@@ -11,7 +11,7 @@
 
 .upper-container{
     height: 100px;
-    background-color: #faced0;
+    background-color: var(--banner);
 }
 
 .image-container-1 img{

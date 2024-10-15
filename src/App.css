@@ -1,5 +1,24 @@
+
+/*defining all the colours we use*/
+:root {
+  --background:#FACEF0;
+
+  --buttons: #F59BE7;
+
+  --buttonsHover:#da8bce;
+
+  --ownMessages:#f1ace8;
+
+  --inputs:#f5f5f5;
+
+  --banner:#faced0;
+
+
+}
+
+
 body {
-  background-color: #fafafa;
+  background-color: var(--background);
   display: flex;
   justify-content: center;
   align-content: center;

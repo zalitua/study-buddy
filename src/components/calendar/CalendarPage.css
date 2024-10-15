@@ -1,6 +1,6 @@
 /* Apply background color and font */
 body {
-  background-color: #FACEF0; /* Light background color */
+  background-color: var(--background); /* Light background color */
   font-family: 'Coiny', cursive; /* Use the Coiny font */
   max-height: 95vh;
 }
@@ -10,7 +10,7 @@ body {
   max-width: 600px;
   margin: auto;
   text-align: center;
-  background-color: #FACEF0; /* Light background for the page */
+  background-color: var(--background); /* Light background for the page */
   color: #333; /* Default text color */
 }
 
@@ -70,5 +70,5 @@ button {
 
 /* Button hover effect */
 button:hover {
-  background-color: #e387c1; /* Slightly darker pink when hovering */
+  background-color: var(--buttonsHover); /* Slightly darker pink when hovering */
 }
