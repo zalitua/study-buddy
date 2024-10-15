@@ -1,3 +1,4 @@
+/* General container styles */
 .dashboard-container {
   display: flex;
   flex-direction: column;
@@ -13,33 +14,58 @@ h1 {
   margin-bottom: 20px;
 }
 
+/* Grid layout for the dashboard */
 .dashboard-grid {
   display: grid;
   grid-template-columns: 1fr 1fr; /* Two columns layout */
-  gap: 40px; /* Increased gap between columns */
-  width: 100%;
-  max-width: 1200px; /* Max width to prevent it from being too wide */
+  gap: 20px; /* Gap between columns */
+  width: calc(100% - 280px); /* Account for sidebar width */
+  max-width: 1000px; /* Limit max width to prevent being too wide */
+  margin-left: 280px; /* Offset the grid by the width of the sidebar */
+  box-sizing: border-box;
 }
 
+/* Styling for individual sections (Tasks, Availabilities) */
 .dashboard-section {
   background-color: white;
   border-radius: 15px;
   padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Softer shadow for better look */
-  transition: transform 0.2s ease; /* Add subtle hover effect */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+  width: 100%;
 }
 
 .dashboard-section:hover {
-  transform: translateY(-5px); /* Move section up slightly on hover */
+  transform: translateY(-5px); /* Slight hover effect */
 }
 
 .dashboard-section h2 {
   font-size: 1.8rem;
   margin-bottom: 15px;
-  color: #F59BE7; /* Dark pink for titles */
+  color: #F59BE7;
   text-align: center;
 }
 
+/* Full-width sections (Leaderboard and Latest Messages) */
+.full-width-section {
+  grid-column: span 2; /* Span across both columns */
+  background-color: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Softer shadow */
+  margin-top: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.full-width-section h2 {
+  font-size: 1.8rem;
+  color: #F59BE7;
+  margin-bottom: 15px;
+}
+
+/* List styling for tasks, availabilities, messages, leaderboard */
 ul {
   list-style-type: none;
   padding: 0;
@@ -58,36 +84,37 @@ li strong {
   color: #F59BE7;
 }
 
-/* Additional styling for messages */
-.message-section {
-  background-color: white;
-  border-radius: 15px;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  margin-top: 40px;
-  max-width: 1200px;
-  text-align: center;
-}
-
-.message-section h2 {
-  font-size: 1.8rem;
-  color: #F59BE7;
-  margin-bottom: 15px;
-}
-
-.message-item {
+/* Styling for messages and leaderboard items */
+.message-item, .leaderboard-item {
   margin-bottom: 15px;
   padding: 15px;
   background-color: #f9f9f9;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  text-align: left; /* Align content to the left for readability */
 }
 
-.message-item p {
+.message-item p, .leaderboard-item p {
   margin: 5px 0;
 }
 
-.message-item strong {
+.message-item strong, .leaderboard-item strong {
   color: #F59BE7;
+}
+
+/* Leaderboard layout */
+.leaderboard-section ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.leaderboard-section li {
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between; /* Space for rank, name, and points */
 }
