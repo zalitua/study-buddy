@@ -2,6 +2,7 @@
 body {
   background-color: #FACEF0; /* Light background color */
   font-family: 'Coiny', cursive; /* Use the Coiny font */
+  max-height: 95vh;
 }
 
 /* Style for the calendar page container */

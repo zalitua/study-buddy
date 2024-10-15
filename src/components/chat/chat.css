@@ -1,5 +1,5 @@
 .chat {
-    height: 100vh; 
+    height: 95vh; 
     display: flex;
     flex-direction: column;
 
@@ -7,7 +7,7 @@
 
     max-width: 70vw;
     flex: 3;
-    margin-left: 100px;/*shift content away from side bar*/
+   /*shift content away from side bar*/
 
     .nav { 
         
@@ -25,9 +25,9 @@
         display: flex;
         flex-direction: column;
         gap: 20px;
-        min-height:calc(100vh - 200px);
+        min-height:calc(90vh - 150px);
 
-        max-height: calc(100vh - 200px); /* adjust height based on screen size */
+        max-height: calc(90vh - 150px); /* adjust height based on screen size */
     }
 
     .message {
@@ -72,8 +72,11 @@
         border-radius: 10px;
 
         position: sticky;
-        bottom: 0;
+        
 
+        /*make it sit at the bottom the the chat component rather then the screen*/
+
+        bottom: 0;
         input {
             flex: 1;
             height: 100%;

@@ -7,6 +7,7 @@ import React, { useState, useEffect } from "react";
 import "./groupPage.css";
 import { Button, Modal, Form } from "react-bootstrap";
 
+import { toast } from "react-toastify";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { arrayRemove, collection, doc, getDoc, getDocs, onSnapshot, query, updateDoc, where } from "firebase/firestore";
@@ -113,7 +114,7 @@ const GroupPage = () => {
     //update group data
     const handleSaveGroupChanges = async () => {
         if(newGroupName === ""){
-            alert("Group name can not be empty");
+            toast.warn("Group name can not be empty");
             return;
         }
         try {
@@ -135,7 +136,7 @@ const GroupPage = () => {
     const handleLeaveGroup = async () => {
         //stop group owner from leaving
         if (createdBy === auth.currentUser.uid) {
-            alert("You are the owner of the group and cannot leave.");
+            toast.warn("You are the owner of the group and cannot leave.");
             return;
         }
         try {

@@ -5,9 +5,11 @@
   }
   
   .outlet-container {
-    min-width: 600px; /* Adjust based on your desired main content width */
-    max-width: 1000px;
+    min-width: 700px; /* Adjust based on your desired main content width */
+    max-width: 1200px;
     height: auto; /* Adjust height as necessary */
     background-color: #facef0;
+    padding-left: 3%;
+    padding-right: 3%;
   }
   
