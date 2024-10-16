@@ -30,8 +30,7 @@ const Home = () => {
   return (
     <>
       <div>
-        <h1>StudyBuddy</h1>
-        <h2>Welcome to StudyBuddy!</h2>
+        <h2>Welcome to StudyBuddy</h2>
         <div className="container-white">
           StudyBuddy is an interacitve environment designed to make organizing
           and managing your group projects easy and fun. By members being
@@ -40,7 +39,7 @@ const Home = () => {
           in increasing your teams productivity!
         </div>
       </div>
-      <div>
+      <div className="button-container">
         <Button variant="primary" onClick={handleNavLogin}>
           Login
         </Button>
