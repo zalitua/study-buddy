@@ -20,7 +20,7 @@
 
 
 body {
-  background-color: var(--background);
+  background-color: white;
   display: flex;
   justify-content: center;
   align-content: center;
@@ -48,7 +48,7 @@ body {
   margin: 0 auto;
 }
 
-.sidebar {
+/* .sidebar {
   position: fixed;
   top: 0;
   left: 0;
@@ -56,8 +56,5 @@ body {
   background-color: #f8f9fa;
   padding-top: 1rem;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-}
+} */
 
-.container-fluid {
-  padding-left: 250px; /* Adjust padding according to sidebar width */
-}

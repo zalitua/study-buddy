@@ -124,7 +124,6 @@ function AppRoutes() {
           }
         />
 
-
         <Route
           path="/group/groupPage/:groupId"
           element={
@@ -132,7 +131,7 @@ function AppRoutes() {
               <GroupPage />
             </ProtectedRoute>
           }
-      />
+        />
       </Route>
     </Routes>
   );
