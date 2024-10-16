@@ -1,3 +1,47 @@
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  width: 80%; /* Adjust width as needed */
+  max-width: 1200px; /* Optional max-width */
+  height: 80%; /* Adjust height as needed */
+  /*background: var(--background); /* Background for the container */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /*slight box shadow for every compoents*/
+  
+}
+
+.sidebar {
+  width: 250px; /* Set the width for the sidebar */
+  height: auto;
+  background-color: white;
+}
+
+  .content {
+    min-width: 60vw; /* Adjust based on your desired main content width */
+    max-width: 70vw;
+    height: auto; /* Adjust height as necessary */
+    background-color: #facef0;
+    padding-left: 3%;
+    padding-right: 3%;
+
+    .btn-primary{
+      background-color: var(--buttons) !important;
+      border-color: var(--buttons) ;
+          
+    }
+    .btn-primary:hover{
+      border-color: var(--buttonsHover) ;
+    }
+  }
+
+
 /* Sidebar CSS (optional tweaks) */
 .sidebar-container {
     width: 250px; /* Keeps the sidebar width */
@@ -11,6 +55,7 @@
     background-color: #facef0;
     padding-left: 3%;
     padding-right: 3%;
+    border-radius: 10px;
 
     .btn-primary{
       background-color: var(--buttons) !important;
@@ -20,6 +65,6 @@
     .btn-primary:hover{
       border-color: var(--buttonsHover) ;
     }
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /*slight box shadow for every compoents*/
+    
   }
   
