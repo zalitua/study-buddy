@@ -24,7 +24,7 @@ body {
   background-color: white;
   display: flex;
   justify-content: center;
-  align-content: center;
+  align-items: center;
   width: 100%;
   height: 100vh;
   font-family: 'Coiny', cursive; 
@@ -32,8 +32,8 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Coiny', cursive; /* Different font for headings */
-  color: var(--darktext); /* Different color for headings */
+  font-family: 'Coiny', cursive; 
+  color: var(--darktext); 
 }
 
 .container-white { 
