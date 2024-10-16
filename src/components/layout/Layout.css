@@ -4,32 +4,45 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: 'Coiny', cursive; 
+  color: var(--darktext)
 }
 
 .container {
   display: flex;
-  width: 80%; /* Adjust width as needed */
-  max-width: 1200px; /* Optional max-width */
-  height: 80%; /* Adjust height as needed */
-  /*background: var(--background); /* Background for the container */
+  min-width: 35vw; /* Adjust width as needed */
+  max-width: 80vw; /* Optional max-width */
+  min-height: 40vh;
+  max-height: 90vh;; /* Adjust height as needed */
+  background: var(--background); /* Background for the container */
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /*slight box shadow for every compoents*/
-  
+  padding-left: 3%;
+  padding-right: 3%;
+  padding-top: 2%;
+  padding-bottom: 2%;
 }
 
+/* .container h1, .container h2, .container h3, .container h4, .container h5, .container h6 {
+  font-family: 'Coiny', cursive; 
+  color: var(--darktext); 
+} */
+
 .sidebar {
-  width: 250px; /* Set the width for the sidebar */
+  width: 200px; /* Set the width for the sidebar */
   height: auto;
   background-color: white;
+  border-radius: 10px;
 }
 
   .content {
-    min-width: 60vw; /* Adjust based on your desired main content width */
-    max-width: 70vw;
+    min-width: 30vw; /* Adjust based on your desired main content width */
+    max-width: 80vw;
     height: auto; /* Adjust height as necessary */
     background-color: #facef0;
-    padding-left: 3%;
-    padding-right: 3%;
+    padding-left: 1%;
+    padding-right: 1%;
+    border-radius: 10px;
 
     .btn-primary{
       background-color: var(--buttons) !important;
@@ -40,31 +53,3 @@ body {
       border-color: var(--buttonsHover) ;
     }
   }
-
-
-/* Sidebar CSS (optional tweaks) */
-.sidebar-container {
-    width: 250px; /* Keeps the sidebar width */
-    height: auto; /* Remove fixed height if needed */
-  }
-  
-  .outlet-container {
-    min-width: 60vw; /* Adjust based on your desired main content width */
-    max-width: 70vw;
-    height: auto; /* Adjust height as necessary */
-    background-color: #facef0;
-    padding-left: 3%;
-    padding-right: 3%;
-    border-radius: 10px;
-
-    .btn-primary{
-      background-color: var(--buttons) !important;
-      border-color: var(--buttons) ;
-        
-    }
-    .btn-primary:hover{
-      border-color: var(--buttonsHover) ;
-    }
-    
-  }
-  

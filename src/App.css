@@ -13,8 +13,9 @@
 
   --banner:#faced0;
 
+  --darktext: #E085D4;
 
-  --mainText:#0a0909;
+  --mainText: #E085D4;
 
 }
 
@@ -25,11 +26,32 @@ body {
   justify-content: center;
   align-content: center;
   width: 100%;
-  /*commented out add for each own page you want makes it so not everything starts in the center
-  align-items: center;
-  */
   height: 100vh;
+  font-family: 'Coiny', cursive; 
+  color: var(--darktext)
 }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Coiny', cursive; /* Different font for headings */
+  color: var(--darktext); /* Different color for headings */
+}
+
+.container-white { 
+  
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  /* margin-right: 40px;
+  margin-bottom: 20px; */
+  min-width: 30vw; /* Adjust width as needed */
+  max-width: 30vw;
+  min-height: 10vh;
+  max-height: 70vh; /*maximum height */
+  
+}
+
+
 
 .box {
   border: 1px solid #dfdfdf;
