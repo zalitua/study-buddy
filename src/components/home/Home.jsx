@@ -21,15 +21,17 @@ const Home = () => {
     <>
       <div>
         <h2>Welcome to StudyBuddy</h2>
-        <div className="container-white">
-          StudyBuddy is an interacitve environment designed to make organizing
-          and managing your group projects easy and fun. By members being
-          rewarded and recognized while using the app, they are encouraged to
-          engage in a friendly, competitve and motivational space that will aid
-          in increasing your teams productivity!
+        <div className="container-center-content">
+          <div className="container-white">
+            StudyBuddy is an interacitve environment designed to make organizing
+            and managing your group projects easy and fun. By members being
+            rewarded and recognized while using the app, they are encouraged to
+            engage in a friendly, competitve and motivational space that will
+            aid in increasing your teams productivity!
+          </div>
         </div>
       </div>
-      <div className="button-container">
+      <div className="container-center-content">
         <Button variant="primary" onClick={handleLoginModal}>
           Login
         </Button>

@@ -15,7 +15,7 @@
 
   --darktext: #E085D4;
 
-  --mainText: #E085D4;
+  --mainText: #0a0009;
 
 }
 
@@ -38,8 +38,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .container-white { 
   display: flex;
-  justify-content: center;
-  align-items: center;
   padding: 20px;
   background-color: white;
   border-radius: 10px;
@@ -47,12 +45,13 @@ h1, h2, h3, h4, h5, h6 {
   /* margin-right: 40px;
   margin-bottom: 20px; */
   min-width: 30vw; /* Adjust width as needed */
-  max-width: 30vw;
+  max-width: 60vw;
   min-height: 10vh;
   max-height: 70vh; /*maximum height */
 }
 
-.button-container {
+/* can be used for buttons or other div tags */
+.container-center-content {
   display: flex;
   justify-content: center; /* Centers the buttons horizontally */
   align-items: center; /* Centers the buttons vertically (if height is set) */

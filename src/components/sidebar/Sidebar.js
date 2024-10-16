@@ -28,13 +28,6 @@ const Sidebar = () => {
         <Nav.Link as={NavLink} to="/dashboard">
           Dashboard
         </Nav.Link>
-        <Nav.Link as={NavLink} to="/login">
-          Login
-        </Nav.Link>
-        <Nav.Link as={NavLink} to="/signup">
-          Signup
-        </Nav.Link>
-
         <Nav.Link as={NavLink} to="/group">
           Group
         </Nav.Link>
