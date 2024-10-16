@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 // Email validation regex
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-const SignUpModal = ({ show, handleClose }) => {
+const SignupModal = ({ show, handleClose }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { signUp, logIn } = useUserAuth();
@@ -100,4 +100,4 @@ const SignUpModal = ({ show, handleClose }) => {
   );
 };
 
-export default SignUpModal;
+export default SignupModal;

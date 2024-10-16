@@ -3,18 +3,19 @@ import { useNavigate } from "react-router-dom";
 import { useUserAuth } from "../../context/userAuthContext";
 import { Button } from "react-bootstrap";
 import LoginModal from "../login/LoginModal";
-import SignUpModal from "../signup/SignUpModal";
+import SignupModal from "../signup/SignupModal";
 
 const Home = () => {
   const { user } = useUserAuth();
   const navigate = useNavigate();
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showSignup, setShowSignup] = useState(false);
+  const [showSignupModal, setShowSignupModal] = useState(false);
 
   const handleLoginModal = () => setShowLoginModal(true);
   const handleCloseLoginModal = () => setShowLoginModal(false);
 
-  const handleNavSignup = () => setShowSignup(true);
+  const handleSignupModal = () => setShowSignupModal(true);
+  const handleCloseSignupModal = () => setShowSignupModal(false);
 
   return (
     <>
@@ -32,13 +33,16 @@ const Home = () => {
         <Button variant="primary" onClick={handleLoginModal}>
           Login
         </Button>
-        <Button variant="primary" onClick={handleNavSignup}>
+        <Button variant="primary" onClick={handleSignupModal}>
           Sign Up
         </Button>
       </div>
       {/* Import and show the login modal */}
       <LoginModal show={showLoginModal} handleClose={handleCloseLoginModal} />
-      <SignUpModal show={showSignup} handleClose={() => setShowSignup(false)} />
+      <SignupModal
+        show={showSignupModal}
+        handleClose={handleCloseSignupModal}
+      />
     </>
   );
 };
