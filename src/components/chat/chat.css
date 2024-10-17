@@ -1,16 +1,17 @@
 .chat {
-    height: 100vh; 
+    height: 100%; 
+    max-height: max-content;
+
     display: flex;
     flex-direction: column;
 
     min-width:900px ;
 
-    max-width: 70vw;
+    width: 100%;
+    max-width: 100%;
     flex: 3;
-    margin-left: 100px;/*shift content away from side bar*/
 
     .nav { 
-        
         display: flex;
         justify-content: flex-start;
         align-items: center;
@@ -21,22 +22,26 @@
     .messages {
         padding: 20px;
         flex: 1;
-        overflow-y: auto; /*esure scrolling only happens inside messages */
+         
         display: flex;
         flex-direction: column;
-        gap: 20px;
-        min-height:calc(100vh - 200px);
+        gap: 5px;
 
-        max-height: calc(100vh - 200px); /* adjust height based on screen size */
+        overflow-y: auto;
+
+        min-height: calc(700px - 70px); 
+
+
+        max-height: calc(700px - 70px); 
     }
 
     .message {
         display: flex;
         flex-direction: column;
-        margin-bottom: 10px;
+        margin-bottom: 5px;
         padding: 10px;
         border-radius: 5px;
-        background-color: #f1f1f1;
+        background-color: var(--messageOther);
 
         /*handle long messages*/
         max-width: 80%; 
@@ -48,6 +53,8 @@
             align-content: center;
             width: 40%;
             border-radius: 10px;
+            background-color: var(--buttons);
+
         }
         .edit-message{
             input{
@@ -59,25 +66,29 @@
 
     .own {
         align-self: flex-end; /*align current user's messages to the right*/
-        background-color: #b3d1ff; /*different background color for own messages */
+        background-color: var(--ownMessages); /*different background color for own messages */
+        border-radius: 10px;
         text-align: left;
     }
 
     .sender {
         display: flex;
         height: 10vh;
-        background: rgb(197, 193, 193);
+        background: var(--inputs);
         align-items: center;
         justify-content: center;
         border-radius: 10px;
 
         position: sticky;
-        bottom: 0;
+        
 
+        /*make it sit at the bottom the the chat component rather then the screen*/
+
+        bottom: 0;
         input {
             flex: 1;
             height: 100%;
-            background-color: rgba(197, 193, 193, 0.932);
+            background-color: var(--inputs);
             border: none;
             outline: none;
             color: rgb(0, 0, 0);
@@ -90,6 +101,7 @@
             height: 100%;
             width: 15%;
             border-radius: 10px;
+            background-color: var(--buttons);
         }
 
         .emoji{
