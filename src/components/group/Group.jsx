@@ -15,6 +15,7 @@ import {
 } from "firebase/firestore";
 
 import { useNavigate } from "react-router-dom";//Used for react router to get to this page
+import { toast } from "react-toastify";
 
 
 
@@ -83,7 +84,7 @@ const Group = () => {
   const handleCreateGroup = async () => {
     //check if group name is valid
     if (!groupName.trim()) {
-      alert("Please enter a group name before creating the group.");
+      toast.warn("Please enter a group name before creating the group.");
       return;
     }
     try {
@@ -121,7 +122,7 @@ const Group = () => {
         chatId: chatRef.id,
       });
       //finish up
-      alert("Group and chat created successfully!");
+      toast.success("Group and chat created successfully!");
       setShowCreateGroupModal(false);
       setSelectedUsers([]);
       setGroupName("");
@@ -137,7 +138,7 @@ const Group = () => {
     try {
       const user = auth.currentUser;
       if (!user) {
-        alert("User not logged in!!!");
+        toast.warn("User not logged in!!!");
         return;
       }
       //ref to groups
@@ -238,7 +239,7 @@ const Group = () => {
   const handleUpdateGroup = async () => {
     //check to see if group name is valid
     if (!editGroupName.trim()) {
-      alert("Please enter a group name before updating the group.");
+      toast.warn("Please enter a group name before updating the group.");
       return;
     }
 
@@ -268,7 +269,7 @@ const Group = () => {
         members: uniqueUserIDs,  //update the members list
       });
 
-      alert("Group updated successfully!");
+      toast.success("Group updated successfully!");
       closeEditGroupModal();
       fetchUserGroups(); //refresh the groups list
 
@@ -320,7 +321,7 @@ const Group = () => {
     try {
 
       if (!chatId) {
-        alert("Chat not found for this group.");
+        toast.warn("Chat not found for this group.");
         return;
       }
       else {
