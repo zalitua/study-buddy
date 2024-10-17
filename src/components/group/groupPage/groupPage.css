@@ -1,15 +1,18 @@
 .groupPage {
     
     font-family: Arial, sans-serif;
-    height: 100vh; 
+    height: 100%; 
+
+    max-height: max-content;
+
     display: flex;
     flex-direction: column;
 
     min-width:900px;
 
-    max-width: 70vw;
+    max-width: max-content;
     flex: 3;
-    margin-left: 100px;
+    
 
 
     .nav { 
@@ -63,17 +66,19 @@
         padding: 10px;
         border-radius: 10px;
         background-color: #f1f1f1;
+
+        max-width: 100%; 
+        word-wrap: break-word;
+        word-break: break-word; 
+        overflow-wrap: break-word; 
+            
+        
         h2{
             text-decoration: underline;
         }
 
-        .latestMessage{
-            max-width: 80%; 
-            word-wrap: break-word;
-            word-break: break-word; 
-            overflow-wrap: break-word; 
+        
             
-        }
         
         /*.messageTimestamp{
             Used for if any changes are needed to the specific time stamp
