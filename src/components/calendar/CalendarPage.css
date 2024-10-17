@@ -1,7 +1,7 @@
 /* Apply background color and font */
 body {
-  background-color: #FACEF0; /* Light background color */
-  font-family: 'Coiny', cursive; /* Use the Coiny font */
+  background-color: #FACEF0; /* Light pink background color */
+  font-family: 'Coiny', cursive; /* Coiny font */
 }
 
 /* Style for the calendar page container */
@@ -9,7 +9,7 @@ body {
   max-width: 600px;
   margin: auto;
   text-align: center;
-  background-color: #FACEF0; /* Light background for the page */
+  background-color: #FACEF0; /* Light background color */
   color: #333; /* Default text color */
 }
 
@@ -70,4 +70,51 @@ button {
 /* Button hover effect */
 button:hover {
   background-color: #e387c1; /* Slightly darker pink when hovering */
+}
+
+/* Styling the list of availabilities */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* Highlighted text */
+li strong {
+  color: #F59BE7;
+}
+
+/* Media query for smaller devices */
+@media (max-width: 768px) {
+  .calendar-page {
+    width: 100%; /* Ensure it takes full width on small devices */
+    padding: 10px; /* Add some padding */
+  }
+
+  .add-availability-form input {
+    width: 100%; /* Ensure input fields take full width */
+  }
+}
+
+/* Style for the delete button */
+.delete-button {
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: #F59BE7; /* Pink background */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+  background-color: #e387c1; /* Darker pink on hover */
 }
