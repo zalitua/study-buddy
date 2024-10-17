@@ -87,6 +87,19 @@ const Tasks = () => {
 
       {/* Task completion stats */}
       <h3>Completed Tasks: {completedTasks} / {tasks.length}</h3>
+
+      {/* Task completion progress bar */}
+      <div className="progress-bar-container">
+        <h3>Task Progress</h3>
+        <div className="progress-bar">
+          <div
+            className="progress-bar-fill"
+            style={{ width: `${(completedTasks / tasks.length) * 100}%` }}
+          >
+            {Math.round((completedTasks / tasks.length) * 100)}%
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

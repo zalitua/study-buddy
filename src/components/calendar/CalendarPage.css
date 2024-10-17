@@ -22,6 +22,45 @@ body {
   background-color: #FACEF0; /* Background color for the calendar container */
 }
 
+/* Calendar specific styling */
+.react-calendar {
+  background-color: #FACEF0; /* Light pink background for the calendar */
+  border: none; /* Remove default border */
+  color: #333; /* Default text color */
+  font-family: 'Coiny', cursive; /* Ensure font is applied to calendar */
+}
+
+.react-calendar__navigation button {
+  color: #F59BE7; /* Darker pink for month navigation buttons */
+  background-color: #FACEF0; /* Same background color */
+  font-weight: bold;
+  font-size: 16px;
+  border: none; /* Remove border */
+}
+
+.react-calendar__tile--now {
+  background: #F59BE7; /* Highlight current date in darker pink */
+  color: white; /* White text for better visibility */
+}
+
+.react-calendar__month-view__days__day--weekend {
+  color: #F59BE7; /* Pink color for weekend days */
+}
+
+.react-calendar__tile {
+  background-color: #f9f9f9; /* Light grey background for calendar days */
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile--active {
+  background-color: #F59BE7; /* Darker pink for hovered or selected days */
+  color: white; /* White text for contrast */
+}
+
 /* Style for the selected date display */
 .selected-date {
   margin-top: 10px;
