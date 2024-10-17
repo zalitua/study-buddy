@@ -92,7 +92,7 @@ const ProfileForm = () => {
   }
 
   return (
-    <div className="p-4 box  profile-form-container" style={{ height: "95vh" }}>
+    <div className="p-4 box  profile-form-container" style={{ height: "100%", }}>
       <h2 className="mb-3">{isEdit ? "Edit Profile" : "Create Profile"}</h2>
       <h4 className="mb-3">Required Information:</h4>
 

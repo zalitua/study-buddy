@@ -29,6 +29,8 @@
 
         overflow-y: auto;
 
+        min-height: calc(700px - 70px); 
+
 
         max-height: calc(700px - 70px); 
     }
