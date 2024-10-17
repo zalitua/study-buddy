@@ -47,17 +47,15 @@ const ProfilePage = () => {
               height="150px"
               width="150px"
             />
-            <div>
-              {displayProfile.email ? (
-                <h5>
-                  <a href={`mailto:${displayProfile.email}`}>
-                    {displayProfile.email}
-                  </a>
-                </h5>
-              ) : (
-                <h5>No email</h5>
-              )}
-            </div>
+            {displayProfile.email ? (
+              <h5>
+                <a href={`mailto:${displayProfile.email}`}>
+                  {displayProfile.email}
+                </a>
+              </h5>
+            ) : (
+              <h5>No email</h5>
+            )}
           </div>
         </div>
         <div className="container-white-2">
