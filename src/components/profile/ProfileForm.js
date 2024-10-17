@@ -16,6 +16,7 @@ const ProfileForm = () => {
   const [date, setDate] = useState(profileData?.date || "");
   const [gender, setGender] = useState(profileData?.gender || "");
   const [pronouns, setPronouns] = useState(profileData?.pronouns || "");
+  const [bio, setBio] = useState(profileData?.bio || "");
   const [other, setOther] = useState("");
   const [otherPN, setOtherPN] = useState("");
   const [profileImage, setProfileImage] = useState(
@@ -64,6 +65,7 @@ const ProfileForm = () => {
       date,
       gender: gender === "other" ? other : gender,
       pronouns: pronouns === "other" ? otherPN : pronouns,
+      bio,
       avatarConfig,
     };
 
@@ -92,7 +94,7 @@ const ProfileForm = () => {
   }
 
   return (
-    <div className="p-4 box  profile-form-container" style={{ height: "95vh" }}>
+    <div className="p-4 box  profile-form-container" style={{ height: "100%", }}>
       <h2 className="mb-3">{isEdit ? "Edit Profile" : "Create Profile"}</h2>
       <h4 className="mb-3">Required Information:</h4>
 
@@ -209,7 +211,19 @@ const ProfileForm = () => {
           </Form.Group>
         )}
 
-        {/* Custom Avatar */}
+        {/* Bio Input */}
+        <Form.Group className="mb-3" controlId="formBio">
+          <Form.Label>Bio</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={3}
+            value={bio}
+            placeholder="Tell us about yourself..."
+            onChange={(e) => setBio(e.target.value)}
+          />
+        </Form.Group>
+
+        {/* Custom Avatar Creator*/}
         <CustomAvatar
           onSaveAvatar={handleSaveAvatar}
           avatarConfig={avatarConfig}

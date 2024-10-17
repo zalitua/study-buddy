@@ -1,13 +1,16 @@
 .groupPage {
     
     font-family: Arial, sans-serif;
-    height: 95vh; 
+    height: 100%; 
+
+    max-height: max-content;
+
     display: flex;
     flex-direction: column;
 
     min-width:900px;
 
-    max-width: 70vw;
+    max-width: max-content;
     flex: 3;
     
 

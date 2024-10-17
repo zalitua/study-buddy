@@ -1,9 +1,9 @@
+// Container.js
 import React from "react";
-import { Outlet } from "react-router-dom";
+import "./Container.css"; // Import the CSS file
 import Sidebar from "../sidebar/Sidebar";
-import "./Layout.css";
 
-const Layout = () => {
+const Container = ({ children }) => {
   return (
     <div className="container">
       <div className="sidebar">
@@ -12,10 +12,10 @@ const Layout = () => {
       </div>
       <div className="content">
         {/* Main content */}
-        <Outlet />
+        {children}
       </div>
     </div>
   );
 };
 
-export default Layout;
+export default Container;

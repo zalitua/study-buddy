@@ -15,7 +15,7 @@
   background-color: #FACEF0; /* Light pink background */
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  max-height: 95vh;
+  max-height: 100%;
   overflow-y: auto;
 }
 
@@ -119,8 +119,6 @@ li span::after {
     flex-direction: column;
   }
 
-  .task-inputs input, .task-inputs button {
-    width: 100%;
-    margin-bottom: 10px;
-  }
+button:hover {
+  background-color: #007BB5;
 }
