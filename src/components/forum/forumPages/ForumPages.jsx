@@ -3,7 +3,7 @@ import "./forumPages.css";
 import { Button } from "react-bootstrap";
 import { db, auth } from "../../../lib/firebase";
 import { useNavigate, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const ForumPage = () => {
   const { forumId } = useParams(); // Get the forum ID
@@ -109,6 +109,15 @@ const ForumPage = () => {
   }, [forumId]);
 
 
+  //auto scroll to bottom
+  const endRef = useRef(null);
+  useEffect(() => {
+      if (endRef.current) {
+          endRef.current.scrollIntoView({ behavior: "smooth" });
+      }
+    }, [messages]);
+  
+
 
   const navigate = useNavigate();
   const handleForum = async () => {
@@ -137,6 +146,7 @@ const ForumPage = () => {
             <span>{message.createdAt?.toDate ? message.createdAt.toDate().toLocaleString() : 'Unknown time'}</span>
           </div>
         ))}
+        <div ref={endRef}></div>
       </div>
 
       <div className="inputContainer">
