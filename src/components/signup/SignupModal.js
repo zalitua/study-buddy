@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { useUserAuth } from "../../context/userAuthContext";
+import { useNavigate } from "react-router-dom";
 import { db } from "../../lib/firebase";
 import { setDoc, doc } from "firebase/firestore";
 import { toast } from "react-toastify";
@@ -8,10 +9,11 @@ import { toast } from "react-toastify";
 // Email validation regex
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-const SignupModal = ({ show, handleClose }) => {
+const SignupModal = ({ show, handleClose, setIsSigningUp }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { signUp, logIn } = useUserAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,6 +37,8 @@ const SignupModal = ({ show, handleClose }) => {
     }
 
     try {
+      setIsSigningUp(true);
+
       // Create user authentication entry
       const userCredential = await signUp(email, password);
       const newUser = userCredential.user;
@@ -58,11 +62,17 @@ const SignupModal = ({ show, handleClose }) => {
         autoClose: 2000,
       });
 
+      setTimeout(() => {
+        navigate("/profileForm");
+        setIsSigningUp(false);
+      }, 2000);
+
       handleClose();
     } catch (err) {
       toast.error("Signup failed.", {
         position: "top-center",
       });
+      setIsSigningUp(false);
     }
   };
 

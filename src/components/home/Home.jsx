@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserAuth } from "../../context/userAuthContext";
 import { Button } from "react-bootstrap";
@@ -10,6 +10,13 @@ const Home = () => {
   const navigate = useNavigate();
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
+  const [isSigningUp, setIsSigningUp] = useState(false);
+
+  useEffect(() => {
+    if (user && !isSigningUp) {
+      navigate("/dashboard");
+    }
+  }, [user, navigate, isSigningUp]);
 
   const handleLoginModal = () => setShowLoginModal(true);
   const handleCloseLoginModal = () => setShowLoginModal(false);
@@ -22,7 +29,7 @@ const Home = () => {
       <div>
         <h2>Welcome to StudyBuddy</h2>
         <div className="container-center-content">
-          <div className="container-white">
+          <div className="container-white-1">
             StudyBuddy is an interacitve environment designed to make organizing
             and managing your group projects easy and fun. By members being
             rewarded and recognized while using the app, they are encouraged to
@@ -44,6 +51,7 @@ const Home = () => {
       <SignupModal
         show={showSignupModal}
         handleClose={handleCloseSignupModal}
+        setIsSigningUp={setIsSigningUp}
       />
     </>
   );
