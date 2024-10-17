@@ -1,14 +1,15 @@
 .forumPage{
 
-    height: 100vh; 
+    height: 100%; 
     display: flex;
     flex-direction: column;
+
+    max-height: max-content;
 
     min-width:900px ;
 
     max-width: 70vw;
     flex: 3;
-    margin-left: 100px;/*shift content away from side bar*/
 
     .nav { 
         
@@ -31,9 +32,9 @@
         display: flex;
         flex-direction: column;
         gap: 20px;
-        min-height:calc(100vh - 200px);
+        min-height:calc(90% - 100px);
 
-        max-height: calc(100vh - 200px); /* adjust height based on screen size */
+        max-height: calc(90% - 100px); /* adjust height based on screen size */
     
 
         .message{
@@ -61,8 +62,8 @@
 
     .inputContainer{
         display: flex;
-        height: 10vh;
-        background: rgb(197, 193, 193);
+        height: 10%;
+        background: F59BE7 ;
         align-items: center;
         justify-content: center;
         border-radius: 10px;
@@ -73,9 +74,9 @@
         input {
             flex: 1;
             height: 100%;
-            background-color: rgba(197, 193, 193, 0.932);
+            background-color: var(--inputs);
             border: none;
-            outline: none;
+            
             color: rgb(0, 0, 0);
             padding: 20px;
             border-radius: 10px;
@@ -86,6 +87,8 @@
             height: 100%;
             width: 15%;
             border-radius: 10px;
+
+            
         }
     }
 }
