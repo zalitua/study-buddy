@@ -9,26 +9,59 @@
     border-radius: 10px;
 }
 
-.upper-container{
-    height: 100px;
+.container-left{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    min-height: 30vw; 
+    max-height: 70vw;
+    min-width: 15vw; 
+    max-width: 20vw;
     background-color: var(--background);
-    color: #f59be7;
+    color: var(--darktext);
 }
 
 .image-container-1 img{
     background: white;
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     padding: 5px;
-    transform: translate(0px,15px);
+    transform: translate(0px,0px);
 }
 
 img{
-    border: 3px solid #e085D4;
+    margin-top: 20px;
+    margin-bottom: 25px;
+    border: 3px solid var(--darktext);
 }
 
-.lower-container{
-    margin-top: 40px;
-    height: 380px;
+.container-right{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    padding: 20px;
+    min-height: 30vw; 
+    max-height: 70vw;
+    min-width: 30vw; 
+    max-width: 50vw;
+    /* color: var(--buttons) */
+}
+
+.container-right h2 {
+    color: var(--darktext);
+}
+
+.container-right p {
+    padding-right: 50px;
+    padding-left: 50px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    word-wrap: break-word; /* Ensures long words break if needed */
+    color: var(--darktext);
 }

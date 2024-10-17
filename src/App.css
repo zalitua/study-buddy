@@ -86,6 +86,16 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 16px; /* Adjusts button text size */
 }
 
+.container-display-horizontal {
+  display: flex;
+  min-width: 45vw; /* Adjust width as needed */
+  max-width: 70vw; /* Optional max-width */
+  min-height: 40vh;
+  max-height: 90vh;; /* Adjust height as needed */
+  background: var(--background); /* Background for the container */
+  
+}
+
 
 .box {
   border: 1px solid #dfdfdf;
