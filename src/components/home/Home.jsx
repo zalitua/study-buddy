@@ -1,142 +1,58 @@
-import { Button } from "react-bootstrap";
-import { useNavigate } from "react-router";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useUserAuth } from "../../context/userAuthContext";
+import { Button } from "react-bootstrap";
+import LoginModal from "../login/LoginModal";
+import SignupModal from "../signup/SignupModal";
 
-//Main UI. Displays relevant information for the user and allows site navigation
 const Home = () => {
-  //logout option
-  const { logOut } = useUserAuth();
+  const { user } = useUserAuth();
   const navigate = useNavigate();
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showSignupModal, setShowSignupModal] = useState(false);
+  const [isSigningUp, setIsSigningUp] = useState(false);
 
-  const handleNavLogin = async () => {
-    try {
-      navigate("/login");
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  const handleNavSignup = async () => {
-    try {
-      navigate("/signup");
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  const handleNavProfile = async () => {
-    try {
-      navigate("/profilePage");
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  /* const handleNavChat = async () => {
-    try {
-      navigate("/chat");
-    } catch (error) {
-      console.log(error.message);
-    }
-  }; */
-
-  const handleNavGroup = async () => {
-    try {
-      navigate("/group");
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  const handleNavCalendar = async () => {
-    try {
-      navigate("/calendar");
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  const handleNavDashboard = async () => {
-    try {
+  useEffect(() => {
+    if (user && !isSigningUp) {
       navigate("/dashboard");
-    } catch (error) {
-      console.log(error.message);
     }
-  };
+  }, [user, navigate, isSigningUp]);
 
-  const handleNavLeaderboard = async () => {
-    try {
-      navigate("/leaderboard");
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  const handleLoginModal = () => setShowLoginModal(true);
+  const handleCloseLoginModal = () => setShowLoginModal(false);
 
-  // New: Handle navigation to Tasks
-  const handleNavTasks = async () => {
-    try {
-      navigate("/tasks");
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  const handleLogout = async () => {
-    try {
-      await logOut();
-      navigate("/login");
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  const handleForum = async () => {
-    try {
-      navigate("/forumHome");
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  const handleSignupModal = () => setShowSignupModal(true);
+  const handleCloseSignupModal = () => setShowSignupModal(false);
 
   return (
     <>
-      <div className="p-4 box mt-4 text-center">
-        <h4>Welcome to StudyBuddy</h4>
+      <div>
+        <h2>Welcome to StudyBuddy</h2>
+        <div className="container-center-content">
+          <div className="container-white-1">
+            StudyBuddy is an interacitve environment designed to make organizing
+            and managing your group projects easy and fun. By members being
+            rewarded and recognized while using the app, they are encouraged to
+            engage in a friendly, competitve and motivational space that will
+            aid in increasing your teams productivity!
+          </div>
+        </div>
       </div>
-      <div className="d-grid gap-2">
-        <Button variant="primary" onClick={handleNavLogin}>
+      <div className="container-center-content">
+        <Button variant="primary" onClick={handleLoginModal}>
           Login
         </Button>
-        <Button variant="primary" onClick={handleNavSignup}>
+        <Button variant="primary" onClick={handleSignupModal}>
           Sign Up
         </Button>
-        <Button variant="primary" onClick={handleNavProfile}>
-          Profile
-        </Button>
-
-        <Button variant="primary" onClick={handleNavGroup}>
-          Group
-        </Button>
-        <Button variant="primary" onClick={handleNavCalendar}>
-          Calendar
-        </Button>
-        <Button variant="primary" onClick={handleNavDashboard}>
-          Dashboard
-        </Button>
-        <Button variant="primary" onClick={handleNavLeaderboard}>
-          Leaderboard
-        </Button>
-        {/* New Button for Tasks */}
-        <Button variant="primary" onClick={handleNavTasks}>
-          Tasks
-        </Button>
-        <Button variant="primary" onClick={handleForum}>
-          Forums
-        </Button>
-        <Button variant="primary" onClick={handleLogout}>
-          Log out
-        </Button>
       </div>
+      {/* Import and show the login modal */}
+      <LoginModal show={showLoginModal} handleClose={handleCloseLoginModal} />
+      <SignupModal
+        show={showSignupModal}
+        handleClose={handleCloseSignupModal}
+        setIsSigningUp={setIsSigningUp}
+      />
     </>
   );
 };
