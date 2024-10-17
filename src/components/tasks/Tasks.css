@@ -2,12 +2,15 @@
 
 .tasks-container {
   width: 100%;
-  max-width: 600px;
+  height: 95vh;
+  max-width: 50vw;
   margin: 0 auto;
   padding: 20px;
-  background-color: #f4f4f9;
+  background-color: var(--backgroundGrey);
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  max-height: 100%;
+  overflow-y: auto;
 }
 
 h1, h2 {
@@ -73,4 +76,6 @@ button {
 
 button:hover {
   background-color: #007BB5;
+
+  border-radius: 5px;
 }
