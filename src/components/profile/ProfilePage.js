@@ -36,43 +36,49 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="Profile">
-      <div className="upper-container">
-        <h4>{displayProfile.username || "No username"}</h4>
-        <div className="image-container-1">
-          <img
-            src={displayProfile.profileImageUrl || defaultProfileImage}
-            alt="profile"
-            height="100px"
-            width="100px"
-          />
-        </div>
-      </div>
-      <div className="lower-container">
-        <br />
-        <h2>
-          {displayProfile.firstName || "No name"} {displayProfile.lastName}
-        </h2>
-        <h5>{displayProfile.pronouns || "pronouns not specified"}</h5>
-        <h5>{displayProfile.gender || "gender not specified"}</h5>
-        <h5>DOB: {displayProfile.date || "no DOB"}</h5>
-        {displayProfile.email ? (
-          <h5>
-            <a href={`mailto:${displayProfile.email}`}>
-              {displayProfile.email}
-            </a>
-          </h5>
-        ) : (
-          <h5>No email</h5>
-        )}
-        <p>{displayProfile.bio || "No bio available"}</p>
-
-        {/* Only allow the authenticated user to edit their own profile */}
-        {!userId && (
-          <div className="edit-profile-link">
-            <Link to="/ProfileForm">Edit Profile</Link>
+    <div className="container-display-horizontal">
+      <div className="container-white-2">
+        <div className="container-left">
+          <h4>{displayProfile.username || "No username"}</h4>
+          <div className="image-container-1">
+            <img
+              src={displayProfile.profileImageUrl || defaultProfileImage}
+              alt="profile"
+              height="150px"
+              width="150px"
+            />
+            <div>
+              {displayProfile.email ? (
+                <h5>
+                  <a href={`mailto:${displayProfile.email}`}>
+                    {displayProfile.email}
+                  </a>
+                </h5>
+              ) : (
+                <h5>No email</h5>
+              )}
+            </div>
           </div>
-        )}
+        </div>
+        <div className="container-white-2">
+          <div className="container-right">
+            <h2>
+              {displayProfile.firstName || "No name"} {displayProfile.lastName}
+            </h2>
+            <h5>{displayProfile.pronouns || "pronouns not specified"}</h5>
+            <h5>{displayProfile.gender || "gender not specified"}</h5>
+            <h5>DOB: {displayProfile.date || "no DOB"}</h5>
+
+            <p>{displayProfile.bio || "No bio available"}</p>
+
+            {/* Only allow the authenticated user to edit their own profile */}
+            {!userId && (
+              <div className="edit-profile-link">
+                <Link to="/ProfileForm">Edit Profile</Link>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
