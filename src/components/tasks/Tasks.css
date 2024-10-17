@@ -68,12 +68,20 @@ li {
 button {
   background-color: #008CBA;
   color: white;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  border-radius: 4px;
+  font-weight: bold;
+  line-height: 20px;
 }
 
+/* Responsive styling for smaller screens */
+@media (max-width: 768px) {
+  .tasks-container {
+    max-width: 100%;
+  }
+  
+  .task-inputs {
+    flex-direction: column;
+  }
+}
 button:hover {
   background-color: #007BB5;
 
