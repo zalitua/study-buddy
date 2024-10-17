@@ -1,16 +1,17 @@
 .chat {
-    height: 95vh; 
+    height: 100%; 
+    max-height: max-content;
+
     display: flex;
     flex-direction: column;
 
     min-width:900px ;
 
-    max-width: 70vw;
+    width: 100%;
+    max-width: 100%;
     flex: 3;
-   /*shift content away from side bar*/
 
     .nav { 
-        
         display: flex;
         justify-content: flex-start;
         align-items: center;
@@ -21,22 +22,24 @@
     .messages {
         padding: 20px;
         flex: 1;
-        overflow-y: auto; /*esure scrolling only happens inside messages */
+         
         display: flex;
         flex-direction: column;
-        gap: 20px;
-        min-height:calc(90vh - 150px);
+        gap: 5px;
 
-        max-height: calc(90vh - 150px); /* adjust height based on screen size */
+        overflow-y: auto;
+
+
+        max-height: calc(700px - 70px); 
     }
 
     .message {
         display: flex;
         flex-direction: column;
-        margin-bottom: 10px;
+        margin-bottom: 5px;
         padding: 10px;
         border-radius: 5px;
-        background-color: #f1f1f1;
+        background-color: var(--messageOther);
 
         /*handle long messages*/
         max-width: 80%; 
