@@ -109,16 +109,6 @@ const CustomAvatar = ({ onSaveAvatar, avatarConfig }) => {
             />
           </div>
 
-          {/* choose hair color - mohawk and thick only come in black */}
-          <div>
-            <label>Hair Color:</label>
-            <input
-              type="color"
-              value={hairColor}
-              onChange={(e) => setHairColor(e.target.value)}
-            />
-          </div>
-
           {/* choose hair style */}
           <div>
             <label>Hair Style:</label>
@@ -132,6 +122,16 @@ const CustomAvatar = ({ onSaveAvatar, avatarConfig }) => {
                 </option>
               ))}
             </select>
+          </div>
+
+          {/* choose hair color - mohawk and thick only come in black */}
+          <div>
+            <label>Hair Color:</label>
+            <input
+              type="color"
+              value={hairColor}
+              onChange={(e) => setHairColor(e.target.value)}
+            />
           </div>
 
           {/* choose eye style */}
