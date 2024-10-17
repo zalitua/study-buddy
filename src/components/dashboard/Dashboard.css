@@ -19,10 +19,19 @@ h1 {
   display: grid;
   grid-template-columns: 1fr 1fr; /* Two columns layout */
   gap: 20px; /* Gap between columns */
-  width: calc(100% - 280px); /* Account for sidebar width */
-  max-width: 1000px; /* Limit max width to prevent being too wide */
-  margin-left: 280px; /* Offset the grid by the width of the sidebar */
+  width: 100%; /* Ensure full width usage */
+  max-width: 1000px; /* Limit max width to prevent it from being too wide */
+  margin: 0 auto; /* Center the grid and remove left margin */
   box-sizing: border-box;
+  padding: 0 20px; /* Add padding to avoid grid touching the edges */
+}
+
+/* Media query for smaller screens */
+@media (max-width: 1200px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr; /* Switch to single column on smaller screens */
+    padding: 0 10px; /* Adjust padding for smaller screens */
+  }
 }
 
 /* Styling for individual sections (Tasks, Availabilities) */
@@ -57,12 +66,6 @@ h1 {
   width: 100%;
   box-sizing: border-box;
   text-align: center;
-}
-
-.full-width-section h2 {
-  font-size: 1.8rem;
-  color: #F59BE7;
-  margin-bottom: 15px;
 }
 
 /* List styling for tasks, availabilities, messages, leaderboard */

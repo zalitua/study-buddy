@@ -114,11 +114,17 @@ li span::after {
   .tasks-container {
     max-width: 100%;
   }
-  
+
   .task-inputs {
     flex-direction: column;
   }
+  
+  .task-inputs input[type="text"], .task-inputs input[type="date"] {
+    width: 100%; /* Make inputs full width on small screens */
+    margin-bottom: 10px;
+  }
 
-button:hover {
-  background-color: #007BB5;
-}
+  button:hover {
+    background-color: #007BB5;
+  }
+} /* Ensure this closing bracket is included */
