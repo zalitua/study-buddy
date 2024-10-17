@@ -1,17 +1,14 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Form } from "react-bootstrap";
-import { Button } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import { useUserAuth } from "../../context/userAuthContext";
 import { db } from "../../lib/firebase";
-import { setDoc, doc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import Success from "./SuccessModal";
 import { toast } from "react-toastify";
 
-// Email validation regex
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-//Creates function for the sign up process
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,65 +16,50 @@ const Signup = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   let navigate = useNavigate();
 
-  //Deals with submitting sign up information
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Validate email format
     if (!emailRegex.test(email)) {
-      toast.warn("Please enter a valid email address.", {
-        position: "top-center",
-        autoClose: 3000,
-      });
+      toast.warn("Please enter a valid email address.");
       return;
     }
-
-    // Check password length
     if (password.length < 8) {
-      toast.warn("Password must be at least 8 characters long.", {
-        position: "top-center",
-        autoClose: 3000,
-      });
+      toast.warn("Password must be at least 8 characters long.");
       return;
     }
 
     try {
-      //Create user authentication entry
       const userCredential = await signUp(email, password);
       const newUser = userCredential.user;
+      console.log("User created with UID:", newUser.uid); // Debug log
 
-      // Add the newly registered user to the users collection in the database
-      await setDoc(
-        doc(db, "users", newUser.uid),
-        {
-          email: newUser.email,
-          uid: newUser.uid,
-        },
-        { merge: true }
-      );
+      await setDoc(doc(db, "users", newUser.uid), {
+        email: newUser.email,
+        uid: newUser.uid,
+        points: 10
+      });
+
+      console.log("Firestore document created"); // Debug log
+
       await logIn(email, password);
 
       setShowSuccess(true);
+      navigate("/dashboard");
+      toast.success("10 points awarded for signing up!");
     } catch (err) {
-      toast.error("Login failed.", {
-        position: "top-center",
-      });
+      console.error("Signup error:", err); // Detailed error log
+      toast.error("Signup failed: " + err.message);
     }
   };
 
-  //Handles closing the success modal and navigating to the dashboard
   const handleCloseSuccess = () => {
     setShowSuccess(false);
     navigate("/profileForm");
   };
 
-  //Displays sign up form
   return (
     <>
       <div className="p-4 box">
         <h2 className="mb-3">StudyBuddy Signup</h2>
-        {/*         {error && <Alert variant="secondary">{error}</Alert>}
-         */}{" "}
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Control
@@ -86,7 +68,6 @@ const Signup = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
           </Form.Group>
-
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Control
               type="password"
@@ -94,7 +75,6 @@ const Signup = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </Form.Group>
-
           <div className="d-grid gap-2">
             <Button variant="primary" type="Submit">
               Sign up
