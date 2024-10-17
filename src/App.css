@@ -15,7 +15,7 @@
 
   --darktext: #E085D4;
 
-  --mainText: #E085D4;
+  --mainText: #0a0009;
 
 }
 
@@ -28,7 +28,7 @@ body {
   width: 100%;
   height: 100vh;
   font-family: 'Coiny', cursive; 
-  color: var(--buttons)
+  color: var(--buttons);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -36,21 +36,36 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--darktext); 
 }
 
-.container-white { 
-  
+/* white box for content, smaller version */
+.container-white-1 { 
+  display: flex;
   padding: 20px;
   background-color: white;
   border-radius: 10px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  /* margin-right: 40px;
-  margin-bottom: 20px; */
   min-width: 30vw; /* Adjust width as needed */
-  max-width: 30vw;
+  max-width: 45vw;
   min-height: 10vh;
-  max-height: 70vh; /*maximum height */
+  max-height: 80vh; /*maximum height */
+  color: var(--buttons)
 }
 
-.button-container {
+/* white box for content, larger version */
+.container-white-2 { 
+  display: flex;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  min-width: 30vw; /* Adjust width as needed */
+  max-width: 90vw;
+  min-height: 10vh;
+  max-height: 80vh; /*maximum height */
+  color: var(--buttons)
+}
+
+/* can be used for buttons or other div tags */
+.container-center-content {
   display: flex;
   justify-content: center; /* Centers the buttons horizontally */
   align-items: center; /* Centers the buttons vertically (if height is set) */
@@ -58,7 +73,7 @@ h1, h2, h3, h4, h5, h6 {
   padding: 20px; /* Padding around the entire div */
 }
 
-.button-container .btn {
+.container-center-content .btn {
   padding: 10px 20px; /* Adds padding inside the buttons */
   font-size: 16px; /* Adjusts button text size */
 }
@@ -81,13 +96,4 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0 auto;
 }
 
-/* .sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  background-color: #f8f9fa;
-  padding-top: 1rem;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-} */
 
