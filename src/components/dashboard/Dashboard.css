@@ -18,14 +18,14 @@
     gap: 10px;
     max-width: 100%;
 
-
-
     .dashboardTasks{
       border-radius: 5px;
       background-color: var(--backgroundWhite);
       display: flex;
       flex-direction: column;
       align-items: center;
+
+      max-width: 47%;
 
       max-height: 40vh;
       overflow-y: auto;
@@ -39,6 +39,8 @@
       background-color: var(--backgroundWhite);
       display: flex;
       flex-direction: column;
+
+      max-width: 53%;
 
       max-height: 40vh;
       overflow-y: auto;
