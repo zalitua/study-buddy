@@ -193,8 +193,9 @@ const Dashboard = () => {
   }
 
   return (
+    
     <div className="dashboard-container">
-      <h1>Dashboard Overview</h1>
+      <h1 className="dashTitle">Dashboard Overview</h1>
 
       {/* Two-column layout */}
       <div className="dashboardTop">

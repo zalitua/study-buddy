@@ -10,11 +10,12 @@
 
   overflow-y: auto; /*make the whole content schrollable*/
 
+
   /*tasks and group availables next to each other*/
   .dashboardTop{
     display: flex;
     flex-direction: row;
-    gap: 3px;
+    gap: 10px;
     max-width: 100%;
 
 
@@ -49,8 +50,10 @@
     
     display:flex;
     flex-direction: row;
-    margin-top: 3px;
-    gap: 3px;
+    margin-top: 10px;
+    gap: 10px;
+
+    max-width: 100%;
 
 
     .dashboardLatestMessages{
@@ -91,6 +94,8 @@
       overflow-y: auto;
 
       align-items: center;
+
+      
     }
   }
 
