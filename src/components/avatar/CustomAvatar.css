@@ -1,0 +1,43 @@
+
+
+.modal-av {
+    
+    font-size: 20px;
+    margin-top: 50px;
+}
+
+.modal-av .modal-dialog {
+    max-height: 90vh; 
+    margin: auto;
+}
+
+.modal-av .modal-body {
+    max-height: 70vh;
+    justify-content: center; 
+    overflow-y: auto; 
+    padding: 20px; 
+}
+
+.modal-av .modal-footer {
+    background-color: #FDE7F8;
+}
+
+
+
+
+  .container-item {
+    align-items: center; 
+    background-color: white;
+    padding: 5px; 
+    margin: 5px;  
+    border-radius: 15px; 
+  }
+  
+  .input-av {
+    margin-left: 8px;
+    border-radius: 8px; /* Rounded corners for the input */
+  }
+
+.modal-footer {
+  background-color: #FDE7F8;
+}

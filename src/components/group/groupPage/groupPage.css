@@ -87,6 +87,10 @@
 
     }
 
+    .modal-footer {
+        background-color: var(--pink0);
+    }
+
 
     button:hover {
         background-color: #0056b3;
@@ -100,5 +104,6 @@
     li {
         padding: 5px 0;
     }
+
 }
   
