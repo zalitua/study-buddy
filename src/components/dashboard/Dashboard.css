@@ -10,6 +10,7 @@
 
   overflow-y: auto; /*make the whole content schrollable*/
 
+  text-align: center;
 
   /*tasks and group availables next to each other*/
   .dashboardTop{
@@ -25,7 +26,7 @@
       flex-direction: column;
       align-items: center;
 
-      max-width: 47%;
+      max-width: 45%;
 
       max-height: 40vh;
       overflow-y: auto;
@@ -34,16 +35,24 @@
     }
 
     .dashboardAvailabilities{
+      
+      justify-content: center;
       align-items: center;
+
+
       border-radius: 5px;
       background-color: var(--backgroundWhite);
       display: flex;
       flex-direction: column;
 
-      max-width: 53%;
+      max-width: 55%;
 
       max-height: 40vh;
       overflow-y: auto;
+
+      word-wrap: break-word;
+      word-break: break-word; 
+      overflow-wrap:break-word; 
     }
 
   }
