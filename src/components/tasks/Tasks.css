@@ -74,9 +74,11 @@ li {
   color: #888;
 }
 
+
 li span {
   font-weight: bold;
   color: #333;
+
 }
 
 li span::after {

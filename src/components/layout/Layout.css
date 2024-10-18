@@ -4,52 +4,54 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Coiny', cursive; 
-  color: var(--darktext);
 }
 
-.container {
+
+
+.container-layout {
   display: flex;
-  min-width: 55vw; /* Adjust width as needed */
-  max-width: 100vw; /* Optional max-width */
+  min-width: 55vw; 
+  max-width: 100vw; 
   min-height: 40vh;
-  max-height: 90vh;; /* Adjust height as needed */
-  background: var(--background); /* Background for the container */
+  max-height: 90vh;
+  background: var(--pink1); 
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /*slight box shadow for every compoents*/
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
   padding-left: 3%;
   padding-right: 3%;
   padding-top: 2%;
   padding-bottom: 2%;
+  font-family: 'Coiny', cursive; 
+  color: var(--pink3);
 }
 
-/* .container h1, .container h2, .container h3, .container h4, .container h5, .container h6 {
+.container-layout h1, .container-layout h2, .container-layout h3, .container-layout h4, .container-layout h5, .container-layout h6 {
   font-family: 'Coiny', cursive; 
-  color: var(--darktext); 
-} */
+  color: var(--pink3); 
+}
 
-.sidebar {
+.sidebar-layout {
   width: 200px; /* Set the width for the sidebar */
   height: auto;
   background-color: white;
   border-radius: 10px;
 }
 
-  .content {
-    min-width: 50vw; /* Adjust based on your desired main content width */
-    max-width: 100vw;
-    height: auto; /* Adjust height as necessary */
-    background-color: #facef0;
-    padding-left: 1%;
-    padding-right: 1%;
-    border-radius: 10px;
+.content-layout {
+  min-width: 50vw; 
+  max-width: 100vw;
+  height: auto; 
+  background-color: #facef0;
+  padding-left: 1%;
+  padding-right: 1%;
+  border-radius: 10px;
 
-    .btn-primary{
-      background-color: var(--buttons) !important;
-      border-color: var(--buttons) ;
-          
-    }
-    .btn-primary:hover{
-      border-color: var(--buttonsHover) ;
-    }
+  .btn-primary{
+    background-color: var(--pink2) !important;
+    border-color: var(--pink2) ;
+        
   }
+  .btn-primary:hover{
+    border-color: var(--buttonsHover) ;
+  }
+}
