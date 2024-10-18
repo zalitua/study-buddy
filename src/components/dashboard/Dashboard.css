@@ -3,128 +3,96 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #FACEF0; /* Light pink background */
+  background-color: var(--pink1); 
   padding: 20px;
-  font-family: 'Coiny', cursive;
-  color: #F59BE7; /* Darker pink text color */
-  max-width: 75vw;
-}
+  max-width: 80vw;
+  max-height: 75vh;
+
+  overflow-y: auto; /*make the whole content schrollable*/
+
+  /*tasks and group availables next to each other*/
+  .dashboardTop{
+    display: flex;
+    flex-direction: row;
+    gap: 3px;
+    max-width: 100%;
 
 
 
+    .dashboardTasks{
+      border-radius: 5px;
+      background-color: var(--backgroundWhite);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
 
+      max-height: 40vh;
+      overflow-y: auto;
+      
 
+    }
 
+    .dashboardAvailabilities{
+      align-items: center;
+      border-radius: 5px;
+      background-color: var(--backgroundWhite);
+      display: flex;
+      flex-direction: column;
 
+      max-height: 40vh;
+      overflow-y: auto;
+    }
 
-/*Sophia css*/
-
-/* Grid layout for the dashboard */
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* Two columns layout */
-  gap: 20px; /* Gap between columns */
-  width: 100%; /* Ensure full width usage */
-  max-width: 1000px; /* Limit max width to prevent it from being too wide */
-  margin: 0 auto; /* Center the grid and remove left margin */
-  box-sizing: border-box;
-  padding: 0 20px; /* Add padding to avoid grid touching the edges */
-}
-
-/* Media query for smaller screens */
-/* would change the size for the screens but we are not using right now
-@media (max-width: 1200px) {
-  .dashboard-grid {
-    grid-template-columns: 1fr; 
-    padding: 0 10px;
   }
-}
-*/
 
-/* Styling for individual sections (Tasks, Availabilities) */
-.dashboard-section {
-  background-color: white;
-  border-radius: 15px;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
-  width: 100%;
-}
+  .dashboardBottom{
+    
+    display:flex;
+    flex-direction: row;
+    margin-top: 3px;
+    gap: 3px;
 
-.dashboard-section:hover {
-  transform: translateY(-5px); /* Slight hover effect */
-}
 
-.dashboard-section h2 {
-  font-size: 1.8rem;
-  margin-bottom: 15px;
-  color: #F59BE7;
-  text-align: center;
-}
+    .dashboardLatestMessages{
+      border-radius: 5px;
+      background-color: var(--backgroundWhite);
 
-/* Full-width sections (Leaderboard and Latest Messages) */
-.full-width-section {
-  grid-column: span 2; /* Span across both columns */
-  background-color: white;
-  border-radius: 15px;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Softer shadow */
-  margin-top: 20px;
-  width: 100%;
-  box-sizing: border-box;
-  text-align: center;
-}
+      display: flex;
+      flex-direction: column;
+      border-radius: 5px;
+      
+      width: 55%;
 
-/* List styling for tasks, availabilities, messages, leaderboard */
-ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
+      max-height: 40vh;
+      overflow-y: auto;
+      gap: 4px;
+      align-items: center;
 
-li {
-  margin-bottom: 10px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  padding: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-}
+      .dashboardMessage{
+        width:90%;
+        max-width: 90%;
+        word-wrap: break-word;
+        word-break: break-word; 
+        overflow-wrap: break-word; 
+        background-color: var(--backgroundGrey);
+        border-radius: 5px;
 
-li strong {
-  color: #F59BE7;
-}
+      }
 
-/* Styling for messages and leaderboard items */
-.message-item, .leaderboard-item {
-  margin-bottom: 15px;
-  padding: 15px;
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-  text-align: left; /* Align content to the left for readability */
-}
+    }
 
-.message-item p, .leaderboard-item p {
-  margin: 5px 0;
-}
+    .dashboardLeaderboard{
+      border-radius: 5px;
+      background-color: var(--backgroundWhite);
+      display: flex;
+      flex-direction: column;
+      max-width: 45%;
+      max-height: 40vh;
+      overflow-y: auto;
 
-.message-item strong, .leaderboard-item strong {
-  color: #F59BE7;
-}
+      align-items: center;
+    }
+  }
 
-/* Leaderboard layout */
-.leaderboard-section ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
 
-.leaderboard-section li {
-  margin-bottom: 10px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  padding: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  display: flex;
-  justify-content: space-between; /* Space for rank, name, and points */
 }

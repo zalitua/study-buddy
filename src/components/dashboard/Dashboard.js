@@ -197,9 +197,9 @@ const Dashboard = () => {
       <h1>Dashboard Overview</h1>
 
       {/* Two-column layout */}
-      <div className="dashboard-grid">
+      <div className="dashboardTop">
         {/* Upcoming Tasks Section */}
-        <section className="dashboard-section">
+        <div className="dashboardTasks">
           <h2>Upcoming Tasks in the Next 5 Days</h2>
           {upcomingTasks.length > 0 ? (
             <ul>
@@ -219,10 +219,10 @@ const Dashboard = () => {
           ) : (
             <p>No tasks in the next 5 days.</p>
           )}
-        </section>
+        </div>
 
         {/* Upcoming Group Availabilities Section */}
-        <section className="dashboard-section">
+        <div className="dashboardAvailabilities">
           <h2>Group Availabilities in the Next 5 Days</h2>
           {upcomingAvailabilities.length > 0 ? (
             <ul>
@@ -241,61 +241,63 @@ const Dashboard = () => {
           ) : (
             <p>No availabilities in the next 5 days.</p>
           )}
-        </section>
+        </div>
       </div>
 
       {/* Latest Chat Messages from All Groups Section */}
-      <section className="dashboard-section full-width-section">
-        <h2>Latest Messages from Your Groups</h2>
-        {latestMessages.length > 0 ? (
-          latestMessages.map((messageInfo, index) => (
-            <div key={index}>
-              <h3>{messageInfo.groupName}</h3>
-              <p>
-                <strong>From:</strong> {messageInfo.latestMessage.senderName}
-              </p>
-              <p>
-                <strong>Message:</strong> {messageInfo.latestMessage.text}
-              </p>
-              <p>
-                <strong>Sent At:</strong>
-                {messageInfo.latestMessage.createdAt
-                  ? typeof messageInfo.latestMessage.createdAt.toDate ===
-                    "function"
-                    ? new Date(
-                        messageInfo.latestMessage.createdAt.toDate()
-                      ).toLocaleString()
-                    : new Date(
-                        messageInfo.latestMessage.createdAt
-                      ).toLocaleString()
-                  : "Date not available"}
-              </p>
-            </div>
-          ))
-        ) : (
-          <p>No latest messages available.</p>
-        )}
-      </section>
+      <div className="dashboardBottom">
+        <div className="dashboardLatestMessages">
+          <h2>Latest Messages from Your Groups</h2>
+          {latestMessages.length > 0 ? (
+            latestMessages.map((messageInfo, index) => (
+              <div className="dashboardMessage" key={index}>
+                <h3>{messageInfo.groupName}</h3>
+                <p>
+                  <strong>From:</strong> {messageInfo.latestMessage.senderName}
+                </p>
+                <p>
+                  <strong>Message:</strong> {messageInfo.latestMessage.text}
+                </p>
+                <p>
+                  <strong>Sent At:</strong>
+                  {messageInfo.latestMessage.createdAt
+                    ? typeof messageInfo.latestMessage.createdAt.toDate ===
+                      "function"
+                      ? new Date(
+                          messageInfo.latestMessage.createdAt.toDate()
+                        ).toLocaleString()
+                      : new Date(
+                          messageInfo.latestMessage.createdAt
+                        ).toLocaleString()
+                    : "Date not available"}
+                </p>
+              </div>
+            ))
+          ) : (
+            <p>No latest messages available.</p>
+          )}
+        </div>
 
-      {/* Top 3 Users from Leaderboard */}
-      <section className="dashboard-section full-width-section">
-        <h2>Top 3 Users on the Leaderboard</h2>
-        {topThreeUsers.length > 0 ? (
-          <ul>
-            {topThreeUsers.map((user) => (
-              <li key={user.id}>
-                <strong>Rank:</strong> {user.rank}
-                <br />
-                <strong>Username:</strong> {user.username}
-                <br />
-                <strong>Points:</strong> {user.points}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No leaderboard data available.</p>
-        )}
-      </section>
+        {/* Top 3 Users from Leaderboard */}
+        <div className="dashboardLeaderboard">
+          <h2>Top 3 Users on the Leaderboard</h2>
+          {topThreeUsers.length > 0 ? (
+            <ul>
+              {topThreeUsers.map((user) => (
+                <li key={user.id}>
+                  <strong>Rank:</strong> {user.rank}
+                  <br />
+                  <strong>Username:</strong> {user.username}
+                  <br />
+                  <strong>Points:</strong> {user.points}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No leaderboard data available.</p>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
