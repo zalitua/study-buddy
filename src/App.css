@@ -66,11 +66,22 @@ body {
   max-width: 90vw;
   min-height: 10vh;
   max-height: 80vh; /*maximum height */
+  overflow-y: auto;
+  overflow-x: hidden;
   color: var(--pink2)
 }
 
-/* can be used for buttons or other div tags */
 .container-center-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centers the buttons horizontally */
+  align-items: center; /* Centers the buttons vertically (if height is set) */
+  min-height: 10vh;
+  max-height: 80vh;
+}
+
+/* can be used for buttons or other div tags */
+.container-center-button {
   display: flex;
   justify-content: center; /* Centers the buttons horizontally */
   align-items: center; /* Centers the buttons vertically (if height is set) */
@@ -78,7 +89,7 @@ body {
   padding: 20px; /* Padding around the entire div */
 }
 
-.container-center-content .btn {
+.container-center-button .btn {
   padding: 10px 20px; /* Adds padding inside the buttons */
   font-size: 16px; /* Adjusts button text size */
 }

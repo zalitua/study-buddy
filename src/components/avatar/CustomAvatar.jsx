@@ -74,6 +74,7 @@ const CustomAvatar = ({ onSaveAvatar, avatarConfig }) => {
     <div>
       {/* Avatar Display */}
       <Avatar style={{ width: "6rem", height: "6rem" }} {...config} />
+      <br />
 
       {/* create avatar button */}
       <Button varient="primary" onClick={handleOpenModal}>
