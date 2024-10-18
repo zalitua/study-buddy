@@ -5,10 +5,10 @@
     display: flex;
     flex-direction: column;
 
-    min-width:900px ;
+    
 
     width: 100%;
-    max-width: 100%;
+    max-width: 75vw;
     flex: 3;
 
     .nav { 
@@ -29,10 +29,10 @@
 
         overflow-y: auto;
 
-        min-height: calc(700px - 70px); 
+        min-height: calc(60vh - 70px); 
 
 
-        max-height: calc(700px - 70px); 
+        max-height: calc(60vh - 70px); 
     }
 
     .message {
@@ -69,6 +69,8 @@
         background-color: var(--ownMessages); /*different background color for own messages */
         border-radius: 10px;
         text-align: left;
+
+        color: var(--mainText);
     }
 
     .sender {
@@ -106,14 +108,14 @@
 
         .emoji{
             /*the button to get the emojis*/
-            width:5%;
-            font-size: 25px;
+            width:7%;
+            font-size: 20px;
             text-align: center;
             position: relative;
         }
         .emoji-picker {
             position: absolute;
-            bottom: 100px;/*position above the message bar*/
+            bottom: 50px;/*position above the message bar*/
             right:0;/*position the picker to the right*/
             z-index: 1000;/*make the picker at the frount*/
         }

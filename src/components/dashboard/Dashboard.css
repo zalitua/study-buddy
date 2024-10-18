@@ -7,12 +7,17 @@
   padding: 20px;
   font-family: 'Coiny', cursive;
   color: #F59BE7; /* Darker pink text color */
+  max-width: 75vw;
 }
 
-h1 {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-}
+
+
+
+
+
+
+
+/*Sophia css*/
 
 /* Grid layout for the dashboard */
 .dashboard-grid {
@@ -27,12 +32,14 @@ h1 {
 }
 
 /* Media query for smaller screens */
+/* would change the size for the screens but we are not using right now
 @media (max-width: 1200px) {
   .dashboard-grid {
-    grid-template-columns: 1fr; /* Switch to single column on smaller screens */
-    padding: 0 10px; /* Adjust padding for smaller screens */
+    grid-template-columns: 1fr; 
+    padding: 0 10px;
   }
 }
+*/
 
 /* Styling for individual sections (Tasks, Availabilities) */
 .dashboard-section {
