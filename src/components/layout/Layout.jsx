@@ -5,12 +5,12 @@ import "./Layout.css";
 
 const Layout = () => {
   return (
-    <div className="container">
-      <div className="sidebar">
+    <div className="container-layout">
+      <div className="sidebar-layout">
         {/* Sidebar content */}
         <Sidebar />
       </div>
-      <div className="content">
+      <div className="content-layout">
         {/* Main content */}
         <Outlet />
       </div>

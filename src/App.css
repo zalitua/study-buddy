@@ -2,12 +2,14 @@
 /*defining all the colours we use*/
 :root {
   --background:#FACEF0;
+  --pink1: #FACEF0; /* light pink - background */
 
   --backgroundGrey:#f7f8faf6;
 
   --backgroundWhite: white;
 
   --buttons: #F59BE7;
+  --pink2: #F59BE7; /* medium pink - buttons, text on white? */
 
   --buttonsHover:#da8bce;
 
@@ -20,6 +22,7 @@
   --banner:#faced0;
 
   --darktext: #E085D4;
+  --pink3: #E085D4; /* dark pink - header, text on light pink  */
 
   --mainText: #0a0009;
 
@@ -35,14 +38,8 @@ body {
   align-items: center;
   width: 100%;
   height: 100vh;
-  font-family: 'Coiny', cursive; 
-  color: var(--buttons);
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Coiny', cursive; 
-  color: var(--darktext); 
-}
 
 /* white box for content, smaller version */
 .container-white-1 { 
@@ -55,7 +52,7 @@ h1, h2, h3, h4, h5, h6 {
   max-width: 45vw;
   min-height: 10vh;
   max-height: 80vh; /*maximum height */
-  color: var(--buttons)
+  color: var(--pink2)
 }
 
 /* white box for content, larger version */
@@ -69,7 +66,7 @@ h1, h2, h3, h4, h5, h6 {
   max-width: 90vw;
   min-height: 10vh;
   max-height: 80vh; /*maximum height */
-  color: var(--buttons)
+  color: var(--pink2)
 }
 
 /* can be used for buttons or other div tags */
@@ -92,7 +89,7 @@ h1, h2, h3, h4, h5, h6 {
   max-width: 70vw; /* Optional max-width */
   min-height: 40vh;
   max-height: 90vh;; /* Adjust height as needed */
-  background: var(--background); /* Background for the container */
+  background: var(--pink1); /* Background for the container */
   
 }
 
