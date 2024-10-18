@@ -13,14 +13,18 @@ const Tasks = () => {
   // Fetch tasks from Firebase on component mount
   useEffect(() => {
     const fetchTasks = async () => {
-      const querySnapshot = await getDocs(collection(db, 'tasks'));
-      const tasksFromFirebase = querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setTasks(tasksFromFirebase);
-      const completedCount = tasksFromFirebase.filter(task => task.completed).length;
-      setCompletedTasks(completedCount);
+      try {
+        const querySnapshot = await getDocs(collection(db, 'tasks'));
+        const tasksFromFirebase = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setTasks(tasksFromFirebase);
+        const completedCount = tasksFromFirebase.filter(task => task.completed).length;
+        setCompletedTasks(completedCount);
+      } catch (error) {
+        console.error('Error fetching tasks:', error); // Added error handling
+      }
     };
 
     fetchTasks();
@@ -29,24 +33,32 @@ const Tasks = () => {
   // Add a new task to Firestore
   const addTask = async () => {
     if (taskInput && dueDate) {
-      const newTask = { task: taskInput, dueDate, completed: false };
-      const docRef = await addDoc(collection(db, 'tasks'), newTask);
-      setTasks([...tasks, { id: docRef.id, ...newTask }]);
-      setTaskInput(''); // Clear input
-      setDueDate(''); // Clear due date
+      try {
+        const newTask = { task: taskInput, dueDate, completed: false };
+        const docRef = await addDoc(collection(db, 'tasks'), newTask);
+        setTasks([...tasks, { id: docRef.id, ...newTask }]);
+        setTaskInput(''); // Clear input
+        setDueDate(''); // Clear due date
+      } catch (error) {
+        console.error('Error adding task:', error); // Added error handling
+      }
     }
   };
 
   // Mark a task as completed in Firestore
   const markTaskAsCompleted = async (taskId, index) => {
-    const taskDocRef = doc(db, 'tasks', taskId);
-    await updateDoc(taskDocRef, { completed: true });
+    try {
+      const taskDocRef = doc(db, 'tasks', taskId);
+      await updateDoc(taskDocRef, { completed: true });
 
-    const updatedTasks = tasks.map((task, i) =>
-      i === index ? { ...task, completed: true } : task
-    );
-    setTasks(updatedTasks);
-    setCompletedTasks(completedTasks + 1);
+      const updatedTasks = tasks.map((task, i) =>
+        i === index ? { ...task, completed: true } : task
+      );
+      setTasks(updatedTasks);
+      setCompletedTasks(completedTasks + 1);
+    } catch (error) {
+      console.error('Error updating task:', error); // Added error handling
+    }
   };
 
   return (
@@ -87,6 +99,25 @@ const Tasks = () => {
 
       {/* Task completion stats */}
       <h3>Completed Tasks: {completedTasks} / {tasks.length}</h3>
+
+      {/* Task completion progress bar */}
+      <div className="progress-bar-container">
+        <h3>Task Progress</h3>
+        <div className="progress-bar">
+          <div
+            className="progress-bar-fill"
+            style={{
+              width: tasks.length > 0
+                ? `${(completedTasks / tasks.length) * 100}%`
+                : '0%', // Handle the case where there are no tasks
+            }}
+          >
+            {tasks.length > 0
+              ? `${Math.round((completedTasks / tasks.length) * 100)}%`
+              : '0%'}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
