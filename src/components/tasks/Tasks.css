@@ -1,11 +1,3 @@
-/* Import Coiny font from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Coiny&display=swap');
-
-/* Apply global font-family */
-* {
-  font-family: 'Coiny', cursive;
-}
-
 .tasks-container {
   width: 100%;
   height: 95vh;
