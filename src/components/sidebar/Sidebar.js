@@ -2,7 +2,6 @@ import React from "react";
 import { Nav } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useUserAuth } from "../../context/userAuthContext";
-import "./Sidebar.css";
 
 const Sidebar = () => {
   const { logOut } = useUserAuth(); // Get the logOut function
@@ -19,7 +18,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="sidebar">
+    <div>
       <Nav className="flex-column p-3">
         <h4>StudyBuddy</h4>
         <Nav.Link as={NavLink} to="/">

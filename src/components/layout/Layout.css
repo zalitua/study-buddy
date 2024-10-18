@@ -53,6 +53,7 @@ body {
         
   }
   .btn-primary:hover{
+    background-color: var(--buttonsHover);
     border-color: var(--buttonsHover) ;
   }
 }
