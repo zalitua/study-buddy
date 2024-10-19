@@ -7,17 +7,17 @@ import { loadProfile } from "../loadProfile";
 import ProfilePage from "./ProfilePage";
 
 // Mock dependencies
-jest.mock("../../../context/ProfileContext", () => ({
+jest.mock("../../context/ProfileContext", () => ({
   useProfile: jest.fn(),
 }));
 jest.mock("react-router-dom", () => ({
   useParams: jest.fn(),
 }));
-jest.mock("../loadProfile", () => ({
+jest.mock("./loadProfile", () => ({
   loadProfile: jest.fn(),
 }));
 
-jest.mock("../ProfilePage", () => () => <div>Mocked ProfilePage</div>);
+jest.mock("./ProfilePage", () => () => <div>Mocked ProfilePage</div>);
 
 describe("ProfilePageContainer", () => {
   beforeEach(() => {
