@@ -11,6 +11,9 @@ body {
   text-align: center;
   background-color: #FACEF0; /* Light background color */
   color: #333; /* Default text color */
+
+  max-height: 100%;
+  overflow-y: auto;
 }
 
 /* Style for the calendar container */
