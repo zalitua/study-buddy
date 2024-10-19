@@ -3,121 +3,112 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #FACEF0; /* Light pink background */
+  background-color: var(--pink1); 
   padding: 20px;
-  font-family: 'Coiny', cursive;
-  color: #F59BE7; /* Darker pink text color */
-}
+  max-width: 80vw;
+  max-height: 75vh;
 
-h1 {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-}
+  overflow-y: auto; /*make the whole content schrollable*/
 
-/* Grid layout for the dashboard */
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* Two columns layout */
-  gap: 20px; /* Gap between columns */
-  width: 100%; /* Ensure full width usage */
-  max-width: 1000px; /* Limit max width to prevent it from being too wide */
-  margin: 0 auto; /* Center the grid and remove left margin */
-  box-sizing: border-box;
-  padding: 0 20px; /* Add padding to avoid grid touching the edges */
-}
+  text-align: center;
 
-/* Media query for smaller screens */
-@media (max-width: 1200px) {
-  .dashboard-grid {
-    grid-template-columns: 1fr; /* Switch to single column on smaller screens */
-    padding: 0 10px; /* Adjust padding for smaller screens */
+  /*tasks and group availables next to each other*/
+  .dashboardTop{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    max-width: 100%;
+
+    .dashboardTasks{
+      border-radius: 5px;
+      background-color: var(--backgroundWhite);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      max-width: 45%;
+
+      max-height: 40vh;
+      overflow-y: auto;
+      
+
+    }
+
+    .dashboardAvailabilities{
+      
+      justify-content: center;
+      align-items: center;
+
+
+      border-radius: 5px;
+      background-color: var(--backgroundWhite);
+      display: flex;
+      flex-direction: column;
+
+      max-width: 55%;
+
+      max-height: 40vh;
+      overflow-y: auto;
+
+      word-wrap: break-word;
+      word-break: break-word; 
+      overflow-wrap:break-word; 
+    }
+
   }
-}
 
-/* Styling for individual sections (Tasks, Availabilities) */
-.dashboard-section {
-  background-color: white;
-  border-radius: 15px;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
-  width: 100%;
-}
+  .dashboardBottom{
+    
+    display:flex;
+    flex-direction: row;
+    margin-top: 10px;
+    gap: 10px;
 
-.dashboard-section:hover {
-  transform: translateY(-5px); /* Slight hover effect */
-}
+    max-width: 100%;
 
-.dashboard-section h2 {
-  font-size: 1.8rem;
-  margin-bottom: 15px;
-  color: #F59BE7;
-  text-align: center;
-}
 
-/* Full-width sections (Leaderboard and Latest Messages) */
-.full-width-section {
-  grid-column: span 2; /* Span across both columns */
-  background-color: white;
-  border-radius: 15px;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Softer shadow */
-  margin-top: 20px;
-  width: 100%;
-  box-sizing: border-box;
-  text-align: center;
-}
+    .dashboardLatestMessages{
+      border-radius: 5px;
+      background-color: var(--backgroundWhite);
 
-/* List styling for tasks, availabilities, messages, leaderboard */
-ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
+      display: flex;
+      flex-direction: column;
+      border-radius: 5px;
+      
+      width: 55%;
 
-li {
-  margin-bottom: 10px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  padding: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-}
+      max-height: 40vh;
+      overflow-y: auto;
+      gap: 4px;
+      align-items: center;
 
-li strong {
-  color: #F59BE7;
-}
+      .dashboardMessage{
+        width:90%;
+        max-width: 90%;
+        word-wrap: break-word;
+        word-break: break-word; 
+        overflow-wrap: break-word; 
+        background-color: var(--backgroundGrey);
+        border-radius: 5px;
 
-/* Styling for messages and leaderboard items */
-.message-item, .leaderboard-item {
-  margin-bottom: 15px;
-  padding: 15px;
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-  text-align: left; /* Align content to the left for readability */
-}
+      }
 
-.message-item p, .leaderboard-item p {
-  margin: 5px 0;
-}
+    }
 
-.message-item strong, .leaderboard-item strong {
-  color: #F59BE7;
-}
+    .dashboardLeaderboard{
+      border-radius: 5px;
+      background-color: var(--backgroundWhite);
+      display: flex;
+      flex-direction: column;
+      max-width: 45%;
+      max-height: 40vh;
+      overflow-y: auto;
 
-/* Leaderboard layout */
-.leaderboard-section ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
+      align-items: center;
 
-.leaderboard-section li {
-  margin-bottom: 10px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  padding: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  display: flex;
-  justify-content: space-between; /* Space for rank, name, and points */
+      
+    }
+  }
+
+
 }
