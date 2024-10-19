@@ -1,0 +1,23 @@
+import Main from '../../index.js';
+import React from 'react';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+import * as firebase from '../../firebase';
+
+Enzyme.configure({ adapter: new Adapter() });
+
+describe('handleSignout', () => {
+
+beforeAll(function() {
+ firebase.firebase.auth = jest.fn().mockReturnValue({
+ currentUser: true,
+ signOut: function() { return true; }
+ });
+ });
+
+it(’should return true’, () => {
+ const wrapper = Enzyme.shallow( < Main / > );
+ let result = wrapper.instance().handleSignOut();
+ expect(result).toBe(true);
+ });
+});

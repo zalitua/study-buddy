@@ -8,7 +8,7 @@ import Signup from "./components/signup/Signup";
 import Chat from "./components/chat/Chat";
 import Leaderboard from "./components/leaderboard/Leaderboard";
 import ProfileForm from "./components/profile/ProfileForm";
-import ProfilePage from "./components/profile/ProfilePage";
+import ProfilePageContainer from "./components/profile/ProfilePageContainer";
 import UserList from "./components/profile/UserList";
 import Calendar from "./components/calendar/Calendar";
 import Home from "./components/home/Home";
@@ -77,7 +77,7 @@ function AppRoutes() {
           path="/profilePage"
           element={
             <ProtectedRoute>
-              <ProfilePage />
+              <ProfilePageContainer />
             </ProtectedRoute>
           }
         />
@@ -85,7 +85,7 @@ function AppRoutes() {
           path="/profilePage/:userId"
           element={
             <ProtectedRoute>
-              <ProfilePage />
+              <ProfilePageContainer />
             </ProtectedRoute>
           }
         />
