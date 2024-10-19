@@ -11,6 +11,9 @@ body {
   text-align: center;
   background-color: #FACEF0; /* Light background color */
   color: #333; /* Default text color */
+
+  max-height: 100%;
+  overflow-y: auto;
 }
 
 /* Style for the calendar container */
@@ -40,7 +43,7 @@ body {
 
 .react-calendar__tile--now {
   background: #F59BE7; /* Highlight current date in darker pink */
-  color: white; /* White text for better visibility */
+  color: rgb(0, 0, 0); /* White text for better visibility */
 }
 
 .react-calendar__month-view__days__day--weekend {
@@ -58,7 +61,7 @@ body {
 .react-calendar__tile:enabled:hover,
 .react-calendar__tile--active {
   background-color: #F59BE7; /* Darker pink for hovered or selected days */
-  color: white; /* White text for contrast */
+  color: rgb(0, 0, 0); /* White text for contrast */
 }
 
 /* Style for the selected date display */
@@ -100,7 +103,7 @@ button {
   font-size: 16px;
   cursor: pointer;
   background-color: #F59BE7; /* Pink background for the button */
-  color: white;
+  color: rgb(0, 0, 0);
   border: none;
   border-radius: 5px;
   transition: background-color 0.3s;

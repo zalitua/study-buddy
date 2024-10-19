@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Avatar, { genConfig } from "react-nice-avatar";
 import { Modal, Button } from "react-bootstrap";
+import "./CustomAvatar.css";
 
 const CustomAvatar = ({ onSaveAvatar, avatarConfig }) => {
   const [showModal, setShowModal] = useState(false);
@@ -74,6 +75,7 @@ const CustomAvatar = ({ onSaveAvatar, avatarConfig }) => {
     <div>
       {/* Avatar Display */}
       <Avatar style={{ width: "6rem", height: "6rem" }} {...config} />
+      <br />
 
       {/* create avatar button */}
       <Button varient="primary" onClick={handleOpenModal}>
@@ -82,141 +84,153 @@ const CustomAvatar = ({ onSaveAvatar, avatarConfig }) => {
           : "Create Avatar"}
       </Button>
 
-      <Modal show={showModal} onHide={handleCloseModal}>
+      <Modal className="modal-av" show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>Create a Custom Avatar</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          {/* Avatar Display */}
-          <Avatar style={{ width: "8rem", height: "8rem" }} {...config} />
-          {/* Option Selectors */}
-          <div>
-            <label>Background Color:</label>
-            <input
-              type="color"
-              value={bgColor}
-              onChange={(e) => setBgColor(e.target.value)}
-            />
-          </div>
+        <Modal.Body className=".container-center-content">
+          <div className=".container-center-content">
+            {/* Avatar Display */}
+            <Avatar style={{ width: "8rem", height: "8rem" }} {...config} />
+            {/* Option Selectors */}
+            <div className="container-item">
+              <label>Background Color: </label>
+              <input
+                className="input-av"
+                type="color"
+                value={bgColor}
+                onChange={(e) => setBgColor(e.target.value)}
+              />
+            </div>
 
-          {/* choose face color */}
-          <div>
-            <label>Face Color:</label>
-            <input
-              type="color"
-              value={faceColor}
-              onChange={(e) => setFaceColor(e.target.value)}
-            />
-          </div>
+            {/* choose face color */}
+            <div className="container-item">
+              <label>Face Color:</label>
+              <input
+                className="input-av"
+                type="color"
+                value={faceColor}
+                onChange={(e) => setFaceColor(e.target.value)}
+              />
+            </div>
 
-          {/* choose hair style */}
-          <div>
-            <label>Hair Style:</label>
-            <select
-              value={hairStyle}
-              onChange={(e) => setHairStyle(e.target.value)}
-            >
-              {hairStyles.map((style) => (
-                <option key={style} value={style}>
-                  {style}
-                </option>
-              ))}
-            </select>
-          </div>
+            {/* choose hair style */}
+            <div className="container-item">
+              <label>Hair Style:</label>
+              <select
+                className="input-av"
+                value={hairStyle}
+                onChange={(e) => setHairStyle(e.target.value)}
+              >
+                {hairStyles.map((style) => (
+                  <option key={style} value={style}>
+                    {style}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          {/* choose hair color - mohawk and thick only come in black */}
-          <div>
-            <label>Hair Color:</label>
-            <input
-              type="color"
-              value={hairColor}
-              onChange={(e) => setHairColor(e.target.value)}
-            />
-          </div>
+            {/* choose hair color - mohawk and thick only come in black */}
+            <div className="container-item">
+              <label>Hair Color:</label>
+              <input
+                className="input-av"
+                type="color"
+                value={hairColor}
+                onChange={(e) => setHairColor(e.target.value)}
+              />
+            </div>
 
-          {/* choose eye style */}
-          <div>
-            <label>Eye Style:</label>
-            <select
-              value={eyeStyle}
-              onChange={(e) => setEyeStyle(e.target.value)}
-            >
-              {eyeStyles.map((style) => (
-                <option key={style} value={style}>
-                  {style}
-                </option>
-              ))}
-            </select>
-          </div>
+            {/* choose eye style */}
+            <div className="container-item">
+              <label>Eye Style:</label>
+              <select
+                className="input-av"
+                value={eyeStyle}
+                onChange={(e) => setEyeStyle(e.target.value)}
+              >
+                {eyeStyles.map((style) => (
+                  <option key={style} value={style}>
+                    {style}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          {/* choose nose style */}
-          <div>
-            <label>Nose Style:</label>
-            <select
-              value={noseStyle}
-              onChange={(e) => setNoseStyle(e.target.value)}
-            >
-              {noseStyles.map((style) => (
-                <option key={style} value={style}>
-                  {style}
-                </option>
-              ))}
-            </select>
-          </div>
+            {/* choose nose style */}
+            <div className="container-item">
+              <label>Nose Style:</label>
+              <select
+                className="input-av"
+                value={noseStyle}
+                onChange={(e) => setNoseStyle(e.target.value)}
+              >
+                {noseStyles.map((style) => (
+                  <option key={style} value={style}>
+                    {style}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          {/* choose mouth style */}
-          <div>
-            <label>Mouth Style:</label>
-            <select
-              value={mouthStyle}
-              onChange={(e) => setMouthStyle(e.target.value)}
-            >
-              {mouthStyles.map((style) => (
-                <option key={style} value={style}>
-                  {style}
-                </option>
-              ))}
-            </select>
-          </div>
+            {/* choose mouth style */}
+            <div className="container-item">
+              <label>Mouth Style:</label>
+              <select
+                className="input-av"
+                value={mouthStyle}
+                onChange={(e) => setMouthStyle(e.target.value)}
+              >
+                {mouthStyles.map((style) => (
+                  <option key={style} value={style}>
+                    {style}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          {/* choose glasses style */}
-          <div>
-            <label>Glasses Style:</label>
-            <select
-              value={glassesStyle}
-              onChange={(e) => setGlassesStyle(e.target.value)}
-            >
-              {glassesStyles.map((style) => (
-                <option key={style} value={style}>
-                  {style}
-                </option>
-              ))}
-            </select>
-          </div>
+            {/* choose glasses style */}
+            <div className="container-item">
+              <label>Glasses Style:</label>
+              <select
+                className="input-av"
+                value={glassesStyle}
+                onChange={(e) => setGlassesStyle(e.target.value)}
+              >
+                {glassesStyles.map((style) => (
+                  <option key={style} value={style}>
+                    {style}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          {/* choose shirt style */}
-          <div>
-            <label>Shirt Style:</label>
-            <select
-              value={shirtStyle}
-              onChange={(e) => setShirtStyle(e.target.value)}
-            >
-              {shirtStyles.map((style) => (
-                <option key={style} value={style}>
-                  {style}
-                </option>
-              ))}
-            </select>
-          </div>
+            {/* choose shirt style */}
+            <div className="container-item">
+              <label>Shirt Style:</label>
+              <select
+                className="input-av"
+                value={shirtStyle}
+                onChange={(e) => setShirtStyle(e.target.value)}
+              >
+                {shirtStyles.map((style) => (
+                  <option key={style} value={style}>
+                    {style}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          {/* choose shirt color */}
-          <div>
-            <label>Shirt Color:</label>
-            <input
-              type="color"
-              value={shirtColor}
-              onChange={(e) => setShirtColor(e.target.value)}
-            />
+            {/* choose shirt color */}
+            <div className="container-item">
+              <label>Shirt Color:</label>
+              <input
+                className="input-av"
+                type="color"
+                value={shirtColor}
+                onChange={(e) => setShirtColor(e.target.value)}
+              />
+            </div>
           </div>
         </Modal.Body>
         <Modal.Footer>

@@ -38,7 +38,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="container-center-content">
+      <div className="container-center-button">
         <Button variant="primary" onClick={handleLoginModal}>
           Login
         </Button>

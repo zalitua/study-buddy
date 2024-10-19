@@ -232,8 +232,9 @@ const GroupPage = () => {
                 <Button onClick={handleLeaveGroup}>Leave Group</Button>
             </div>
 
+            <h2>Members</h2>
             <div className="members">
-                <h2>Members</h2>
+                
             
                 <ul>
                     {members.length > 0 ? (
