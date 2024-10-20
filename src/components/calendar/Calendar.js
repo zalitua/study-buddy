@@ -3,19 +3,20 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
-import { useUserAuth } from "../../context/userAuthContext"; 
-import { db } from "../../lib/firebase"; 
+import { useUserAuth } from "../../context/userAuthContext";
+import { db } from "../../lib/firebase";
 import { collection, addDoc, query, where, getDocs, deleteDoc, doc } from "firebase/firestore";
-import "./CalendarPage.css"; 
+import "./CalendarPage.css";
 
 const CalendarPage = () => {
-  const [selectedDate, setSelectedDate] = useState(new Date()); 
-  const [availabilities, setAvailabilities] = useState([]); 
-  const [startTime, setStartTime] = useState(""); 
-  const [endTime, setEndTime] = useState(""); 
-  const [loading, setLoading] = useState(false); 
-  const { user } = useUserAuth(); 
-  const navigate = useNavigate(); 
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [availabilities, setAvailabilities] = useState([]);
+  const [meetings, setMeetings] = useState([]);
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { user } = useUserAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!user) {
@@ -24,47 +25,48 @@ const CalendarPage = () => {
       return;
     }
 
-    const fetchAvailabilities = async () => {
+    const fetchAvailabilitiesAndMeetings = async () => {
       setLoading(true);
       try {
-        const q = query(
+        const availabilitiesQuery = query(
           collection(db, "availabilities"),
           where("date", "==", selectedDate.toDateString())
         );
-        const querySnapshot = await getDocs(q);
-        const data = querySnapshot.docs.map((doc) => ({
+        const availabilitiesSnapshot = await getDocs(availabilitiesQuery);
+        const availabilitiesData = availabilitiesSnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
-        setAvailabilities(data); 
+
+        const meetingsQuery = query(
+          collection(db, "meetings"),
+          where("date", "==", selectedDate.toDateString())
+        );
+        const meetingsSnapshot = await getDocs(meetingsQuery);
+        const meetingsData = meetingsSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        setAvailabilities(availabilitiesData);
+        setMeetings(meetingsData);
       } catch (err) {
-        toast.error("Failed to fetch availabilities: " + err.message); 
+        toast.error("Failed to fetch data: " + err.message);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchAvailabilities(); 
+    fetchAvailabilitiesAndMeetings();
   }, [selectedDate, user, navigate]);
 
   const handleDateChange = (date) => {
-    setSelectedDate(date); 
+    setSelectedDate(date);
   };
 
   const handleAddAvailability = async () => {
     if (!startTime || !endTime) {
       toast.warn("Please fill in both start and end times.");
-      return;
-    }
-
-    const isSlotTaken = availabilities.some(
-      (availability) =>
-        (startTime >= availability.startTime && startTime < availability.endTime) ||
-        (endTime > availability.startTime && endTime <= availability.endTime)
-    );
-
-    if (isSlotTaken) {
-      toast.error("This time slot is already booked by another member.");
       return;
     }
 
@@ -74,26 +76,49 @@ const CalendarPage = () => {
         startTime,
         endTime,
         userId: user.uid,
-        userName: user.displayName || user.email, 
+        userName: user.displayName || user.email,
       });
 
-      toast.success("Availability added successfully!"); 
-      setStartTime(""); 
-      setEndTime(""); 
+      toast.success("Availability added successfully!");
+      setStartTime("");
+      setEndTime("");
     } catch (err) {
-      toast.error("Failed to add availability: " + err.message); 
+      toast.error("Failed to add availability: " + err.message);
     }
   };
 
-  const handleDeleteAvailability = async (availabilityId) => {
+  const handleScheduleMeeting = async () => {
+    if (!startTime || !endTime) {
+      toast.warn("Please fill in both start and end times for the meeting.");
+      return;
+    }
+
     try {
-      await deleteDoc(doc(db, "availabilities", availabilityId));
-      toast.success("Availability removed successfully!");
-      setAvailabilities((prevAvailabilities) =>
-        prevAvailabilities.filter((availability) => availability.id !== availabilityId)
+      await addDoc(collection(db, "meetings"), {
+        date: selectedDate.toDateString(),
+        startTime,
+        endTime,
+        userId: user.uid,
+        userName: user.displayName || user.email,
+      });
+
+      toast.success("Meeting scheduled successfully!");
+      setStartTime("");
+      setEndTime("");
+    } catch (err) {
+      toast.error("Failed to schedule meeting: " + err.message);
+    }
+  };
+
+  const handleDeleteMeeting = async (meetingId) => {
+    try {
+      await deleteDoc(doc(db, "meetings", meetingId));
+      toast.success("Meeting removed successfully!");
+      setMeetings((prevMeetings) =>
+        prevMeetings.filter((meeting) => meeting.id !== meetingId)
       );
     } catch (err) {
-      toast.error("Failed to remove availability: " + err.message);
+      toast.error("Failed to remove meeting: " + err.message);
     }
   };
 
@@ -112,10 +137,26 @@ const CalendarPage = () => {
           <li key={index}>
             <strong>{availability.userName}</strong>: {availability.startTime} -{" "}
             {availability.endTime}
-            {availability.userId === user.uid && (
+          </li>
+        ))}
+      </ul>
+    );
+  };
+
+  const renderMeetings = () => {
+    if (meetings.length === 0) {
+      return <p>No meetings scheduled for this date.</p>;
+    }
+
+    return (
+      <ul>
+        {meetings.map((meeting, index) => (
+          <li key={index}>
+            <strong>{meeting.userName}</strong>: {meeting.startTime} - {meeting.endTime}
+            {meeting.userId === user.uid && (
               <button
                 className="delete-button"
-                onClick={() => handleDeleteAvailability(availability.id)}
+                onClick={() => handleDeleteMeeting(meeting.id)}
               >
                 Delete
               </button>
@@ -128,7 +169,7 @@ const CalendarPage = () => {
 
   return (
     <div className="calendar-page">
-      <h2>Group Availabilities</h2>
+      <h2>Availabilities and Meetings</h2>
       <div className="calendar-container">
         <Calendar onChange={handleDateChange} value={selectedDate} />
         <div className="selected-date">
@@ -156,6 +197,28 @@ const CalendarPage = () => {
       <div className="availabilities">
         <h3>Availabilities on {selectedDate.toDateString()}:</h3>
         {renderAvailabilities()}
+      </div>
+
+      <div className="schedule-meeting-form">
+        <h3>Schedule a Meeting:</h3>
+        <label>Start Time: </label>
+        <input
+          type="time"
+          value={startTime}
+          onChange={(e) => setStartTime(e.target.value)}
+        />
+        <label>End Time: </label>
+        <input
+          type="time"
+          value={endTime}
+          onChange={(e) => setEndTime(e.target.value)}
+        />
+        <button onClick={handleScheduleMeeting}>Schedule Meeting</button>
+      </div>
+
+      <div className="meetings">
+        <h3>Meetings on {selectedDate.toDateString()}:</h3>
+        {renderMeetings()}
       </div>
     </div>
   );

@@ -3,118 +3,113 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #FACEF0; /* Light pink background */
+  background-color: var(--pink1); 
   padding: 20px;
-  font-family: 'Coiny', cursive;
-  color: #F59BE7; /* Darker pink text color */
-}
+  max-width: 80vw;
+  max-height: 75vh;
 
-h1 {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-}
+  overflow-y: auto; /*make the whole content schrollable*/
 
-/* Grid layout for the dashboard */
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* Two columns layout */
-  gap: 20px; /* Gap between columns */
-  width: calc(100% - 280px); /* Account for sidebar width */
-  max-width: 1000px; /* Limit max width to prevent being too wide */
-  margin-left: 280px; /* Offset the grid by the width of the sidebar */
-  box-sizing: border-box;
-}
-
-/* Styling for individual sections (Tasks, Availabilities) */
-.dashboard-section {
-  background-color: white;
-  border-radius: 15px;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
-  width: 100%;
-}
-
-.dashboard-section:hover {
-  transform: translateY(-5px); /* Slight hover effect */
-}
-
-.dashboard-section h2 {
-  font-size: 1.8rem;
-  margin-bottom: 15px;
-  color: #F59BE7;
   text-align: center;
-}
 
-/* Full-width sections (Leaderboard and Latest Messages) */
-.full-width-section {
-  grid-column: span 2; /* Span across both columns */
-  background-color: white;
-  border-radius: 15px;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Softer shadow */
-  margin-top: 20px;
-  width: 100%;
-  box-sizing: border-box;
-  text-align: center;
-}
+  /*tasks and group availables next to each other*/
+  .dashboardTop{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    max-width: 100%;
 
-.full-width-section h2 {
-  font-size: 1.8rem;
-  color: #F59BE7;
-  margin-bottom: 15px;
-}
+    .dashboardTasks{
+      border-radius: 5px;
+      background-color: var(--backgroundWhite);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
 
-/* List styling for tasks, availabilities, messages, leaderboard */
-ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
+      max-width: 45%;
 
-li {
-  margin-bottom: 10px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  padding: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-}
+      max-height: 40vh;
+      overflow-y: auto;
+      
 
-li strong {
-  color: #F59BE7;
-}
+    }
 
-/* Styling for messages and leaderboard items */
-.message-item, .leaderboard-item {
-  margin-bottom: 15px;
-  padding: 15px;
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-  text-align: left; /* Align content to the left for readability */
-}
+    .dashboardAvailabilities{
+      
+      justify-content: center;
+      align-items: center;
 
-.message-item p, .leaderboard-item p {
-  margin: 5px 0;
-}
 
-.message-item strong, .leaderboard-item strong {
-  color: #F59BE7;
-}
+      border-radius: 5px;
+      background-color: var(--backgroundWhite);
+      display: flex;
+      flex-direction: column;
 
-/* Leaderboard layout */
-.leaderboard-section ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
+      max-width: 55%;
 
-.leaderboard-section li {
-  margin-bottom: 10px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  padding: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  display: flex;
-  justify-content: space-between; /* Space for rank, name, and points */
+      max-height: 40vh;
+      overflow-y: auto;
+
+      word-wrap: break-word;
+      word-break: break-word; 
+      overflow-wrap:break-word; 
+    }
+
+  }
+
+  .dashboardBottom{
+    
+    display:flex;
+    flex-direction: row;
+    margin-top: 10px;
+    gap: 10px;
+
+    max-width: 100%;
+
+
+    .dashboardLatestMessages{
+      border-radius: 5px;
+      background-color: var(--backgroundWhite);
+
+      display: flex;
+      flex-direction: column;
+      border-radius: 5px;
+      
+      width: 55%;
+
+      max-height: 40vh;
+      overflow-y: auto;
+      gap: 4px;
+      align-items: center;
+
+      .dashboardMessage{
+        width:90%;
+        max-width: 90%;
+        word-wrap: break-word;
+        word-break: break-word; 
+        overflow-wrap: break-word; 
+        background-color: var(--backgroundGrey);
+        border-radius: 5px;
+
+      }
+
+    }
+
+    .dashboardLeaderboard{
+      border-radius: 5px;
+      background-color: var(--backgroundWhite);
+      display: flex;
+      flex-direction: column;
+      width: 45%;
+      max-width: 45%;
+      max-height: 40vh;
+      overflow-y: auto;
+
+      align-items: center;
+
+      
+    }
+  }
+
+
 }

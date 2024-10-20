@@ -1,13 +1,14 @@
+import React from "react";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { storage } from "../../lib/firebase";
-import { db } from "../../lib/firebase";
 import { setDoc, doc } from "firebase/firestore";
-import { useUserAuth } from "../../context/userAuthContext";
 import { toast } from "react-toastify";
 import { v4 } from "uuid";
 
+import { db, storage } from "../../../lib/firebase";
+import { useUserAuth } from "../../../context/userAuthContext";
+
 // add a user's profile pic
-function ProfilePic({ onImageUpload }) {
+const ProfilePic = ({ onImageUpload }) => {
   const { user } = useUserAuth();
 
   const uploadFile = async (imageUpload) => {
@@ -35,6 +36,7 @@ function ProfilePic({ onImageUpload }) {
         autoClose: 1000,
       });
     } catch (err) {
+      //error when profile image doesn't upload
       toast.error("Failed to add profile image!", {
         position: "top-center",
         autoClose: 2000,
@@ -51,6 +53,6 @@ function ProfilePic({ onImageUpload }) {
       />
     </div>
   );
-}
+};
 
 export default ProfilePic;

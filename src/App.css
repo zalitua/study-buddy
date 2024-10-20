@@ -2,12 +2,18 @@
 /*defining all the colours we use*/
 :root {
   --background:#FACEF0;
+  --pink1: #FACEF0; /* light pink - background */
+
+  --pink0: #FDE7F8; /* half light pink */
+
+  --pink15: #f8b4ec;
 
   --backgroundGrey:#f7f8faf6;
 
   --backgroundWhite: white;
 
   --buttons: #F59BE7;
+  --pink2: #F59BE7; /* medium pink - buttons, text on white? */
 
   --buttonsHover:#da8bce;
 
@@ -20,6 +26,7 @@
   --banner:#faced0;
 
   --darktext: #E085D4;
+  --pink3: #E085D4; /* dark pink - header, text on light pink  */
 
   --mainText: #0a0009;
 
@@ -35,14 +42,13 @@ body {
   align-items: center;
   width: 100%;
   height: 100vh;
-  font-family: 'Coiny', cursive; 
-  color: var(--buttons);
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Coiny', cursive; 
-  color: var(--darktext); 
+img{
+  margin: 5px;
+  border: none;
 }
+
 
 /* white box for content, smaller version */
 .container-white-1 { 
@@ -51,51 +57,85 @@ h1, h2, h3, h4, h5, h6 {
   background-color: white;
   border-radius: 10px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  min-width: 30vw; /* Adjust width as needed */
+  min-width: 30vw; 
   max-width: 45vw;
   min-height: 10vh;
-  max-height: 80vh; /*maximum height */
-  color: var(--buttons)
+  max-height: 80vh; 
+  color: var(--pink2)
 }
 
 /* white box for content, larger version */
 .container-white-2 { 
   display: flex;
-  padding: 20px;
+  padding: 15px;
   background-color: white;
-  border-radius: 10px;
+  border-radius: 15px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  min-width: 30vw; /* Adjust width as needed */
+  min-width: 30vw; 
   max-width: 90vw;
+  min-height: 70vh;
+  max-height: 80vh; 
+  gap: 15px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  color: var(--pink2)
+}
+
+.container-center-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center; 
   min-height: 10vh;
-  max-height: 80vh; /*maximum height */
-  color: var(--buttons)
+  max-height: 80vh;
 }
 
 /* can be used for buttons or other div tags */
-.container-center-content {
+.container-center-button {
   display: flex;
-  justify-content: center; /* Centers the buttons horizontally */
-  align-items: center; /* Centers the buttons vertically (if height is set) */
-  gap: 10px; /* Space between the buttons */
-  padding: 20px; /* Padding around the entire div */
+  justify-content: center; 
+  gap: 20px; 
+  padding: 20px; 
 }
 
-.container-center-content .btn {
-  padding: 10px 20px; /* Adds padding inside the buttons */
-  font-size: 16px; /* Adjusts button text size */
+.container-center-button .btn {
+  padding: 10px 20px; 
+  font-size: 16px; 
 }
 
 .container-display-horizontal {
   display: flex;
-  min-width: 45vw; /* Adjust width as needed */
-  max-width: 70vw; /* Optional max-width */
+  min-width: 45vw; 
+  max-width: 70vw; 
   min-height: 40vh;
-  max-height: 90vh;; /* Adjust height as needed */
-  background: var(--background); /* Background for the container */
+  max-height: 90vh;; 
+  background: var(--pink1); 
   
 }
 
+.logo-display {
+  display: flex;
+  justify-content: center;
+}
+
+.logo-display img{
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+}
+
+.logo-display-home {
+  display: flex;
+  justify-content: center;
+}
+
+.logo-display-home img{
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  border: 5px solid white; 
+}
 
 .box {
   border: 1px solid #dfdfdf;
@@ -103,15 +143,113 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .p-4 {
-  max-height: 100vh; /* Set maximum height to the viewport height */
-  overflow-y: auto;  /* Allow vertical scrolling */
-  padding: 20px;     /* Ensure the content inside has space */
-  box-sizing: border-box; /* Include padding in the element’s height */
+  max-height: 100vh; 
+  overflow-y: auto;  
+  padding: 20px;     
+  box-sizing: border-box; 
 }
 
-.profile-form-container {
-  max-width: 400px;
-  margin: 0 auto;
+.btn-primary{
+  background-color: var(--pink2) !important;
+  border-color: var(--pink2) ;
+      
+}
+.btn-primary:hover{
+  background-color: var(--buttonsHover);
+  border-color: var(--buttonsHover) ;
 }
 
+.btn-secondary{
+  background-color: var(--pink1) !important;
+  border-color: var(--pink1) ;    
+}
+.btn-secondary:hover{
+  background-color: var(--pink2);
+  border-color: var(--pink2) ;
+}
 
+.btn-light{
+  background-color: var(--pink1) !important;
+  border-color: var(--pink1) ;    
+  color: white;
+}
+.btn-light:hover{
+  background-color: var(--pink2);
+  border-color: var(--pink2) ;
+}
+
+.modal {
+  font-family: 'Coiny', cursive; 
+  color: var(--pink3);
+
+  .btn-primary{
+    background-color: var(--pink2) !important;
+    border-color: var(--pink2) ;
+        
+  }
+  .btn-primary:hover{
+    background-color: var(--buttonsHover);
+    border-color: var(--buttonsHover) ;
+  }
+
+  .btn-secondary{
+    background-color: var(--pink3) !important;
+    border-color: var(--pink3) ;
+        
+  }
+  .btn-secondary:hover{
+    background-color: var(--buttonsHover);
+    border-color: var(--buttonsHover) ;
+  }
+}
+
+.modal-dialog {
+  max-height: 90vh; 
+  margin: auto;
+}
+
+.modal-header {
+  background-color: var(--pink0);
+}
+
+.modal-body {
+  max-height: 70vh;
+  justify-content: center; 
+  overflow-y: auto; 
+  padding: 20px; 
+  background-color: var(--pink1);
+}
+
+.modal-footer {
+  background-color: #FDE7F8;
+}
+
+/* Popover container */
+.popover {
+  min-width: 250px;
+  border-radius: 20px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  
+}
+
+/* Popover header */
+.popover .popover-header {
+  background-color: var(--pink1);
+  border: 1px solid var(--pink3);
+  padding: 8px 12px;
+  font-size: 24px;
+  font-family: 'Coiny', cursive; /* Optional: Coiny font */
+  color: var(--pink3);
+}
+
+/* Popover body */
+.popover .popover-body {
+  background-color: var(--pink0);
+  border: 1px solid var(--pink3);
+  padding: 12px;
+  padding-bottom: 24px;
+  font-size: 20px;
+  line-height: 1.5;
+  font-family: 'Coiny', cursive; /* Optional: Coiny font */
+  color: var(--pink3);
+}

@@ -3,6 +3,8 @@ import { Table, Spinner, Alert } from "react-bootstrap";
 import { db, auth } from "../../lib/firebase"; // Import Firebase auth
 import { collection, query, orderBy, limit, onSnapshot, getDocs } from "firebase/firestore";
 
+import "./leaderboard.css"
+
 const Leaderboard = () => {
   const [leaders, setLeaders] = useState([]);
   const [currentUserData, setCurrentUserData] = useState(null);
@@ -81,7 +83,7 @@ const Leaderboard = () => {
   }
 
   return (
-    <div>
+    <div className="leaderBoard">
       <h2>Leaderboard</h2>
       <Table striped bordered hover>
         <thead>

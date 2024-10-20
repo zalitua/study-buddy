@@ -4,15 +4,11 @@
   "private": true,
   "dependencies": {
     "@react-firebase/firestore": "^0.5.5",
-<<<<<<< HEAD
-    "@testing-library/user-event": "^13.5.0",
-=======
->>>>>>> main
     "bootstrap": "^5.3.3",
     "emoji-picker-react": "^4.12.0",
     "firebase": "^10.13.1",
     "react": "^18.3.1",
-    "react-bootstrap": "^2.10.5",
+    "react-bootstrap": "^2.10.4",
     "react-calendar": "^5.0.0",
     "react-dom": "^18.3.1",
     "react-firebase-hooks": "^5.1.1",
@@ -20,7 +16,7 @@
     "react-nice-avatar": "^1.5.0",
     "react-router-dom": "^6.26.2",
     "react-scripts": "^5.0.1",
-    "react-toastify": "^10.0.6",
+    "react-toastify": "^10.0.5",
     "terser": "^5.31.6",
     "tough-cookie": "^4.1.4",
     "uuid": "^10.0.0",
@@ -52,18 +48,12 @@
     ]
   },
   "devDependencies": {
-<<<<<<< HEAD
-    "@testing-library/jest-dom": "^6.5.0",
-    "@testing-library/react": "^16.0.1",
-    "deep-equal": "^2.2.3",
-    "jest": "^27.5.1"
-=======
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
     "deep-equal": "^2.2.3",
     "jest": "^29.3.1",
     "jest-environment-jsdom": "^29.3.1"
->>>>>>> main
   }
 }
