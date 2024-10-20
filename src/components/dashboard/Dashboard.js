@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { db, auth } from "../../lib/firebase"; // Adjust Firebase path as needed
+import { db, auth } from "../../lib/firebase"; 
 import {
   collection,
   query,
@@ -9,20 +9,20 @@ import {
   where,
   onSnapshot,
 } from "firebase/firestore";
-import { useUserAuth } from "../../context/userAuthContext"; // Assuming you have user context
+import { useUserAuth } from "../../context/userAuthContext"; 
 import "./Dashboard.css";
 
 const Dashboard = () => {
-  const { user } = useUserAuth(); // Accessing the logged-in user's info
+  const { user } = useUserAuth(); // accessing the logged-in user's info
   const [upcomingTasks, setUpcomingTasks] = useState([]);
-  const [upcomingAvailabilities, setUpcomingAvailabilities] = useState([]); // Store group availabilities
-  const [latestMessages, setLatestMessages] = useState([]); // To store latest messages from all groups
+  const [upcomingAvailabilities, setUpcomingAvailabilities] = useState([]); 
+  const [latestMessages, setLatestMessages] = useState([]); 
   const [topThreeUsers, setTopThreeUsers] = useState([]);
   const [userGroups, setUserGroups] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // Fetch upcoming events, latest messages, leaderboard data, and user groups
+  // fetches upcoming events, latest messages, leaderboard data, and user groups
   useEffect(() => {
     if (!user) {
       setLoading(false);
@@ -34,12 +34,12 @@ const Dashboard = () => {
         setLoading(true);
         const today = new Date();
         const fiveDaysFromNow = new Date();
-        fiveDaysFromNow.setDate(today.getDate() + 5); // Add 5 days to current date
+        fiveDaysFromNow.setDate(today.getDate() + 5); // adds 5 days to current date
 
-        // Fetch tasks within the next 5 days
+       
         const fetchUpcomingTasks = async () => {
           const tasksQuery = query(
-            collection(db, "tasks"), // Assuming your tasks are stored in the 'tasks' collection
+            collection(db, "tasks"), 
             orderBy("dueDate", "asc")
           );
           const querySnapshot = await getDocs(tasksQuery);
@@ -60,7 +60,7 @@ const Dashboard = () => {
         // Fetch group availabilities within the next 5 days
         const fetchUpcomingAvailabilities = async () => {
           const availabilitiesQuery = query(
-            collection(db, "availabilities"), // Assuming your calendar events are in 'availabilities' collection
+            collection(db, "availabilities"), 
             orderBy("date", "asc")
           );
           const querySnapshot = await getDocs(availabilitiesQuery);
@@ -85,25 +85,25 @@ const Dashboard = () => {
         // Fetch top 3 users from leaderboard
         const fetchTopThreeUsers = async () => {
           const leaderboardQuery = query(
-            collection(db, "users"), // Access the 'users' collection
-            orderBy("points", "desc"), // Order by top-level 'points'
-            limit(3) // Get the top 3 users
+            collection(db, "users"), 
+            orderBy("points", "desc"), 
+            limit(3) 
           );
           const querySnapshot = await getDocs(leaderboardQuery);
 
           if (!querySnapshot.empty) {
             const leaderboardData = querySnapshot.docs.map((doc, index) => ({
               id: doc.id,
-              rank: index + 1, // Rank based on order in the query
-              username: doc.data().username, // Access 'username' from the document
-              points: doc.data().points, // Access 'points' from the document
+              rank: index + 1, 
+              username: doc.data().username, 
+              points: doc.data().points, 
             }));
 
             setTopThreeUsers(leaderboardData);
           }
         };
 
-        // Fetch latest messages from groups
+        // fetches latest messages from groups
         const fetchLatestMessagesFromGroups = async () => {
           const currentUser = auth.currentUser;
           if (!currentUser) {
