@@ -116,7 +116,6 @@ img{
 .logo-display {
   display: flex;
   justify-content: center;
-  padding-top: 10px;
 }
 
 .logo-display img{
