@@ -27,7 +27,7 @@ const Sidebar = () => {
       </div>
 
       {/* page navigation display */}
-      <Nav className="flex-column p-10">
+      <Nav className="flex-column py-001 px-10">
         <Nav.Link as={NavLink} to="/">
           Home
         </Nav.Link>
@@ -52,7 +52,6 @@ const Sidebar = () => {
         <Nav.Link as={NavLink} to="/forumHome">
           Forums
         </Nav.Link>
-        <br />
         {/* logout from app */}
         <Button variant="light" onClick={handleLogout}>
           Logout
