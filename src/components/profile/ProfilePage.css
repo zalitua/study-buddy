@@ -29,8 +29,8 @@
     padding: 20px;
     min-height: 30vw; 
     max-height: 70vw;
-    min-width: 30vw; 
-    max-width: 45vw;
+    min-width: 40vw; 
+    max-width: 55vw;
     border-radius: 10px;
     background-color: var(--pink0);
 }
