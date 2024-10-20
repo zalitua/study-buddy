@@ -1,9 +1,11 @@
+import React from "react";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { db, storage } from "../../../lib/firebase";
 import { setDoc, doc } from "firebase/firestore";
-import { useUserAuth } from "../../../context/userAuthContext";
 import { toast } from "react-toastify";
 import { v4 } from "uuid";
+
+import { db, storage } from "../../../lib/firebase";
+import { useUserAuth } from "../../../context/userAuthContext";
 
 // add a user's profile pic
 const ProfilePic = ({ onImageUpload }) => {
