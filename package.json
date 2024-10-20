@@ -18,7 +18,9 @@
     "react-scripts": "^5.0.1",
     "react-toastify": "^10.0.5",
     "terser": "^5.31.6",
+    "text-encoding": "^0.7.0",
     "tough-cookie": "^4.1.4",
+    "util": "^0.12.5",
     "uuid": "^10.0.0",
     "webpack": "^5.94.0",
     "webpack-cli": "^5.1.4"
@@ -53,6 +55,6 @@
     "@testing-library/user-event": "^14.4.3",
     "deep-equal": "^2.2.3",
     "jest": "^29.3.1",
-    "jest-environment-jsdom": "^29.3.1"
+    "jest-environment-jsdom": "^29.7.0"
   }
 }
