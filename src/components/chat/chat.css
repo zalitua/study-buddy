@@ -108,10 +108,10 @@
 
         .emoji{
             /*the button to get the emojis*/
-            width:7%;
-            font-size: 20px;
+            width:9%;
+            font-size: 25px;
             text-align: center;
-            position: relative;
+            
         }
         .emoji-picker {
             position: absolute;

@@ -1,0 +1,5 @@
+.leaderBoard{
+    /*Added to stop max overflow*/
+    max-height: 100%;
+    overflow-y: auto;
+}
