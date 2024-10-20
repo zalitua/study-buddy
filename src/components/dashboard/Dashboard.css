@@ -100,6 +100,7 @@
       background-color: var(--backgroundWhite);
       display: flex;
       flex-direction: column;
+      width: 45%;
       max-width: 45%;
       max-height: 40vh;
       overflow-y: auto;
