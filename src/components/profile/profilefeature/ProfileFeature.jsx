@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { OverlayTrigger, Popover } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-import defaultProfileImage from "../../assets/default-profile.png";
+import defaultProfileImage from "../../../assets/default-profile.png";
 import "./ProfileFeature.css";
 
 // display a selected user's profile in a popover on hover
@@ -12,6 +12,11 @@ const ProfileFeature = ({ user }) => {
   // handle popover behaviour based on mouse position
   const handleMouseEnter = () => setShowPopover(true);
   const handleMouseLeave = () => setShowPopover(false);
+
+  // error handling in case of no userId passed in
+  if (!user) {
+    return <span>User data not available</span>;
+  }
 
   // popover component
   const popover = (

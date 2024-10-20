@@ -1,4 +1,4 @@
-
+/* simple content centering and column flex */
 .center-content {
     display: flex;
     flex-direction: column;
@@ -6,6 +6,7 @@
     text-align: center;
   }
 
+/* display image styling */
 .image-container img{
     background: white;
     width: 70px;
