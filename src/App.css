@@ -73,7 +73,7 @@ img{
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   min-width: 30vw; 
   max-width: 90vw;
-  min-height: 10vh;
+  min-height: 70vh;
   max-height: 80vh; 
   gap: 15px;
   overflow-y: auto;
@@ -197,8 +197,6 @@ img{
   margin: auto;
 }
 
-
-
 .modal-header {
   background-color: var(--pink0);
 }
@@ -213,4 +211,34 @@ img{
 
 .modal-footer {
   background-color: #FDE7F8;
+}
+
+/* Popover container */
+.popover {
+  min-width: 250px;
+  border-radius: 20px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  
+}
+
+/* Popover header */
+.popover .popover-header {
+  background-color: var(--pink1);
+  border: 1px solid var(--pink3);
+  padding: 8px 12px;
+  font-size: 24px;
+  font-family: 'Coiny', cursive; /* Optional: Coiny font */
+  color: var(--pink3);
+}
+
+/* Popover body */
+.popover .popover-body {
+  background-color: var(--pink0);
+  border: 1px solid var(--pink3);
+  padding: 12px;
+  padding-bottom: 24px;
+  font-size: 20px;
+  line-height: 1.5;
+  font-family: 'Coiny', cursive; /* Optional: Coiny font */
+  color: var(--pink3);
 }

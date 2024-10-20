@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Nav } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useUserAuth } from "../../context/userAuthContext";
-import siteLogo from "../../assets/SBLogo.jpg";
+import siteLogo from "../../assets/SBLogo.png";
 import defaultProfileImage from "../../assets/default-profile.png";
 
 const Sidebar = () => {
