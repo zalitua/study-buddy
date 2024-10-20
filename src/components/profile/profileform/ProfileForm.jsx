@@ -1,90 +1,41 @@
-import React, { useState } from "react";
+import React from "react";
 import { Form, Button, Spinner } from "react-bootstrap";
-import { useProfile } from "../../context/ProfileContext";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-//import Avatar from "react-nice-avatar";
-import CustomAvatar from "../avatar/CustomAvatar";
+
+import CustomAvatar from "../../avatar/CustomAvatar";
 import ProfilePic from "./ProfilePic";
 
-const ProfileForm = () => {
-  const { profileData, updateProfileData } = useProfile(); // Access profile and update functions from context
-  const [firstName, setFirstName] = useState(profileData?.firstName || "");
-  const [lastName, setLastName] = useState(profileData?.lastName || "");
-  const [username, setUsername] = useState(profileData?.username || "");
-  const [phone, setPhone] = useState(profileData?.phone || "");
-  const [date, setDate] = useState(profileData?.date || "");
-  const [gender, setGender] = useState(profileData?.gender || "");
-  const [pronouns, setPronouns] = useState(profileData?.pronouns || "");
-  const [bio, setBio] = useState(profileData?.bio || "");
-  const [other, setOther] = useState("");
-  const [otherPN, setOtherPN] = useState("");
-  const [profileImage, setProfileImage] = useState(
-    profileData?.profileImageUrl
-  );
-  const [avatarConfig, setAvatarConfig] = useState(
-    profileData.avatarConfig || {}
-  );
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-  const isEdit = firstName && lastName && username;
-
-  const handleImageUpload = (url) => {
-    setProfileImage(url);
-  };
-
-  // Validate required fields before submission
-  const validateForm = () => {
-    if (!firstName || !lastName || !username) {
-      toast.warn("Please fill out required fields.", {
-        position: "top-center",
-      });
-      return false;
-    }
-    return true;
-  };
-
-  // Function to handle avatar saving from CustomAvatar component
-  const handleSaveAvatar = (newAvatarConfig) => {
-    setAvatarConfig(newAvatarConfig); // Update avatar configuration
-  };
-
-  // Handle form submission to update profile data
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!validateForm()) return;
-
-    setLoading(true);
-
-    const updatedData = {
-      firstName,
-      lastName,
-      username,
-      phone,
-      date,
-      gender: gender === "other" ? other : gender,
-      pronouns: pronouns === "other" ? otherPN : pronouns,
-      bio,
-      avatarConfig,
-    };
-
-    try {
-      await updateProfileData(updatedData); // Use context to update profile
-      toast.success("Profile updated successfully!", {
-        position: "top-center",
-        autoClose: 1000,
-      });
-      setTimeout(() => {
-        navigate("/dashboard"); // Redirect to home page
-      }, 2000);
-    } catch (error) {
-      toast.error("Failed to update profile!", { position: "top-center" });
-    } finally {
-      setLoading(false);
-    }
-  };
-
+// form to gather profile information
+const ProfileForm = ({
+  profileData,
+  firstName,
+  lastName,
+  username,
+  phone,
+  date,
+  gender,
+  pronouns,
+  bio,
+  other,
+  otherPN,
+  profileImage,
+  avatarConfig,
+  loading,
+  handleImageUpload,
+  handleSaveAvatar,
+  setFirstName,
+  setLastName,
+  setUsername,
+  setPhone,
+  setDate,
+  setGender,
+  setPronouns,
+  setBio,
+  setOther,
+  setOtherPN,
+  handleSubmit,
+  isEdit,
+}) => {
   if (loading) {
     return (
       <div className="d-flex justify-content-center align-items-center vh-100">

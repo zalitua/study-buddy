@@ -3,7 +3,9 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../lib/firebase";
 import Avatar from "react-nice-avatar";
 import "../CustomAvatar.css";
+import { toast } from "react-toastify";
 
+// get and display Avatar object
 const GetAvatar = ({ userId }) => {
   const [avatarConfig, setAvatarConfig] = useState(null);
 
@@ -15,10 +17,11 @@ const GetAvatar = ({ userId }) => {
         const userSnap = await getDoc(userRef);
 
         if (userSnap.exists()) {
-          // Assuming avatar config is stored under a field called 'avatarConfig'
           setAvatarConfig(userSnap.data().avatarConfig);
         } else {
-          console.log("No avatar configuration found for this user");
+          toast.error("Failed to upload avatar data!", {
+            position: "top-center",
+          });
         }
       }
     };
@@ -26,6 +29,7 @@ const GetAvatar = ({ userId }) => {
     fetchAvatarConfig();
   }, [userId]);
 
+  // loading message
   if (!avatarConfig) {
     return <p>Loading avatar...</p>;
   }

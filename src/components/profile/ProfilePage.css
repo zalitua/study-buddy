@@ -10,19 +10,16 @@
     min-width: 15vw; 
     max-width: 20vw;
     background-color: var(--pink1);
-    color: var(--pink3);
 }
 
+/* custom image container */
 .image-container-1 img{
     background: white;
     width: 150px;
     height: 150px;
     border-radius: 50%;
     padding: 5px;
-    transform: translate(0px,0px);
 }
-
-
 
 .container-right{
     display: flex;
@@ -36,18 +33,13 @@
     max-width: 45vw;
     border-radius: 10px;
     background-color: var(--pink0);
-    /* color: var(--buttons) */
 }
 
-.container-right h2 {
-    color: var(--pink3);
-}
-
+/* format p tag */
 .container-right p {
     padding-right: 5%;
     padding-left: 5%;
-    padding-top: 30px;
-    padding-bottom: 30px;
+    padding-top: 20px;
+    padding-bottom: 20px;
     word-wrap: break-word; /* Ensures long words break if needed */
-    color: var(--pink3);
 }
