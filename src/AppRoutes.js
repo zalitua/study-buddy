@@ -7,9 +7,8 @@ import Login from "./components/login/Login";
 import Signup from "./components/signup/Signup";
 import Chat from "./components/chat/Chat";
 import Leaderboard from "./components/leaderboard/Leaderboard";
-import ProfileForm from "./components/profile/ProfileForm";
+import ProfileFormContainer from "./components/profile/profileform/ProfileFormContainer";
 import ProfilePageContainer from "./components/profile/ProfilePageContainer";
-import UserList from "./components/profile/UserList";
 import Calendar from "./components/calendar/Calendar";
 import Home from "./components/home/Home";
 import Tasks from "./components/tasks/Tasks";
@@ -69,7 +68,7 @@ function AppRoutes() {
           path="/profileForm"
           element={
             <ProtectedRoute>
-              <ProfileForm />
+              <ProfileFormContainer />
             </ProtectedRoute>
           }
         />
@@ -89,7 +88,6 @@ function AppRoutes() {
             </ProtectedRoute>
           }
         />
-        <Route path="/userList" element={<UserList />} />
         <Route
           path="/calendar"
           element={

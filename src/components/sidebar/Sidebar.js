@@ -22,12 +22,7 @@ const Sidebar = () => {
   return (
     <div>
       <div className="logo-display">
-        <img
-          src={siteLogo || defaultProfileImage}
-          alt="profile"
-          height="50px"
-          width="50px"
-        />
+        <img src={siteLogo} alt="profile" height="50px" width="50px" />
       </div>
       <Nav className="flex-column px-3 py-1">
         {/* <h4>StudyBuddy</h4> */}
