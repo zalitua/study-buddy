@@ -2,25 +2,23 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-import Dashboard from "./components/dashboard/Dashboard";
-import Login from "./components/login/Login";
-import Signup from "./components/signup/Signup";
-import Chat from "./components/chat/Chat";
-import Leaderboard from "./components/leaderboard/Leaderboard";
-import ProfileFormContainer from "./components/profile/profileform/ProfileFormContainer";
-import ProfilePageContainer from "./components/profile/ProfilePageContainer";
-import Calendar from "./components/calendar/Calendar";
-import Home from "./components/home/Home";
-import Tasks from "./components/tasks/Tasks";
-import Group from "./components/group/Group";
-import CustomAvatar from "./components/avatar/CustomAvatar";
-import Layout from "./components/layout/Layout";
+import Dashboard from "../dashboard/Dashboard";
+import Chat from "../chat/Chat";
+import Leaderboard from "../leaderboard/Leaderboard";
+import ProfileFormContainer from "../profile/profileform/ProfileFormContainer";
+import ProfilePageContainer from "../profile/ProfilePageContainer";
+import Calendar from "../calendar/Calendar";
+import Home from "../home/Home";
+import Tasks from "../tasks/Tasks";
+import Group from "../group/Group";
+import CustomAvatar from "../avatar/CustomAvatar";
+import Layout from "../layout/Layout";
 
-import ForumHome from "./components/forum/ForumHome";
-import ForumPage from "./components/forum/forumPages/ForumPages";
+import ForumHome from "../forum/ForumHome";
+import ForumPage from "../forum/forumPages/ForumPages";
 
-import ProtectedRoute from "./components/protectedroutes/ProtectedRoute";
-import GroupPage from "./components/group/groupPage/GroupPage";
+import ProtectedRoute from "../protectedroutes/ProtectedRoute";
+import GroupPage from "../group/groupPage/GroupPage";
 
 // define routes for app
 function AppRoutes() {
@@ -38,8 +36,6 @@ function AppRoutes() {
             </ProtectedRoute>
           }
         />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
         <Route
           path="/chat/:groupId/:chatId"
           element={
