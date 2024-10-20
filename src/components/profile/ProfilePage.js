@@ -16,33 +16,32 @@ const ProfilePage = ({ profileInfo, canEdit }) => {
               height="150px"
               width="150px"
             />
-            {profileInfo.email ? (
-              <h5>
-                <a href={`mailto:${profileInfo.email}`}>{profileInfo.email}</a>
-              </h5>
-            ) : (
-              <h5>No email</h5>
-            )}
           </div>
+          {profileInfo.email ? (
+            <h5>
+              <a href={`mailto:${profileInfo.email}`}>{profileInfo.email}</a>
+            </h5>
+          ) : (
+            <h5>No email</h5>
+          )}
         </div>
-        <div className="container-white-2">
-          <div className="container-right">
-            <h2>
-              {profileInfo.firstName || "No name"} {profileInfo.lastName}
-            </h2>
-            <h5>{profileInfo.pronouns || "pronouns not specified"}</h5>
-            <h5>{profileInfo.gender || "gender not specified"}</h5>
-            <h5>DOB: {profileInfo.date || "no DOB"}</h5>
 
-            <p>{profileInfo.bio || "No bio available"}</p>
+        <div className="container-right">
+          <h2>
+            {profileInfo.firstName || "No name"} {profileInfo.lastName}
+          </h2>
+          <h5>{profileInfo.pronouns || "pronouns not specified"}</h5>
+          <h5>{profileInfo.gender || "gender not specified"}</h5>
+          <h5>DOB: {profileInfo.date || "no DOB"}</h5>
 
-            {/* Only allow the authenticated user to edit their own profile */}
-            {canEdit && (
-              <div className="edit-profile-link">
-                <Link to="/ProfileForm">Edit Profile</Link>
-              </div>
-            )}
-          </div>
+          <p>{profileInfo.bio || "No bio available"}</p>
+
+          {/* Only allow the authenticated user to edit their own profile */}
+          {canEdit && (
+            <div className="edit-profile-link">
+              <Link to="/ProfileForm">Edit Profile</Link>
+            </div>
+          )}
         </div>
       </div>
     </div>

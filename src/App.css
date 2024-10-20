@@ -44,6 +44,11 @@ body {
   height: 100vh;
 }
 
+img{
+  margin: 5px;
+  border: none;
+}
+
 
 /* white box for content, smaller version */
 .container-white-1 { 
@@ -62,14 +67,15 @@ body {
 /* white box for content, larger version */
 .container-white-2 { 
   display: flex;
-  padding: 20px;
+  padding: 15px;
   background-color: white;
-  border-radius: 10px;
+  border-radius: 15px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   min-width: 30vw; 
   max-width: 90vw;
   min-height: 10vh;
   max-height: 80vh; 
+  gap: 15px;
   overflow-y: auto;
   overflow-x: hidden;
   color: var(--pink2)
@@ -107,6 +113,18 @@ body {
   
 }
 
+.logo-display {
+  display: flex;
+  justify-content: center;
+}
+
+.logo-display img{
+  background: white;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  /* transform: translate(0px,0px); */
+}
 
 .box {
   border: 1px solid #dfdfdf;
@@ -132,10 +150,19 @@ body {
 
 .btn-secondary{
   background-color: var(--pink1) !important;
-  border-color: var(--pink1) ;
-      
+  border-color: var(--pink1) ;    
 }
 .btn-secondary:hover{
+  background-color: var(--pink2);
+  border-color: var(--pink2) ;
+}
+
+.btn-light{
+  background-color: var(--pink1) !important;
+  border-color: var(--pink1) ;    
+  color: white;
+}
+.btn-light:hover{
   background-color: var(--pink2);
   border-color: var(--pink2) ;
 }
