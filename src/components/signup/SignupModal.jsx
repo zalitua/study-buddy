@@ -49,6 +49,7 @@ const SignupModal = ({ show, handleClose, setIsSigningUp }) => {
         {
           email: newUser.email,
           uid: newUser.uid,
+          points: 10,
         },
         { merge: true }
       );
@@ -61,6 +62,8 @@ const SignupModal = ({ show, handleClose, setIsSigningUp }) => {
         position: "top-center",
         autoClose: 2000,
       });
+
+      toast.success("Congratulations! You've earned 10 points for signing up.")
 
       setTimeout(() => {
         navigate("/profileForm");
