@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useProfile } from "../../../context/ProfileContext";
 import ProfileForm from "./ProfileForm";
+import { increment, updateDoc } from "firebase/firestore";
 
 const ProfileFormContainer = () => {
   const { profileData, updateProfileData } = useProfile();
@@ -61,6 +62,7 @@ const ProfileFormContainer = () => {
       pronouns: pronouns === "other" ? otherPN : pronouns,
       bio,
       avatarConfig,
+      points: increment(10),
     };
 
     try {
@@ -69,6 +71,9 @@ const ProfileFormContainer = () => {
         position: "top-center",
         autoClose: 1000,
       });
+
+      toast.success("Congratulations! You've earned 10 points for editing your profile")
+
       setTimeout(() => {
         navigate("/dashboard");
       }, 2000);
