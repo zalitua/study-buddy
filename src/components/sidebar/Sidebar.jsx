@@ -26,7 +26,7 @@ const Sidebar = () => {
         <img src={siteLogo} alt="profile" height="50px" width="50px" />
       </div>
       {/* page navigation display */}
-      <Nav className="flex-column p-3">
+      <Nav className="flex-column p-10">
         <Nav.Link as={NavLink} to="/">
           Home
         </Nav.Link>
