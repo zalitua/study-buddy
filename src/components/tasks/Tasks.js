@@ -41,7 +41,7 @@ const Tasks = () => {
   };
 
   // Mark a task as completed and update points
-  const markTaskAsCompleted = async (taskId, index) => {
+    const markTaskAsCompleted = async (taskId, index) => {
     const taskDocRef = doc(db, 'tasks', taskId);
     await updateDoc(taskDocRef, { completed: true });
 
