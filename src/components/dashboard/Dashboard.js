@@ -193,22 +193,29 @@ const Dashboard = () => {
   }
 
   return (
-    
     <div className="dashboard-container">
-      <h1 className="dashTitle">Dashboard Overview</h1>
+      <h2 className="dashTitle">Dashboard Overview</h2>
 
-      <span className="dashBlurb">Welcom to the Study buddy dashboard here you can see a quick version of everything currently going on on the site. The dash board shows the latest messages for any group your in, the upcoming tasks for the next 5 days, the group availabilities for the next 5 days, and the top 3 users currently on the leaderboard. Happy Studying and good luck with your goals!!!</span>
+      <span className="dashBlurb">
+        Welcom to the Study buddy dashboard here you can see a quick version of
+        everything currently going on on the site. The dash board shows the
+        latest messages for any group your in, the upcoming tasks for the next 5
+        days, the group availabilities for the next 5 days, and the top 3 users
+        currently on the leaderboard. Happy Studying and good luck with your
+        goals!!!
+      </span>
 
       {/* Two-column layout */}
       <div className="dashboardTop">
         {/* Upcoming Tasks Section */}
         <div className="dashboardTasks">
-          <h2>Upcoming Tasks in the Next 5 Days</h2>
+          <h3>Upcoming Tasks in the Next 5 Days</h3>
           {upcomingTasks.length > 0 ? (
             <ul>
               {upcomingTasks.map((task) => (
                 <li key={task.id}>
-                  <strong>Task Title:</strong>{task.task}
+                  <strong>Task Title:</strong>
+                  {task.task}
                   <br />
                   <strong>Due Date:</strong>{" "}
                   {task.dueDate
@@ -226,14 +233,15 @@ const Dashboard = () => {
 
         {/* Upcoming Group Availabilities Section */}
         <div className="dashboardAvailabilities">
-          <h2>Group Availabilities in the Next 5 Days</h2>
+          <h3>Group Availabilities in the Next 5 Days</h3>
           {upcomingAvailabilities.length > 0 ? (
             <ul>
               {upcomingAvailabilities.map((availability) => (
                 <li key={availability.id}>
                   <strong>Group Member:</strong> {availability.userName}
                   <br />
-                  <strong>Date:</strong> {new Date(availability.date).toDateString()}
+                  <strong>Date:</strong>{" "}
+                  {new Date(availability.date).toDateString()}
                   <br />
                   <strong>Start Time:</strong> {availability.startTime}
                   <br />
@@ -250,7 +258,7 @@ const Dashboard = () => {
       {/* Latest Chat Messages from All Groups Section */}
       <div className="dashboardBottom">
         <div className="dashboardLatestMessages">
-          <h2>Latest Messages from Your Groups</h2>
+          <h3>Latest Messages from Your Groups</h3>
           {latestMessages.length > 0 ? (
             latestMessages.map((messageInfo, index) => (
               <div className="dashboardMessage" key={index}>
@@ -283,7 +291,7 @@ const Dashboard = () => {
 
         {/* Top 3 Users from Leaderboard */}
         <div className="dashboardLeaderboard">
-          <h2>Top 3 Users on the Leaderboard</h2>
+          <h3>Top 3 Users on the Leaderboard</h3>
           {topThreeUsers.length > 0 ? (
             <ul>
               {topThreeUsers.map((user) => (
