@@ -86,3 +86,6 @@ Make sure you are currently part of a group (if you are it will show up in the c
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
+
+## Project Status
+Assignment is finished so no more team development will be taking place. Development stoped
