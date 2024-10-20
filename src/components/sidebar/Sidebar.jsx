@@ -1,9 +1,9 @@
 import React from "react";
 import { Button, Nav } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
+
 import { useUserAuth } from "../../context/userAuthContext";
 import siteLogo from "../../assets/SBLogo.png";
-import defaultProfileImage from "../../assets/default-profile.png";
 
 const Sidebar = () => {
   const { logOut } = useUserAuth(); // Get the logOut function
@@ -21,11 +21,12 @@ const Sidebar = () => {
 
   return (
     <div>
+      {/* display site logo */}
       <div className="logo-display">
         <img src={siteLogo} alt="profile" height="50px" width="50px" />
       </div>
+      {/* page navigation display */}
       <Nav className="flex-column p-3">
-        {/* <h4>StudyBuddy</h4> */}
         <Nav.Link as={NavLink} to="/">
           Home
         </Nav.Link>
@@ -51,6 +52,7 @@ const Sidebar = () => {
           Forums
         </Nav.Link>
         <br />
+        {/* logout from app */}
         <Button variant="light" onClick={handleLogout}>
           Logout
         </Button>
