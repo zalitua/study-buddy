@@ -197,9 +197,9 @@ const Dashboard = () => {
       <h2 className="dashTitle">Dashboard Overview</h2>
 
       <span className="dashBlurb">
-        Welcom to the Study buddy dashboard here you can see a quick version of
-        everything currently going on on the site. The dash board shows the
-        latest messages for any group your in, the upcoming tasks for the next 5
+        Welcome to the Study Buddy dashboard here you can see a quick version of
+        everything currently going on on the site. The dashboard shows the
+        latest messages for any group you're in, the upcoming tasks for the next 5
         days, the group availabilities for the next 5 days, and the top 3 users
         currently on the leaderboard. Happy Studying and good luck with your
         goals!!!
