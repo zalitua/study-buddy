@@ -68,6 +68,11 @@ const Tasks = () => {
     );
     setTasks(updatedTasks);
     setCompletedTasks(completedTasks + 1);
+  }
+  catch (error) {
+    console.error('Error adding task:', error); // Added error handling
+  }
+
   };
 
   return (
