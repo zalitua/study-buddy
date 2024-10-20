@@ -9,6 +9,10 @@
 
     width: 100%;
     max-width: 75vw;
+    word-wrap: break-word;
+    word-break: break-word; 
+    overflow-wrap: break-word; 
+
     flex: 3;
 
     .nav { 

@@ -29,7 +29,7 @@ const Sidebar = () => {
           width="50px"
         />
       </div>
-      <Nav className="flex-column p-3">
+      <Nav className="flex-column px-3 py-1">
         {/* <h4>StudyBuddy</h4> */}
         <Nav.Link as={NavLink} to="/">
           Home
@@ -55,7 +55,7 @@ const Sidebar = () => {
         <Nav.Link as={NavLink} to="/forumHome">
           Forums
         </Nav.Link>
-        <br />
+        {/*<br />*/}
         <Button variant="light" onClick={handleLogout}>
           Logout
         </Button>
