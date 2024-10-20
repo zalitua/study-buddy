@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import defaultProfileImage from "../../assets/default-profile.png";
 import "./ProfilePage.css";
+import GetAvatar from "../avatar/getavatar/GetAvatar";
 
 const ProfilePage = ({ profileInfo, canEdit }) => {
   return (
@@ -27,6 +28,7 @@ const ProfilePage = ({ profileInfo, canEdit }) => {
         </div>
 
         <div className="container-right">
+          <GetAvatar userId={profileInfo.uid} />
           <h2>
             {profileInfo.firstName || "No name"} {profileInfo.lastName}
           </h2>
