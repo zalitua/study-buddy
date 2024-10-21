@@ -1,33 +1,34 @@
 import { Button, Modal, Form } from "react-bootstrap";
 import { useState } from "react";
-import "./group.css"
+import "./group.css";
 import { auth } from "../../lib/firebase";
 import { db } from "../../lib/firebase";
 
 import { useEffect } from "react";
 
 import {
-  collection, doc, getDoc,
-  getDocs, query, serverTimestamp,
-  updateDoc, where, addDoc,
-  
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  serverTimestamp,
+  updateDoc,
+  where,
+  addDoc,
   onSnapshot,
 } from "firebase/firestore";
 
-import { useNavigate } from "react-router-dom";//Used for react router to get to this page
+import { useNavigate } from "react-router-dom"; //Used for react router to get to this page
 import { toast } from "react-toastify";
 
-
-
 const Group = () => {
-
   //consts used in this file
 
   //used for searching and selecting users
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
-
 
   //Create group
   const [groupName, setGroupName] = useState(""); //used for changing group name
@@ -40,20 +41,18 @@ const Group = () => {
   const [editSelectedUsers, setEditSelectedUsers] = useState([]);
   const [userGroups, setUserGroups] = useState([]);
 
-
   //Seach users
   //to be able to search users i had to edit the fire base permessions so it would be able to sort
   const handleSearch = async (e) => {
     e.preventDefault();
     try {
-
-      //get the the users from the users collection where they match the search  
+      //get the the users from the users collection where they match the search
       const userRef = collection(db, "users");
       const q = query(
         userRef,
         //email will be changed to user name when all users have a username
-        where('username', '>=', searchTerm),
-        where('username', '<=', searchTerm + '\uf8ff')
+        where("username", ">=", searchTerm),
+        where("username", "<=", searchTerm + "\uf8ff")
       );
 
       //get doc
@@ -90,13 +89,15 @@ const Group = () => {
     try {
       const currentUserID = auth.currentUser.uid;
       let updatedSelectedUsers = [...selectedUsers];
-      //add the current user to the group 
+      //add the current user to the group
       if (!selectedUsers.some((user) => user.id === currentUserID)) {
         updatedSelectedUsers.push({ id: currentUserID });
       }
 
       //remove duplicate user IDs
-      const uniqueUserIDs = [...new Set(updatedSelectedUsers.map(user => user.id))];
+      const uniqueUserIDs = [
+        ...new Set(updatedSelectedUsers.map((user) => user.id)),
+      ];
 
       //set up group data
       const groupData = {
@@ -104,10 +105,10 @@ const Group = () => {
         members: uniqueUserIDs,
         createdAt: serverTimestamp(),
         createdBy: currentUserID,
-        latestMessage: [],//holds the latest message in the gorup
+        latestMessage: [], //holds the latest message in the gorup
       };
       //create the group and get the new group ID
-      const groupRef = await addDoc(collection(db, 'groups'), groupData);
+      const groupRef = await addDoc(collection(db, "groups"), groupData);
       const groupId = groupRef.id;
       //create a new chat for the group
       const chatData = {
@@ -116,7 +117,7 @@ const Group = () => {
         messages: [],
       };
 
-      const chatRef = await addDoc(collection(db, 'chats'), chatData);
+      const chatRef = await addDoc(collection(db, "chats"), chatData);
       //link the created chat to the group
       await updateDoc(groupRef, {
         chatId: chatRef.id,
@@ -127,7 +128,6 @@ const Group = () => {
       setSelectedUsers([]);
       setGroupName("");
       fetchUserGroups();
-
     } catch (error) {
       console.log("Error creating group and chat: ", error);
     }
@@ -142,8 +142,8 @@ const Group = () => {
         return;
       }
       //ref to groups
-      const groupsRef = collection(db, 'groups');
-      const q = query(groupsRef, where('members', 'array-contains', user.uid));//would like to order by group name but doesn't work
+      const groupsRef = collection(db, "groups");
+      const q = query(groupsRef, where("members", "array-contains", user.uid)); //would like to order by group name but doesn't work
 
       //real time listener so updates every time a new one is added without refresh
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -154,14 +154,13 @@ const Group = () => {
         setUserGroups(groups); //update with the real time data
       });
 
-      //return the unsubscribe function to stop listening 
+      //return the unsubscribe function to stop listening
       return unsubscribe;
-
     } catch (error) {
       console.log("Error fetching user groups: ", error);
     }
   };
-  
+
   //useEffect for the live group updating now whenever your added you update
   useEffect(() => {
     //fetch user groups only if the user is loged in
@@ -175,7 +174,7 @@ const Group = () => {
         }
       };
     } else {
-      //listen for auth state changes if the user is not authenticated 
+      //listen for auth state changes if the user is not authenticated
       const unsubscribeAuth = auth.onAuthStateChanged((user) => {
         if (user) {
           const unsubscribeGroups = fetchUserGroups();
@@ -196,12 +195,9 @@ const Group = () => {
     }
   }, []);
 
-
-
-
   //modal and creating the group
   const openCreateGroupModal = () => {
-    setShowCreateGroupModal(true)
+    setShowCreateGroupModal(true);
   };
 
   const closeCreateGroupModal = () => {
@@ -219,8 +215,13 @@ const Group = () => {
     setEditGroupName(group.groupName || "");
 
     //pass all the members id so they show up correctly
-    const userDocs = await Promise.all(group.members.map(userID => getDoc(doc(db, 'users', userID))));
-    const memberDetails = userDocs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const userDocs = await Promise.all(
+      group.members.map((userID) => getDoc(doc(db, "users", userID)))
+    );
+    const memberDetails = userDocs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
     setEditSelectedUsers(memberDetails); // Set the full user objects
     setShowEditGroupModal(true);
@@ -233,7 +234,6 @@ const Group = () => {
     setEditGroupName("");
     setEditSelectedUsers([]);
   };
-
 
   //update information for an existing group
   const handleUpdateGroup = async () => {
@@ -254,25 +254,23 @@ const Group = () => {
       }
 
       //filter out any invalid user objects no id
-      const validUsers = updatedSelectedUsers.filter(user => user.id);
+      const validUsers = updatedSelectedUsers.filter((user) => user.id);
 
       //check no undefined or invalid user objects are being used
-      const uniqueUserIDs = [...new Set(validUsers.map(user => user.id))];
-
+      const uniqueUserIDs = [...new Set(validUsers.map((user) => user.id))];
 
       //reference the group's document in db
-      const docRef = doc(db, 'groups', editingGroup.id);
+      const docRef = doc(db, "groups", editingGroup.id);
 
       //update the group document in db
       await updateDoc(docRef, {
         groupName: editGroupName, //update group name
-        members: uniqueUserIDs,  //update the members list
+        members: uniqueUserIDs, //update the members list
       });
 
       toast.success("Group updated successfully!");
       closeEditGroupModal();
       fetchUserGroups(); //refresh the groups list
-
     } catch (error) {
       console.log("Error updating group: ", error);
     }
@@ -301,7 +299,6 @@ const Group = () => {
     setEditSelectedUsers(updatedUsers);
   };
 
-
   //react router code to be able to naviate around the site
   const navigate = useNavigate();
   const handleNavDash = async () => {
@@ -313,19 +310,16 @@ const Group = () => {
     }
   };
 
-
-  const handleNavChat = ( groupId, chatId) => {
+  const handleNavChat = (groupId, chatId) => {
     //handle user going to chat
     //group and chat are passed to make sure the context is kept eaiser
 
     try {
-
       if (!chatId) {
         toast.warn("Chat not found for this group.");
         return;
-      }
-      else {
-        navigate(`/chat/${groupId}/${chatId}`);//navigate to each unique chat
+      } else {
+        navigate(`/chat/${groupId}/${chatId}`); //navigate to each unique chat
       }
     } catch (error) {
       console.log(error.message);
@@ -334,15 +328,11 @@ const Group = () => {
 
   const handleNavGroup = (groupId) => {
     try {
-      
-      navigate(`/group/groupPage/${groupId}/`);//navigate to each unique chat
-    
+      navigate(`/group/groupPage/${groupId}/`); //navigate to each unique chat
     } catch (error) {
       console.log(error.message);
     }
-  }
-
-
+  };
 
   return (
     <div className="group">
@@ -350,14 +340,12 @@ const Group = () => {
         <Button variant="primary" onClick={handleNavDash}>
           Back to home
         </Button>
-        
       </div>
       <div className="contentHolder">
-
         {/*creating a new group*/}
         <div className="groups">
           <div className="create">
-            <h1>Group Creation: </h1>
+            <h3>Group Creation: </h3>
             <input
               type="text"
               placeholder="Search for users"
@@ -369,14 +357,16 @@ const Group = () => {
               <ul>
                 {searchResults.map((user) => (
                   <li key={user.id}>
-                    {user.username || user.email} {/*show either the users username or email*/}
+                    {user.username || user.email}{" "}
+                    {/*show either the users username or email*/}
                     <Button
-                        onClick={() => handleSelectUser(user)}
-                        disabled={isUserSelected(user)} //disable if user is selected
-                        style={{
-                          backgroundColor: isUserSelected(user) ? 'grey' : 'blue',
-                        }}>
-                        {isUserSelected(user) ? 'Added' : 'Add'}
+                      onClick={() => handleSelectUser(user)}
+                      disabled={isUserSelected(user)} //disable if user is selected
+                      style={{
+                        backgroundColor: isUserSelected(user) ? "grey" : "blue",
+                      }}
+                    >
+                      {isUserSelected(user) ? "Added" : "Add"}
                     </Button>
                   </li>
                 ))}
@@ -386,33 +376,37 @@ const Group = () => {
           </div>
         </div>
 
-
         {/*the users current groups*/}
         <div className="current">
-          <h1>Curent Groups: </h1>
+          <h3>Curent Groups: </h3>
           <ul>
             {userGroups.map((group) => (
               <li key={group.id}>
                 {group.groupName}
                 <div className="buttonContainer">
-
                   {/*only allow the creator of the group to edit the group*/}
-                  {group.createdBy ===  auth.currentUser.uid ? (
-                    <Button onClick={() => openEditGroupModal(group)}>Edit</Button>
-                  ) : 
-                    <Button disabled={true} variant="disabled">Edit</Button>
-                  }
+                  {group.createdBy === auth.currentUser.uid ? (
+                    <Button onClick={() => openEditGroupModal(group)}>
+                      Edit
+                    </Button>
+                  ) : (
+                    <Button disabled={true} variant="disabled">
+                      Edit
+                    </Button>
+                  )}
 
-                  <Button onClick={() => handleNavChat(group.id, group.chatId)}>Chat</Button>
-                  <Button onClick={() => handleNavGroup(group.id)}>Group Page</Button>
+                  <Button onClick={() => handleNavChat(group.id, group.chatId)}>
+                    Chat
+                  </Button>
+                  <Button onClick={() => handleNavGroup(group.id)}>
+                    Group Page
+                  </Button>
                 </div>
               </li>
             ))}
           </ul>
         </div>
- 
-
-      </div>    
+      </div>
       {/*create group modal*/}
       <Modal show={showCreateGroupModal} onHide={closeCreateGroupModal}>
         <Modal.Header closeButton>
@@ -435,7 +429,15 @@ const Group = () => {
             {selectedUsers.map((user) => (
               <li key={user.id}>
                 {user.username || user.email}
-                <button onClick={() => setSelectedUsers(selectedUsers.filter(u => u.id !== user.id))}>Remove</button>
+                <button
+                  onClick={() =>
+                    setSelectedUsers(
+                      selectedUsers.filter((u) => u.id !== user.id)
+                    )
+                  }
+                >
+                  Remove
+                </button>
               </li>
             ))}
           </ul>
@@ -451,7 +453,11 @@ const Group = () => {
       </Modal>
 
       {/*edit group modal*/}
-      <Modal show={showEditGroupModal} onHide={closeEditGroupModal} className="edit-group-modal">
+      <Modal
+        show={showEditGroupModal}
+        onHide={closeEditGroupModal}
+        className="edit-group-modal"
+      >
         <Modal.Header closeButton>
           <Modal.Title>Edit Group</Modal.Title>
         </Modal.Header>
@@ -467,7 +473,6 @@ const Group = () => {
               />
             </Form.Group>
           </Form>
-
 
           <p>Current Members:</p>
           <div className="edit-current-members">
@@ -508,11 +513,8 @@ const Group = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-
     </div>
   );
 };
 
-
-export default Group
-
+export default Group;
