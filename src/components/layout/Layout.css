@@ -10,7 +10,7 @@ body {
 .container-layout {
   display: flex;
   min-width: 55vw; 
-  max-width: 95vw; 
+  max-width: 90vw; 
   min-height: 40vh;
   max-height: 90vh;
   background: var(--pink1); 

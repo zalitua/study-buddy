@@ -5,10 +5,11 @@ import { collection, addDoc, getDocs, updateDoc, doc, increment } from 'firebase
 import { Toast, ToastContainer } from 'react-bootstrap'; // Importing Toast for notifications
 import './Tasks.css'; // Ensure you have the correct path for the CSS file
 
+
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
-  const [taskInput, setTaskInput] = useState('');
-  const [dueDate, setDueDate] = useState('');
+  const [taskInput, setTaskInput] = useState("");
+  const [dueDate, setDueDate] = useState("");
   const [completedTasks, setCompletedTasks] = useState(0);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
@@ -17,16 +18,18 @@ const Tasks = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, 'tasks'));
-        const tasksFromFirebase = querySnapshot.docs.map(doc => ({
+        const querySnapshot = await getDocs(collection(db, "tasks"));
+        const tasksFromFirebase = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
         setTasks(tasksFromFirebase);
-        const completedCount = tasksFromFirebase.filter(task => task.completed).length;
+        const completedCount = tasksFromFirebase.filter(
+          (task) => task.completed
+        ).length;
         setCompletedTasks(completedCount);
       } catch (error) {
-        console.error('Error fetching tasks:', error); // Added error handling
+        console.error("Error fetching tasks:", error); // Added error handling
       }
     };
 
@@ -38,12 +41,12 @@ const Tasks = () => {
     if (taskInput && dueDate) {
       try {
         const newTask = { task: taskInput, dueDate, completed: false };
-        const docRef = await addDoc(collection(db, 'tasks'), newTask);
+        const docRef = await addDoc(collection(db, "tasks"), newTask);
         setTasks([...tasks, { id: docRef.id, ...newTask }]);
-        setTaskInput(''); // Clear input
-        setDueDate(''); // Clear due date
+        setTaskInput(""); // Clear input
+        setDueDate(""); // Clear due date
       } catch (error) {
-        console.error('Error adding task:', error); // Added error handling
+        console.error("Error adding task:", error); // Added error handling
       }
     }
   };
@@ -51,8 +54,9 @@ const Tasks = () => {
   // Mark a task as completed and update points
   const markTaskAsCompleted = async (taskId, index) => {
     try {
-      const taskDocRef = doc(db, 'tasks', taskId);
+      const taskDocRef = doc(db, "tasks", taskId);
       await updateDoc(taskDocRef, { completed: true });
+
 
     // Update user points on task completion
     const user = auth.currentUser;
@@ -77,11 +81,13 @@ const Tasks = () => {
 
   return (
     <div className="tasks-container">
+
         <ToastContainer position="top-end" className="p-3">
             <Toast onClose={() => setShowToast(false)} show={showToast} delay={5000} autohide>
                 <Toast.Body>{toastMessage}</Toast.Body>
             </Toast>
         </ToastContainer>
+
 
       <h1>Tasks</h1>
       {/* Input for new tasks */}
@@ -101,11 +107,13 @@ const Tasks = () => {
       </div>
 
       {/* Task list */}
-      <h2>Task List</h2>
+      <h3>Task List</h3>
       <ul>
         {tasks.map((task, index) => (
-          <li key={task.id} className={task.completed ? 'completed-task' : ''}>
-            <span>{task.task} - Due on {new Date(task.dueDate).toLocaleDateString()}</span>
+          <li key={task.id} className={task.completed ? "completed-task" : ""}>
+            <span>
+              {task.task} - Due on {new Date(task.dueDate).toLocaleDateString()}
+            </span>
             {!task.completed && (
               <button onClick={() => markTaskAsCompleted(task.id, index)}>
                 Mark as Completed
@@ -117,7 +125,9 @@ const Tasks = () => {
       </ul>
 
       {/* Task completion stats */}
-      <h3>Completed Tasks: {completedTasks} / {tasks.length}</h3>
+      <h3>
+        Completed Tasks: {completedTasks} / {tasks.length}
+      </h3>
 
       {/* Task completion progress bar */}
       <div className="progress-bar-container">
@@ -126,14 +136,15 @@ const Tasks = () => {
           <div
             className="progress-bar-fill"
             style={{
-              width: tasks.length > 0
-                ? `${(completedTasks / tasks.length) * 100}%`
-                : '0%', // Handle the case where there are no tasks
+              width:
+                tasks.length > 0
+                  ? `${(completedTasks / tasks.length) * 100}%`
+                  : "0%", // Handle the case where there are no tasks
             }}
           >
             {tasks.length > 0
               ? `${Math.round((completedTasks / tasks.length) * 100)}%`
-              : '0%'}
+              : "0%"}
           </div>
         </div>
       </div>

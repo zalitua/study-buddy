@@ -1,8 +1,9 @@
 /*whole page*/
 .group {
-    background-color: var(--backgroundGrey);
+    background-color: var(--pink0);
     margin: auto;
-    padding: 20px;
+    padding: 15px;
+    min-height: 70vh;
     height: 100%;
     
     display: flex;
@@ -10,7 +11,7 @@
 
     max-height: max-content;
 
-    border-radius: 2%;
+    border-radius: 15px;
 
 
     /*for testing nav to easliy get around*/
@@ -18,7 +19,6 @@
         display: flex;
         justify-content: flex-start;
         align-items: flex-start;
-        padding: 10px 0;
         width: 100%;
     }
 
@@ -27,6 +27,8 @@
         justify-content: space-between;
         min-width: 50%;
         max-width: 100%;
+        gap: 15px;
+        margin-top: 15px;
     
         /*group creation*/
         .groups {
