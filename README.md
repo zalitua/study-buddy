@@ -158,6 +158,15 @@ The user is logged out and navigation to the home page is automatic.
 - You will next press the schedule meeting button.
 - after reloading the page your meeting will appear underneath the meetings header
 
+### how to earn points
+- Task Completion: When a you completes a task, the task is marked as completed, and your points will increase by 5. These points will be reflected on the leaderboard instantly.
+- Sign-up: Upon successfully signing up for an account, the user will receive 10 points. The leaderboard will update immediately to reflect the 10 points.
+- Profile Setup: After signing up, if you have not yet set up your profile, once you completes your profile setup (e.g., adds DOB, phone number, avatar), you will receive 10 additional points, which will update the leaderboard in real-time.
+
+### how to view the leaderboard:
+- Viewing your rank: After logging in with valid credentials, you can navigate to the leaderboard page. The leaderboard will display your current points and rank, which updates automatically based on the points accumulated.
+- Top 10 users: The leaderboard will display the top 10 users, showing their usernames, points, and ranks. These updates occur in real-time to ensure that the leaderboard reflects the most recent changes.
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
