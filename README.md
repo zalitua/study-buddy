@@ -53,6 +53,24 @@ list of needed dependency:
 - cd to the correct directory 
 - run: npm start
 
+### Entering the site:
+
+- A user starts at the home page
+If the user has previously registered and their login credentials are currently active, then navigation to the dashboard is automatic.
+
+### How to register:
+
+- From the home page click on the signup button and a signup modal will be displayed
+- Fill in the inputs and click the signup button
+If the email and password meet format checks then the user account is created. An authentication record is created, a user ID is assigned and user's details are stored in the database. Login is automatic as is navigation to the profile form page.
+
+### How to login:
+
+- From the home page click on the login button and a login modal will be displayed
+- Fill in the user credentials and click the login button
+If the user credentials match those stored with the authentication service then navigation to the dashboard is automatic.
+Note: all pages use protected routes, so if a user tries to navigate to a page without being logged in, then navigation to the home page is automatic.
+
 ### How to create a group:
 
 - Navigate to the group page
@@ -82,6 +100,47 @@ Make sure you are currently part of a group (if you are it will show up in the c
 - A modal allowing you to: Change the name of the group, Remove users, and search/add new users to the group will open
 - To confirm any changes you made press the save changes and the group will be updated and an alert will pop up saying the group updated
 - To cancel any change to the group you made to the group click on the Cancel button or press on the X button at the top right of the modal
+
+### How to create a user profile:
+
+- Navigate to the profile form page.
+This navigation is automatic upon registration.
+- Fill in the data fields fields and click update profile.
+There are three required fields. If these have been filled out then the user's data will be added to user's record the database, and navigation to the dashboard is automatic.
+Note: If an avatar has not been created then one is automatically generated.
+
+### How to add a profile picture:
+
+- Navigate to the profile form page.
+- Click on the choose file button.
+A file selection window will open.
+- Select an image file and click open/select.
+The image will be added to a storage database automatically and the profile image will then be shown on the profile form.
+
+### How to create a custom avatar:
+
+- Navigate to the profile form page.
+- Click on the create avatar button.
+A modal for creating a custom avatar will open and a default avatar will be displayed.
+- Choose options for a variety of styles and use color pickers to choose preferred colors.
+The displayed avatar will update in real time, showing style and color selections.
+- Click save avatar. The avatar configuration will be saved to the data base and navigation back to the profile form is automatic.
+The new custom avatar will display in the profile form.
+
+### How to edit profile after it has been created:
+
+- Navigate to the profile page.
+Here all profile information, including the profile image and avatar are displayed.
+- Click on edit profile link. This will open the profile form
+If the user has created a profile then the name of the page will display as "Edit Profile". The form will automatically display the current profile data in the input fields, and the current profile image and avatar will be displayed.
+- Change any of the input as required and create a new avatar or add a new profile image if desired.
+- Click the update profile button.
+The user's profile data in the database will be updated and navigation to the dashboard is automatic.
+
+### How to logout:
+
+- From any page click on the logout button on the sidebar
+The user is logged out and navigation to the home page is automatic.
 
 ## how to add availability 
 - click on the day you are available, under the add availability header you can put the time period you're free. The start time will be the time you start being free and the end time will be the time you stop being free.
