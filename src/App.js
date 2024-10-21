@@ -6,8 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { UserAuthContextProvider } from "./context/userAuthContext";
 import { ProfileProvider } from "./context/ProfileContext";
 
-import Sidebar from "./components/sidebar/Sidebar";
-import AppRoutes from "./AppRoutes";
+import AppRoutes from "./components/approutes/AppRoutes";
 
 import "./App.css";
 
