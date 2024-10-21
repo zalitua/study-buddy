@@ -1,0 +1,21 @@
+list of needed dependencys:
+
+- npm node: npm install
+- react router: npm install react-router-dom
+- react toastfiy: npm install --save react-toastify
+
+By: Zali
+react-dom: npm install react react-dom
+react-firebase-hooks: npm install --save react-firebase-hooks
+react-router-dom: npm install react-router-dom@6
+react-toastify: npm install --save react-toastify //currently not being used. bootstrap components do this already
+react-bootstrap: npm install react-bootstrap bootstrap
+react-google-button: npm install --save react-google-button
+uuid: npm install uuid
+react-nice-avatar: npm install react-nice-avatar
+jest for testing: npm install @testing-library/jest-dom@5.16.5 @testing-library/react@13.4.0 @testing-library/user-event@14.4.3 jest@29.3.1 jest-environment-jsdom@29.3.1 vitest@0.25.3 --save-dev
+
+react-calendar: npm install react-calendar
+
+Chat:
+React emoji: npm i emoji-picker-react
