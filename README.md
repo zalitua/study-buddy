@@ -83,6 +83,22 @@ Make sure you are currently part of a group (if you are it will show up in the c
 - To confirm any changes you made press the save changes and the group will be updated and an alert will pop up saying the group updated
 - To cancel any change to the group you made to the group click on the Cancel button or press on the X button at the top right of the modal
 
+## how to add availability 
+- click on the day you are available, under the add availability header you can put the time period you're free. The start time will be the time you start being free and the end time will be the time you stop being free.
+- Next you can click add availbility.
+- When you click on the date you are availabile you will now see your availbility next to your email address and how long you are availbile for.
+
+## how to schedule a meeting
+- There are two ways to schedule a meeting
+- way #1 - creating a meeting from another persons availability.
+- you can do this by pressing the button create meeting next to the persons availbility.
+- this will create a meeting during the persons availibility time
+- after reloading the page your meeting will appear underneath the meetings header
+- way #2 create meeting without availability
+- you can do this by scrolling down 'schedule a meeting' and inputting the time you would like to start the meeting and when you'd like it to end.
+- You will next press the schedule meeting button.
+- after reloading the page your meeting will appear underneath the meetings header
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
