@@ -408,7 +408,11 @@ const Group = () => {
         </div>
       </div>
       {/*create group modal*/}
-      <Modal show={showCreateGroupModal} onHide={closeCreateGroupModal}>
+      <Modal
+        className="modal-gp"
+        show={showCreateGroupModal}
+        onHide={closeCreateGroupModal}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Create Group</Modal.Title>
         </Modal.Header>
@@ -456,7 +460,7 @@ const Group = () => {
       <Modal
         show={showEditGroupModal}
         onHide={closeEditGroupModal}
-        className="edit-group-modal"
+        className="modal-gp"
       >
         <Modal.Header closeButton>
           <Modal.Title>Edit Group</Modal.Title>

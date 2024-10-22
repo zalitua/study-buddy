@@ -262,7 +262,11 @@ const GroupPage = () => {
       </div>
 
       {/* Edit Group Modal */}
-      <Modal show={showEditGroupModal} onHide={handleCloseEditGroupModal}>
+      <Modal
+        className="modal-gp"
+        show={showEditGroupModal}
+        onHide={handleCloseEditGroupModal}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Edit Group</Modal.Title>
         </Modal.Header>
