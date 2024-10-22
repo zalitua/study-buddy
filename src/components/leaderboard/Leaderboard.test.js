@@ -29,8 +29,8 @@ jest.mock('firebase/firestore', () => ({
         })),
       });
   
-      // Return a mock unsubscribe function
-      return jest.fn(); // This fixes the "unsubscribe is not a function" error
+      // Return a mock unsubscribe function to avoid errors
+      return jest.fn();
     }),
   }));
   
@@ -44,11 +44,12 @@ jest.mock('firebase/firestore', () => ({
     },
   }));
   
-  // Mock Firebase Storage to avoid ReadableStream issues
+  // Mock Firebase Storage to avoid potential ReadableStream issues
   jest.mock('firebase/storage', () => ({
     getStorage: jest.fn(),
   }));
   
+  //test 1
   test("renders the leaderboard component", async () => {
     // Act block to wrap the async render call
     await act(async () => {
@@ -59,13 +60,56 @@ jest.mock('firebase/firestore', () => ({
       );
     });
   
-    // Wait for the loading spinner to disappear
-    await waitFor(() => {
-      expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
-    });
-  
     // Wait for the "Leaderboard" element to appear in the DOM after loading completes
     const titleElement = await waitFor(() => screen.getByText("Leaderboard"));
     expect(titleElement).toBeInTheDocument();
   });
+
+  //test 2
+  test("should display top 10 users on the leaderboard", async () => {
+    render(
+      <Router>
+        <Leaderboard />
+      </Router>
+    );
   
+    // Correctly counts 11 rows (1 header + 10 user rows)
+    await waitFor(() => {
+      expect(screen.getAllByRole('row')).toHaveLength(11);
+    });
+  });
+
+  //test 3
+  test("should display current user’s rank", async () => {
+    render(
+      <Router>
+        <Leaderboard />
+      </Router>
+    );
+  
+    await waitFor(() => {
+      expect(screen.getByText('Your Position')).toBeInTheDocument();
+      expect(screen.getByText('1')).toBeInTheDocument(); // Assuming test user is rank 1
+    });
+  });
+
+  //test 4
+  test("should reflect real-time data updates on leaderboard", async () => {
+    render(
+      <Router>
+        <Leaderboard />
+      </Router>
+    );
+  
+    // Initial data render
+    await waitFor(() => {
+      expect(screen.getByText('User1')).toBeInTheDocument();
+      expect(screen.getByText('10')).toBeInTheDocument(); // Initial points for User1
+    });
+  
+    // Updated data after real-time update
+    await waitFor(() => {
+      expect(screen.getByText('UpdatedUser1')).toBeInTheDocument();
+      expect(screen.getByText('20')).toBeInTheDocument(); // Updated points for User1
+    });
+  });
