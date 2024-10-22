@@ -1,9 +1,13 @@
+// Profile Form Container - Profides the logic to handle
+// the form from Profile Form, including updating a user's
+// profile information and fetching it to display in the form
+// if the profile is being edited.
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useProfile } from "../../../context/ProfileContext";
 import ProfileForm from "./ProfileForm";
-import { increment, updateDoc } from "firebase/firestore";
+import { increment } from "firebase/firestore";
 
 const ProfileFormContainer = () => {
   const { profileData, updateProfileData } = useProfile();
@@ -27,10 +31,12 @@ const ProfileFormContainer = () => {
   const navigate = useNavigate();
   const isEdit = firstName && lastName && username;
 
+  // handling image upload from ProfilePic component
   const handleImageUpload = (url) => {
     setProfileImage(url);
   };
 
+  // check required fields are filled out before allowing submission
   const validateForm = () => {
     if (!firstName || !lastName || !username) {
       toast.warn("Please fill out required fields.", {
@@ -41,10 +47,12 @@ const ProfileFormContainer = () => {
     return true;
   };
 
+  // handle saving the avatar configuration from the CustomAvatar component
   const handleSaveAvatar = (newAvatarConfig) => {
     setAvatarConfig(newAvatarConfig);
   };
 
+  // handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -52,6 +60,7 @@ const ProfileFormContainer = () => {
 
     setLoading(true);
 
+    // data to be uploaded
     const updatedData = {
       firstName,
       lastName,
@@ -65,25 +74,32 @@ const ProfileFormContainer = () => {
       points: increment(10),
     };
 
+    // update the profile data in the database
     try {
       await updateProfileData(updatedData);
+      //success message
       toast.success("Profile updated successfully!", {
         position: "top-center",
         autoClose: 1000,
       });
 
-      toast.success("Congratulations! You've earned 10 points for editing your profile")
+      //points message
+      toast.success(
+        "Congratulations! You've earned 10 points for editing your profile"
+      );
 
       setTimeout(() => {
         navigate("/dashboard");
       }, 2000);
     } catch (error) {
+      // error message for failing to update the database
       toast.error("Failed to update profile!", { position: "top-center" });
     } finally {
       setLoading(false);
     }
   };
 
+  // display ProfileForm component
   return (
     <ProfileForm
       profileData={profileData}

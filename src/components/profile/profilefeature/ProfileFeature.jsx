@@ -1,3 +1,9 @@
+// Profile Feature is a popover display component that shows
+// any selected user's abridged profile. When on a page like
+// GroupPage hovering over a user's name triggers the profile to
+// appear and show their profile data. From the popover there
+// is a link to the user's full profile page and an option to
+// email the user.
 import React, { useState } from "react";
 import { OverlayTrigger, Popover } from "react-bootstrap";
 import { Link } from "react-router-dom";
