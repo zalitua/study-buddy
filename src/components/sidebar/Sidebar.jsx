@@ -1,3 +1,4 @@
+// Sidebar provides site navigation and a logout button
 import React from "react";
 import { Button, Nav } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";

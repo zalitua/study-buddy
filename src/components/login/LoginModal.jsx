@@ -1,3 +1,5 @@
+// Login Modal handles the form and logic for a user
+// to login to the app
 import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { useUserAuth } from "../../context/userAuthContext";

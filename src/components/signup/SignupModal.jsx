@@ -1,3 +1,5 @@
+// Signup Modal handles the form and logic for a user to
+// register for an account for the app
 import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { useUserAuth } from "../../context/userAuthContext";
@@ -63,7 +65,7 @@ const SignupModal = ({ show, handleClose, setIsSigningUp }) => {
         autoClose: 2000,
       });
 
-      toast.success("Congratulations! You've earned 10 points for signing up.")
+      toast.success("Congratulations! You've earned 10 points for signing up.");
 
       setTimeout(() => {
         navigate("/profileForm");

@@ -1,3 +1,7 @@
+// Profile Page Container - get's a user's profile information
+// or a selected user's profile(if a paramter for userId is present)
+// so that Profile Page can display an auth user profile or any
+//other user's profile
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useProfile } from "../../context/ProfileContext";

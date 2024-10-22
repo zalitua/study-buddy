@@ -1,3 +1,5 @@
+// Home Page is the welcome page for the site. From here
+// a user can signup or login
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserAuth } from "../../context/userAuthContext";

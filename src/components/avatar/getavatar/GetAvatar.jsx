@@ -1,3 +1,7 @@
+// Get Avatar gets a user's avatar configuration from
+// the database and then displays it using the <Avatar>
+// component. This can be used throughout the site
+// to display a user's avatar
 import React, { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../lib/firebase";
