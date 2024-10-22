@@ -1,3 +1,6 @@
+// Custom Avatar allows a user to create an avatar with a suite
+// of customizable characteristics and save that configuration
+// as part of their profile.
 import React, { useState } from "react";
 import Avatar, { genConfig } from "react-nice-avatar";
 import { Modal, Button } from "react-bootstrap";

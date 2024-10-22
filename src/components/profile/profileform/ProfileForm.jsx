@@ -1,6 +1,9 @@
+// Profile Form - displays a form to gather a user's
+// profile information. Also handles editing profile
+// information and has options to upload a profile picture
+// or create a custom avatar
 import React from "react";
-import { Form, Button, Spinner } from "react-bootstrap";
-import { toast } from "react-toastify";
+import { Form, Button } from "react-bootstrap";
 
 import CustomAvatar from "../../avatar/CustomAvatar";
 import ProfilePic from "./ProfilePic";
@@ -36,12 +39,9 @@ const ProfileForm = ({
   handleSubmit,
   isEdit,
 }) => {
+  // display loading message
   if (loading) {
-    return (
-      <div className="d-flex justify-content-center align-items-center vh-100">
-        <Spinner animation="border" variant="primary" />
-      </div>
-    );
+    return <div>Loading...</div>;
   }
 
   return (

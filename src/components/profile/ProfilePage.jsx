@@ -1,3 +1,6 @@
+// Profile Page - displays a user's profile information
+// and provides access to editing a user's profile and
+// sending an email to the user
 import React from "react";
 import { Link } from "react-router-dom";
 import defaultProfileImage from "../../assets/default-profile.png";

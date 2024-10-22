@@ -137,6 +137,19 @@ If the user has created a profile then the name of the page will display as "Edi
 - Click the update profile button.
 The user's profile data in the database will be updated and navigation to the dashboard is automatic.
 
+### How to quickly view another user's profile and view their whole profile:
+
+- Navigate to a page with a user's name listed, currently GroupPage.
+- Hover the cursor over the name.
+A popover containing key aspects of their profile will be displayed.
+- Click on view profile. Navigation is to the user's full profile page is automatic.
+
+### How to email another user:
+
+- Navigate to a user's popover profile or the user's full profile page.
+- Click on their email address.
+A mailto link opens to your preferred mail app
+
 ### How to logout:
 
 - From any page click on the logout button on the sidebar

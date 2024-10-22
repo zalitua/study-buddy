@@ -221,7 +221,11 @@ img{
 }
 
 .modal-footer {
-  background-color: #FDE7F8;
+  background-color: var(--pink0);
+}
+
+.mod-bottom {
+  background-color: var(--pink0);
 }
 
 /* Popover container */
